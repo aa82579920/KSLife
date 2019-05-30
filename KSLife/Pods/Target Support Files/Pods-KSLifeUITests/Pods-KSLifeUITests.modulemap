@@ -1,0 +1,6 @@
+framework module Pods_KSLifeUITests {
+  umbrella header "Pods-KSLifeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

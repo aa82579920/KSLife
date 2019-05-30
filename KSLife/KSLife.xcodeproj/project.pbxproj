@@ -1,0 +1,956 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1514CB5FCEB463F8082FAB2C /* Pods_KSLifeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6DCBDB48F937C60CA4BBE4 /* Pods_KSLifeUITests.framework */; };
+		4972AAB311FB586C52577F24 /* Pods_KSLife.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A039A5CB1A5D80B3F9D241 /* Pods_KSLife.framework */; };
+		742104DE228F06F200A23C83 /* YouLuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742104DD228F06F200A23C83 /* YouLuViewController.swift */; };
+		743212C6229514EC0076CCF3 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743212C5229514EC0076CCF3 /* AboutViewController.swift */; };
+		74882AB7229E6FFA00323AAA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74882AB6229E6FFA00323AAA /* LoginViewController.swift */; };
+		74882AB9229E77CA00323AAA /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74882AB8229E77CA00323AAA /* UserModel.swift */; };
+		74882ABB229E83FC00323AAA /* HomeArticlesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74882ABA229E83FC00323AAA /* HomeArticlesModel.swift */; };
+		748C77712298FB4200E1E97D /* MyNewsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C77702298FB4200E1E97D /* MyNewsPageViewController.swift */; };
+		748C77732298FE9400E1E97D /* MessageDoctorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C77722298FE9400E1E97D /* MessageDoctorViewController.swift */; };
+		748C77752298FEBE00E1E97D /* MessageFriendsViewConttroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C77742298FEBE00E1E97D /* MessageFriendsViewConttroller.swift */; };
+		748C77772299037A00E1E97D /* MessageDoctorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C77762299037A00E1E97D /* MessageDoctorTableViewCell.swift */; };
+		748C77792299320600E1E97D /* CourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C77782299320600E1E97D /* CourseViewController.swift */; };
+		748C777B2299329600E1E97D /* CourseBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C777A2299329600E1E97D /* CourseBuyViewController.swift */; };
+		748C777D229932C500E1E97D /* CourseShouCangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C777C229932C500E1E97D /* CourseShouCangViewController.swift */; };
+		748C777F2299330100E1E97D /* CourseStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C777E2299330100E1E97D /* CourseStudyViewController.swift */; };
+		748C77812299352600E1E97D /* CourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C77802299352600E1E97D /* CourseTableViewCell.swift */; };
+		74B09E89228D806F0065D3AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09E88228D806F0065D3AB /* ViewController.swift */; };
+		74B09E8C228D806F0065D3AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74B09E8A228D806F0065D3AB /* Main.storyboard */; };
+		74B09E8E228D80700065D3AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74B09E8D228D80700065D3AB /* Assets.xcassets */; };
+		74B09E91228D80700065D3AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74B09E8F228D80700065D3AB /* LaunchScreen.storyboard */; };
+		74B09E9C228D80700065D3AB /* KSLifeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09E9B228D80700065D3AB /* KSLifeTests.swift */; };
+		74B09EA7228D80700065D3AB /* KSLifeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EA6228D80700065D3AB /* KSLifeUITests.swift */; };
+		74B09EC9228D80960065D3AB /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EB6228D80960065D3AB /* MainPageViewController.swift */; };
+		74B09ECA228D80960065D3AB /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EB8228D80960065D3AB /* UserView.swift */; };
+		74B09ECB228D80960065D3AB /* UserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 74B09EB9228D80960065D3AB /* UserView.xib */; };
+		74B09ECC228D80960065D3AB /* RecommendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EBA228D80960065D3AB /* RecommendTableViewCell.swift */; };
+		74B09ECD228D80960065D3AB /* ModuleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EBB228D80960065D3AB /* ModuleCollectionViewCell.swift */; };
+		74B09ECE228D80960065D3AB /* RecommendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 74B09EBC228D80960065D3AB /* RecommendTableViewCell.xib */; };
+		74B09ECF228D80960065D3AB /* ClassExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EBE228D80960065D3AB /* ClassExtensions.swift */; };
+		74B09ED0228D80960065D3AB /* PersonalPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC1228D80960065D3AB /* PersonalPageViewController.swift */; };
+		74B09ED1228D80960065D3AB /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC2228D80960065D3AB /* PersonalInfoViewController.swift */; };
+		74B09ED2228D80960065D3AB /* PersonalRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC3228D80960065D3AB /* PersonalRecordViewController.swift */; };
+		74B09ED3228D80960065D3AB /* DottedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC5228D80960065D3AB /* DottedLineView.swift */; };
+		74B09ED4228D80960065D3AB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC7228D80960065D3AB /* MainTabBarController.swift */; };
+		74B09ED5228D80960065D3AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC8228D80960065D3AB /* AppDelegate.swift */; };
+		74E1A60A229188F500B38CC2 /* YouLuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E1A609229188F500B38CC2 /* YouLuTableViewCell.swift */; };
+		B71259684D475A4CB24E6E03 /* Pods_KSLifeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36AEA81B96721ADB27EEFF60 /* Pods_KSLifeTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		74B09E98228D80700065D3AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74B09E7B228D806F0065D3AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74B09E82228D806F0065D3AB;
+			remoteInfo = KSLife;
+		};
+		74B09EA3228D80700065D3AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74B09E7B228D806F0065D3AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74B09E82228D806F0065D3AB;
+			remoteInfo = KSLife;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		36AEA81B96721ADB27EEFF60 /* Pods_KSLifeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KSLifeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		50A039A5CB1A5D80B3F9D241 /* Pods_KSLife.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KSLife.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		605C45607BE7BFDEDDDC1674 /* Pods-KSLifeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeUITests/Pods-KSLifeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		742104DD228F06F200A23C83 /* YouLuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouLuViewController.swift; sourceTree = "<group>"; };
+		743212C5229514EC0076CCF3 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		74882AB6229E6FFA00323AAA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		74882AB8229E77CA00323AAA /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		74882ABA229E83FC00323AAA /* HomeArticlesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeArticlesModel.swift; path = KSLife/MainPage/HomeArticlesModel.swift; sourceTree = SOURCE_ROOT; };
+		748C77702298FB4200E1E97D /* MyNewsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNewsPageViewController.swift; sourceTree = "<group>"; };
+		748C77722298FE9400E1E97D /* MessageDoctorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDoctorViewController.swift; sourceTree = "<group>"; };
+		748C77742298FEBE00E1E97D /* MessageFriendsViewConttroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFriendsViewConttroller.swift; sourceTree = "<group>"; };
+		748C77762299037A00E1E97D /* MessageDoctorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDoctorTableViewCell.swift; sourceTree = "<group>"; };
+		748C77782299320600E1E97D /* CourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseViewController.swift; sourceTree = "<group>"; };
+		748C777A2299329600E1E97D /* CourseBuyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBuyViewController.swift; sourceTree = "<group>"; };
+		748C777C229932C500E1E97D /* CourseShouCangViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseShouCangViewController.swift; sourceTree = "<group>"; };
+		748C777E2299330100E1E97D /* CourseStudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStudyViewController.swift; sourceTree = "<group>"; };
+		748C77802299352600E1E97D /* CourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTableViewCell.swift; sourceTree = "<group>"; };
+		74B09E83228D806F0065D3AB /* KSLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KSLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		74B09E88228D806F0065D3AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		74B09E8B228D806F0065D3AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		74B09E8D228D80700065D3AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		74B09E90228D80700065D3AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		74B09E92228D80700065D3AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74B09E97228D80700065D3AB /* KSLifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KSLifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74B09E9B228D80700065D3AB /* KSLifeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSLifeTests.swift; sourceTree = "<group>"; };
+		74B09E9D228D80700065D3AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74B09EA2228D80700065D3AB /* KSLifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KSLifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74B09EA6228D80700065D3AB /* KSLifeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSLifeUITests.swift; sourceTree = "<group>"; };
+		74B09EA8228D80700065D3AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74B09EB6228D80960065D3AB /* MainPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
+		74B09EB8228D80960065D3AB /* UserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		74B09EB9228D80960065D3AB /* UserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserView.xib; sourceTree = "<group>"; };
+		74B09EBA228D80960065D3AB /* RecommendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendTableViewCell.swift; sourceTree = "<group>"; };
+		74B09EBB228D80960065D3AB /* ModuleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleCollectionViewCell.swift; sourceTree = "<group>"; };
+		74B09EBC228D80960065D3AB /* RecommendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecommendTableViewCell.xib; sourceTree = "<group>"; };
+		74B09EBE228D80960065D3AB /* ClassExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassExtensions.swift; sourceTree = "<group>"; };
+		74B09EC1228D80960065D3AB /* PersonalPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalPageViewController.swift; sourceTree = "<group>"; };
+		74B09EC2228D80960065D3AB /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
+		74B09EC3228D80960065D3AB /* PersonalRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalRecordViewController.swift; sourceTree = "<group>"; };
+		74B09EC5228D80960065D3AB /* DottedLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedLineView.swift; sourceTree = "<group>"; };
+		74B09EC7228D80960065D3AB /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		74B09EC8228D80960065D3AB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		74E1A609229188F500B38CC2 /* YouLuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouLuTableViewCell.swift; sourceTree = "<group>"; };
+		9A6DCBDB48F937C60CA4BBE4 /* Pods_KSLifeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KSLifeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6A9D6DF693054324302DC29 /* Pods-KSLifeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeTests/Pods-KSLifeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D645F3294477FB701638E831 /* Pods-KSLifeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeUITests/Pods-KSLifeUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		D89657CC8B6D15B3D9092318 /* Pods-KSLife.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLife.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KSLife/Pods-KSLife.debug.xcconfig"; sourceTree = "<group>"; };
+		E0921375A7354C23FA589C29 /* Pods-KSLifeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeTests/Pods-KSLifeTests.release.xcconfig"; sourceTree = "<group>"; };
+		EF3D75C1889A85725196C570 /* Pods-KSLife.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLife.release.xcconfig"; path = "Pods/Target Support Files/Pods-KSLife/Pods-KSLife.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		74B09E80228D806F0065D3AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4972AAB311FB586C52577F24 /* Pods_KSLife.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74B09E94228D80700065D3AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B71259684D475A4CB24E6E03 /* Pods_KSLifeTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74B09E9F228D80700065D3AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1514CB5FCEB463F8082FAB2C /* Pods_KSLifeUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		54DC5B351371D426D0C481DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50A039A5CB1A5D80B3F9D241 /* Pods_KSLife.framework */,
+				36AEA81B96721ADB27EEFF60 /* Pods_KSLifeTests.framework */,
+				9A6DCBDB48F937C60CA4BBE4 /* Pods_KSLifeUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		55A22A28AF80449F7284EA6A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D89657CC8B6D15B3D9092318 /* Pods-KSLife.debug.xcconfig */,
+				EF3D75C1889A85725196C570 /* Pods-KSLife.release.xcconfig */,
+				B6A9D6DF693054324302DC29 /* Pods-KSLifeTests.debug.xcconfig */,
+				E0921375A7354C23FA589C29 /* Pods-KSLifeTests.release.xcconfig */,
+				D645F3294477FB701638E831 /* Pods-KSLifeUITests.debug.xcconfig */,
+				605C45607BE7BFDEDDDC1674 /* Pods-KSLifeUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		74882AB2229E6FA100323AAA /* login */ = {
+			isa = PBXGroup;
+			children = (
+				74882AB3229E6FA900323AAA /* Model */,
+				74882AB4229E6FB600323AAA /* View */,
+				74882AB5229E6FBB00323AAA /* Controller */,
+			);
+			path = login;
+			sourceTree = "<group>";
+		};
+		74882AB3229E6FA900323AAA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				74882AB8229E77CA00323AAA /* UserModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		74882AB4229E6FB600323AAA /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		74882AB5229E6FBB00323AAA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				74882AB6229E6FFA00323AAA /* LoginViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		74B09E7A228D806F0065D3AB = {
+			isa = PBXGroup;
+			children = (
+				74B09E85228D806F0065D3AB /* KSLife */,
+				74B09E9A228D80700065D3AB /* KSLifeTests */,
+				74B09EA5228D80700065D3AB /* KSLifeUITests */,
+				74B09E84228D806F0065D3AB /* Products */,
+				55A22A28AF80449F7284EA6A /* Pods */,
+				54DC5B351371D426D0C481DB /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		74B09E84228D806F0065D3AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74B09E83228D806F0065D3AB /* KSLife.app */,
+				74B09E97228D80700065D3AB /* KSLifeTests.xctest */,
+				74B09EA2228D80700065D3AB /* KSLifeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74B09E85228D806F0065D3AB /* KSLife */ = {
+			isa = PBXGroup;
+			children = (
+				74882AB2229E6FA100323AAA /* login */,
+				74B09EC6228D80960065D3AB /* main */,
+				74B09EB4228D80960065D3AB /* MainPage */,
+				74B09EBD228D80960065D3AB /* Shared */,
+				74B09EBF228D80960065D3AB /* User */,
+				74B09E88228D806F0065D3AB /* ViewController.swift */,
+				74B09E8A228D806F0065D3AB /* Main.storyboard */,
+				74B09E8D228D80700065D3AB /* Assets.xcassets */,
+				74B09E8F228D80700065D3AB /* LaunchScreen.storyboard */,
+				74B09E92228D80700065D3AB /* Info.plist */,
+			);
+			path = KSLife;
+			sourceTree = "<group>";
+		};
+		74B09E9A228D80700065D3AB /* KSLifeTests */ = {
+			isa = PBXGroup;
+			children = (
+				74B09E9B228D80700065D3AB /* KSLifeTests.swift */,
+				74B09E9D228D80700065D3AB /* Info.plist */,
+			);
+			path = KSLifeTests;
+			sourceTree = "<group>";
+		};
+		74B09EA5228D80700065D3AB /* KSLifeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				74B09EA6228D80700065D3AB /* KSLifeUITests.swift */,
+				74B09EA8228D80700065D3AB /* Info.plist */,
+			);
+			path = KSLifeUITests;
+			sourceTree = "<group>";
+		};
+		74B09EB4228D80960065D3AB /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+				74B09ED6228DAC790065D3AB /* Model */,
+				74B09EB7228D80960065D3AB /* View */,
+				74B09EB5228D80960065D3AB /* Controller */,
+			);
+			path = MainPage;
+			sourceTree = "<group>";
+		};
+		74B09EB5228D80960065D3AB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				74B09EB6228D80960065D3AB /* MainPageViewController.swift */,
+				748C77702298FB4200E1E97D /* MyNewsPageViewController.swift */,
+				748C77722298FE9400E1E97D /* MessageDoctorViewController.swift */,
+				748C77742298FEBE00E1E97D /* MessageFriendsViewConttroller.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		74B09EB7228D80960065D3AB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				74B09EB8228D80960065D3AB /* UserView.swift */,
+				74B09EB9228D80960065D3AB /* UserView.xib */,
+				74B09EBA228D80960065D3AB /* RecommendTableViewCell.swift */,
+				74B09EBB228D80960065D3AB /* ModuleCollectionViewCell.swift */,
+				74B09EBC228D80960065D3AB /* RecommendTableViewCell.xib */,
+				748C77762299037A00E1E97D /* MessageDoctorTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		74B09EBD228D80960065D3AB /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				74B09EBE228D80960065D3AB /* ClassExtensions.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		74B09EBF228D80960065D3AB /* User */ = {
+			isa = PBXGroup;
+			children = (
+				74B09EC0228D80960065D3AB /* Controller */,
+				74B09EC4228D80960065D3AB /* View */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		74B09EC0228D80960065D3AB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				74B09EC1228D80960065D3AB /* PersonalPageViewController.swift */,
+				74B09EC2228D80960065D3AB /* PersonalInfoViewController.swift */,
+				74B09EC3228D80960065D3AB /* PersonalRecordViewController.swift */,
+				742104DD228F06F200A23C83 /* YouLuViewController.swift */,
+				743212C5229514EC0076CCF3 /* AboutViewController.swift */,
+				748C77782299320600E1E97D /* CourseViewController.swift */,
+				748C777A2299329600E1E97D /* CourseBuyViewController.swift */,
+				748C777C229932C500E1E97D /* CourseShouCangViewController.swift */,
+				748C777E2299330100E1E97D /* CourseStudyViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		74B09EC4228D80960065D3AB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				74B09EC5228D80960065D3AB /* DottedLineView.swift */,
+				74E1A609229188F500B38CC2 /* YouLuTableViewCell.swift */,
+				748C77802299352600E1E97D /* CourseTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		74B09EC6228D80960065D3AB /* main */ = {
+			isa = PBXGroup;
+			children = (
+				74B09EC7228D80960065D3AB /* MainTabBarController.swift */,
+				74B09EC8228D80960065D3AB /* AppDelegate.swift */,
+			);
+			path = main;
+			sourceTree = "<group>";
+		};
+		74B09ED6228DAC790065D3AB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				74882ABA229E83FC00323AAA /* HomeArticlesModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		74B09E82228D806F0065D3AB /* KSLife */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74B09EAB228D80700065D3AB /* Build configuration list for PBXNativeTarget "KSLife" */;
+			buildPhases = (
+				D87C227D133C0AC287134822 /* [CP] Check Pods Manifest.lock */,
+				74B09E7F228D806F0065D3AB /* Sources */,
+				74B09E80228D806F0065D3AB /* Frameworks */,
+				74B09E81228D806F0065D3AB /* Resources */,
+				9257AA3F465BF63F59DBFC3A /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KSLife;
+			productName = KSLife;
+			productReference = 74B09E83228D806F0065D3AB /* KSLife.app */;
+			productType = "com.apple.product-type.application";
+		};
+		74B09E96228D80700065D3AB /* KSLifeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74B09EAE228D80700065D3AB /* Build configuration list for PBXNativeTarget "KSLifeTests" */;
+			buildPhases = (
+				E84037C497E177C2A0461EAB /* [CP] Check Pods Manifest.lock */,
+				74B09E93228D80700065D3AB /* Sources */,
+				74B09E94228D80700065D3AB /* Frameworks */,
+				74B09E95228D80700065D3AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74B09E99228D80700065D3AB /* PBXTargetDependency */,
+			);
+			name = KSLifeTests;
+			productName = KSLifeTests;
+			productReference = 74B09E97228D80700065D3AB /* KSLifeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		74B09EA1228D80700065D3AB /* KSLifeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74B09EB1228D80700065D3AB /* Build configuration list for PBXNativeTarget "KSLifeUITests" */;
+			buildPhases = (
+				D367F3489670EA9AA40E60DE /* [CP] Check Pods Manifest.lock */,
+				74B09E9E228D80700065D3AB /* Sources */,
+				74B09E9F228D80700065D3AB /* Frameworks */,
+				74B09EA0228D80700065D3AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74B09EA4228D80700065D3AB /* PBXTargetDependency */,
+			);
+			name = KSLifeUITests;
+			productName = KSLifeUITests;
+			productReference = 74B09EA2228D80700065D3AB /* KSLifeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		74B09E7B228D806F0065D3AB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "王春杉";
+				TargetAttributes = {
+					74B09E82228D806F0065D3AB = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					74B09E96228D80700065D3AB = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 74B09E82228D806F0065D3AB;
+					};
+					74B09EA1228D80700065D3AB = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 74B09E82228D806F0065D3AB;
+					};
+				};
+			};
+			buildConfigurationList = 74B09E7E228D806F0065D3AB /* Build configuration list for PBXProject "KSLife" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 74B09E7A228D806F0065D3AB;
+			productRefGroup = 74B09E84228D806F0065D3AB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				74B09E82228D806F0065D3AB /* KSLife */,
+				74B09E96228D80700065D3AB /* KSLifeTests */,
+				74B09EA1228D80700065D3AB /* KSLifeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		74B09E81228D806F0065D3AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74B09E91228D80700065D3AB /* LaunchScreen.storyboard in Resources */,
+				74B09E8E228D80700065D3AB /* Assets.xcassets in Resources */,
+				74B09ECE228D80960065D3AB /* RecommendTableViewCell.xib in Resources */,
+				74B09E8C228D806F0065D3AB /* Main.storyboard in Resources */,
+				74B09ECB228D80960065D3AB /* UserView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74B09E95228D80700065D3AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74B09EA0228D80700065D3AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9257AA3F465BF63F59DBFC3A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-KSLife/Pods-KSLife-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/WMPageController/WMPageController.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WMPageController.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KSLife/Pods-KSLife-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D367F3489670EA9AA40E60DE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KSLifeUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D87C227D133C0AC287134822 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KSLife-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E84037C497E177C2A0461EAB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KSLifeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		74B09E7F228D806F0065D3AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74B09ECC228D80960065D3AB /* RecommendTableViewCell.swift in Sources */,
+				742104DE228F06F200A23C83 /* YouLuViewController.swift in Sources */,
+				748C77772299037A00E1E97D /* MessageDoctorTableViewCell.swift in Sources */,
+				748C77732298FE9400E1E97D /* MessageDoctorViewController.swift in Sources */,
+				74B09ED3228D80960065D3AB /* DottedLineView.swift in Sources */,
+				743212C6229514EC0076CCF3 /* AboutViewController.swift in Sources */,
+				748C777F2299330100E1E97D /* CourseStudyViewController.swift in Sources */,
+				74B09ED4228D80960065D3AB /* MainTabBarController.swift in Sources */,
+				748C77812299352600E1E97D /* CourseTableViewCell.swift in Sources */,
+				74B09E89228D806F0065D3AB /* ViewController.swift in Sources */,
+				74B09ECF228D80960065D3AB /* ClassExtensions.swift in Sources */,
+				74B09ECD228D80960065D3AB /* ModuleCollectionViewCell.swift in Sources */,
+				748C77712298FB4200E1E97D /* MyNewsPageViewController.swift in Sources */,
+				74882AB7229E6FFA00323AAA /* LoginViewController.swift in Sources */,
+				74B09EC9228D80960065D3AB /* MainPageViewController.swift in Sources */,
+				74B09ED5228D80960065D3AB /* AppDelegate.swift in Sources */,
+				74882ABB229E83FC00323AAA /* HomeArticlesModel.swift in Sources */,
+				748C77792299320600E1E97D /* CourseViewController.swift in Sources */,
+				74B09ED0228D80960065D3AB /* PersonalPageViewController.swift in Sources */,
+				74882AB9229E77CA00323AAA /* UserModel.swift in Sources */,
+				74B09ED2228D80960065D3AB /* PersonalRecordViewController.swift in Sources */,
+				74B09ED1228D80960065D3AB /* PersonalInfoViewController.swift in Sources */,
+				748C777B2299329600E1E97D /* CourseBuyViewController.swift in Sources */,
+				748C77752298FEBE00E1E97D /* MessageFriendsViewConttroller.swift in Sources */,
+				748C777D229932C500E1E97D /* CourseShouCangViewController.swift in Sources */,
+				74E1A60A229188F500B38CC2 /* YouLuTableViewCell.swift in Sources */,
+				74B09ECA228D80960065D3AB /* UserView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74B09E93228D80700065D3AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74B09E9C228D80700065D3AB /* KSLifeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74B09E9E228D80700065D3AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74B09EA7228D80700065D3AB /* KSLifeUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		74B09E99228D80700065D3AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74B09E82228D806F0065D3AB /* KSLife */;
+			targetProxy = 74B09E98228D80700065D3AB /* PBXContainerItemProxy */;
+		};
+		74B09EA4228D80700065D3AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74B09E82228D806F0065D3AB /* KSLife */;
+			targetProxy = 74B09EA3228D80700065D3AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		74B09E8A228D806F0065D3AB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				74B09E8B228D806F0065D3AB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		74B09E8F228D80700065D3AB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				74B09E90228D80700065D3AB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		74B09EA9228D80700065D3AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		74B09EAA228D80700065D3AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		74B09EAC228D80700065D3AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D89657CC8B6D15B3D9092318 /* Pods-KSLife.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7TB848KK9F;
+				INFOPLIST_FILE = KSLife/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shan.KSLife;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		74B09EAD228D80700065D3AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF3D75C1889A85725196C570 /* Pods-KSLife.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7TB848KK9F;
+				INFOPLIST_FILE = KSLife/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shan.KSLife;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		74B09EAF228D80700065D3AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B6A9D6DF693054324302DC29 /* Pods-KSLifeTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7TB848KK9F;
+				INFOPLIST_FILE = KSLifeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shan.KSLifeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KSLife.app/KSLife";
+			};
+			name = Debug;
+		};
+		74B09EB0228D80700065D3AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0921375A7354C23FA589C29 /* Pods-KSLifeTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7TB848KK9F;
+				INFOPLIST_FILE = KSLifeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shan.KSLifeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KSLife.app/KSLife";
+			};
+			name = Release;
+		};
+		74B09EB2228D80700065D3AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D645F3294477FB701638E831 /* Pods-KSLifeUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7TB848KK9F;
+				INFOPLIST_FILE = KSLifeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shan.KSLifeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = KSLife;
+			};
+			name = Debug;
+		};
+		74B09EB3228D80700065D3AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 605C45607BE7BFDEDDDC1674 /* Pods-KSLifeUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7TB848KK9F;
+				INFOPLIST_FILE = KSLifeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shan.KSLifeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = KSLife;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		74B09E7E228D806F0065D3AB /* Build configuration list for PBXProject "KSLife" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74B09EA9228D80700065D3AB /* Debug */,
+				74B09EAA228D80700065D3AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74B09EAB228D80700065D3AB /* Build configuration list for PBXNativeTarget "KSLife" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74B09EAC228D80700065D3AB /* Debug */,
+				74B09EAD228D80700065D3AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74B09EAE228D80700065D3AB /* Build configuration list for PBXNativeTarget "KSLifeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74B09EAF228D80700065D3AB /* Debug */,
+				74B09EB0228D80700065D3AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74B09EB1228D80700065D3AB /* Build configuration list for PBXNativeTarget "KSLifeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74B09EB2228D80700065D3AB /* Debug */,
+				74B09EB3228D80700065D3AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 74B09E7B228D806F0065D3AB /* Project object */;
+}
