@@ -18,10 +18,9 @@ class MsgDetailViewController: UIViewController {
         favButton.setUpImageAndDownLableWithSpace(space: 15)
         reButton.setUpImageAndDownLableWithSpace(space: 15)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHeightChange), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHeightChange), name: UIResponder.keyboardWillHideNotification, object: nil)
-            }
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -111,6 +110,7 @@ class MsgDetailViewController: UIViewController {
     
     private lazy var favButton: UIButton = {
         let btn = UIButton()
+        btn.contentMode = .scaleAspectFit
         btn.setImage(UIImage(named: "guanzhu"), for: .normal)
         btn.setTitle("关注", for: .normal)
         btn.setTitleColor(UIColor.gray, for: .normal)
@@ -122,6 +122,7 @@ class MsgDetailViewController: UIViewController {
     
     private lazy var reButton: UIButton = {
         let btn = UIButton()
+        btn.contentMode = .scaleAspectFit
         btn.setImage(UIImage(named: "dangans"), for: .normal)
         btn.setTitle("2个回复", for: .normal)
         btn.setTitleColor(UIColor.gray, for: .normal)
@@ -198,24 +199,66 @@ extension MsgDetailViewController: UITextFieldDelegate, UIScrollViewDelegate {
         return true
     }
 
-    @objc func keyboardHeightChange(notifi: Notification) {
-        let keyBoardRect = (notifi.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-
-        let keyBoardH = keyBoardRect.size.height
-        var offset: CGFloat = 0
-        if (notifi.name == UIResponder.keyboardWillShowNotification) {
-            offset = (self.replayView.frame.origin.y - keyBoardH)
-        } else {
-        offset = (self.replayView.frame.origin.y + keyBoardH)
-        }
-
-        let duration = notifi.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+//    @objc func keyboardHeightChange(notifi: Notification) {
+//        let keyBoardRect = (notifi.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+//
+//        let keyBoardH = keyBoardRect.size.height
+//        var offset: CGFloat = 0
+//        if (notifi.name == UIResponder.keyboardWillShowNotification) {
+//            offset = (self.replayView.frame.origin.y - keyBoardH)
+//        } else {
+//        offset = (self.replayView.frame.origin.y + keyBoardH)
+//        }
+//
+//        let duration = notifi.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+//
+//        if(offset > 0) {
+//            UIView.animate(withDuration: duration,  animations: {
+//                self.replayView.frame = CGRect(x: self.replayView.frame.origin.x, y: offset, width: self.replayView.frame.width, height: self.replayView.frame.height)
+//            }, completion: nil)
+//        }
+//    }
+    @objc func keyBoardWillShow(notifi:NSNotification)
+    {
         
-        if(offset > 0) {
-            UIView.animate(withDuration: duration,  animations: {
-                self.replayView.frame = CGRect(x: self.replayView.frame.origin.x, y: offset, width: self.replayView.frame.width, height: self.replayView.frame.height)
-            }, completion: nil)
+        let keyBoardBounds = (notifi.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let duration =  (notifi.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey]as! NSNumber).doubleValue
+        
+        let deltaY = keyBoardBounds.size.height
+        
+        let animations:(() -> Void) = {
+            
+            self.replayView.transform = CGAffineTransform(translationX: 0,y: -deltaY)
         }
+        
+        if duration > 0 {
+            let options = UIView.AnimationOptions(rawValue: UInt((notifi.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as! NSNumber).intValue << 16))
+            
+            UIView.animate(withDuration: duration, delay: 0, options:options, animations: animations, completion: nil)
+        }else{
+            animations()
+        }
+        
+    }
+    @objc func keyBoardWillHide(notifi:NSNotification)
+    {
+        
+        let duration =  (notifi.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey]as! NSNumber).doubleValue
+        
+        
+        let animations:(() -> Void) = {
+            self.replayView.transform = CGAffineTransform.identity
+            self.view.layoutIfNeeded()
+        }
+        
+        if duration > 0 {
+            let options = UIView.AnimationOptions(rawValue: UInt((notifi.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as! NSNumber).intValue << 16))
+            
+            UIView.animate(withDuration: duration, delay: 0, options:options, animations: animations, completion: nil)
+        }else{
+            animations()
+        }
+        
     }
 }
 
@@ -319,15 +362,15 @@ extension MsgDetailViewController {
         
         favButton.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(textField.snp.right).offset(padding)
-            make.bottom.equalTo(textField)
-            make.top.equalTo(textField)
+            make.bottom.equalTo(textField).offset(-padding)
+            make.top.equalTo(textField).offset(padding)
         }
         
         reButton.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(favButton.snp.right)
             make.width.equalTo(favButton)
-            make.bottom.equalTo(textField)
-            make.top.equalTo(textField)
+            make.bottom.equalTo(textField).offset(-padding)
+            make.top.equalTo(textField).offset(padding)
             make.right.equalTo(replayView).offset(-padding)
         }
     }
