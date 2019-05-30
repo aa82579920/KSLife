@@ -379,16 +379,16 @@
 				74B09EBE228D80960065D3AB /* ClassExtensions.swift */,
 				C453AF3E229F7CF900369F10 /* common.swift */,
 				C453AF49229F7CFA00369F10 /* CycleView.swift */,
-				C453AF47229F7CFA00369F10 /* DropDownMenu.swift */,
 				C453AF3F229F7CF900369F10 /* NavButton.swift */,
 				C453AF44229F7CF900369F10 /* NewCollectionView.swift */,
-				C453AF45229F7CFA00369F10 /* PageContentView.swift */,
 				C453AF41229F7CF900369F10 /* PageTitleView.swift */,
-				C453AF46229F7CFA00369F10 /* PhotoViewController.swift */,
+				C453AF45229F7CFA00369F10 /* PageContentView.swift */,
 				C453AF48229F7CFA00369F10 /* PopView.swift */,
 				C453AF42229F7CF900369F10 /* SwiftPopup.swift */,
 				C453AF43229F7CF900369F10 /* SwiftPopupAnimation.swift */,
 				C453AF40229F7CF900369F10 /* SwiftPopupPresentationController.swift */,
+				C453AF46229F7CFA00369F10 /* PhotoViewController.swift */,
+				C453AF47229F7CFA00369F10 /* DropDownMenu.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";

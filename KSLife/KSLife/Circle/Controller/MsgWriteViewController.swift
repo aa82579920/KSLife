@@ -49,27 +49,13 @@ class MsgWriteViewController: PhotoViewController {
         return view
     }()
     
-    private lazy var deleteBtn: UIButton = {
-       let btn = UIButton()
-        btn.setImage(UIImage(named: "scIcs"), for: .normal)
-        btn.contentMode = .center
-        btn.addTarget(self, action: #selector(deleteImg), for: .touchUpInside)
-        btn.backgroundColor = .lightGray
-        btn.isHidden = true
-        return btn
-    }()
-    
-    private lazy var photoImage: UIImageView = {
-        let view = UIImageView()
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.contentMode = .center
-        view.image = UIImage(named: "add")
-        let ges = UITapGestureRecognizer(target: self, action: #selector(tapAvatar))
-        view.addGestureRecognizer(ges)
-        view.isUserInteractionEnabled = true
-        return view
-    }()
+    private var photoImages: [UIImageView] = []
+    private var deleteBtns: [UIButton] = []
+    private var images: [UIImage] = [] {
+        didSet {
+            refreshImage()
+        }
+    }
     
     private lazy var helpLabel: UILabel = {
         let label = UILabel()
@@ -82,10 +68,36 @@ class MsgWriteViewController: PhotoViewController {
     
     override func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         super.imagePickerController(picker, didFinishPickingMediaWithInfo: info)
-        let image = info[UIImagePickerController.InfoKey.editedImage]
-        photoImage.image = image as! UIImage
-        photoImage.contentMode = .scaleToFill
-        deleteBtn.isHidden = false
+        let image = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
+        images.append(image)
+    }
+    
+    func refreshImage() {
+        for i in 0..<images.count {
+            photoImages[i].isHidden = false
+            photoImages[i].image = images[i]
+            photoImages[i].contentMode = .scaleToFill
+            deleteBtns[i].isHidden = false
+        }
+        
+        if (images.count <= 2) {
+            UIWindow.animate(withDuration: 0.2, animations: {
+                let index = self.images.count
+                self.photoImages[index].isHidden = false
+                self.photoImages[index].contentMode = .center
+                self.photoImages[index].image = UIImage(named: "add")
+            })
+        }
+        
+        if (images.count < 2) {
+            for i in images.count+1..<3 {
+                photoImages[i].isHidden = true
+            }
+        }
+        
+        for i in images.count..<3 {
+            deleteBtns[i].isHidden = true
+        }
     }
 }
 
@@ -98,10 +110,11 @@ extension MsgWriteViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func deleteImg() {
-        photoImage.contentMode = .center
-        photoImage.image = UIImage(named: "add")
-        deleteBtn.isHidden = true
+    @objc func deleteImg(sender: UIButton) {
+        images.remove(at: sender.tag)
+//        photoImage.contentMode = .center
+//        photoImage.image = UIImage(named: "add")
+//        deleteBtn.isHidden = true
     }
     
 }
@@ -148,10 +161,37 @@ extension MsgWriteViewController {
     func setUpUI() {
         view.addSubview(tipLabel)
         view.addSubview(textView)
-        view.addSubview(photoImage)
         view.addSubview(helpLabel)
         view.addSubview(placeholderLabel)
-        photoImage.addSubview(deleteBtn)
+        addImageView()
+    }
+    
+    func addImageView() {
+        for i in 0..<3 {
+            let image = UIImageView()
+            image.layer.borderWidth = 1
+            image.layer.borderColor = UIColor.lightGray.cgColor
+            image.contentMode = .center
+            image.image = UIImage(named: "add")
+            let ges = UITapGestureRecognizer(target: self, action: #selector(tapAvatar))
+            image.addGestureRecognizer(ges)
+            image.isUserInteractionEnabled = true
+            view.addSubview(image)
+            photoImages.append(image)
+            let btn = UIButton()
+            btn.setImage(UIImage(named: "scIcs"), for: .normal)
+            btn.tag = i
+            btn.contentMode = .center
+            btn.addTarget(self, action: #selector(deleteImg), for: .touchUpInside)
+            btn.backgroundColor = .lightGray
+            btn.isHidden = true
+            view.addSubview(btn)
+            deleteBtns.append(btn)
+            image.addSubview(btn)
+        }
+        for i in 1..<3 {
+            photoImages[i].isHidden = true
+        }
     }
     
     func setUpNavBtn() {
@@ -189,24 +229,37 @@ extension MsgWriteViewController {
             make.right.equalTo(tipLabel)
         }
         
-        photoImage.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(textView.snp.bottom).offset(20)
-            make.left.equalTo(tipLabel)
-           make.width.equalTo(view).multipliedBy(0.3)
-            make.height.equalTo(photoImage.snp.width).multipliedBy(2)
-        }
-        
         helpLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(photoImage.snp.bottom).offset(10)
+            make.top.equalTo(photoImages[0].snp.bottom).offset(10)
             make.left.equalTo(tipLabel)
             make.right.equalTo(tipLabel)
             make.bottom.equalTo(view).offset(-30)
         }
         
-        deleteBtn.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(photoImage)
-            make.height.equalTo(photoImage).multipliedBy(0.2)
-            make.bottom.equalTo(photoImage)
+        for i in 0..<3 {
+            photoImages[i].snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(textView.snp.bottom).offset(20)
+                make.width.equalTo(view).multipliedBy(0.27)
+                make.height.equalTo(photoImages[i].snp.width).multipliedBy(2)
+            }
+            
+            deleteBtns[i].snp.makeConstraints { (make) -> Void in
+                make.width.equalTo(photoImages[i])
+                make.height.equalTo(photoImages[i]).multipliedBy(0.2)
+                make.bottom.equalTo(photoImages[i])
+            }
+        }
+        
+        photoImages[0].snp.makeConstraints { (make) -> Void in
+            make.left.equalTo(tipLabel)
+        }
+        
+        photoImages[1].snp.makeConstraints { (make) -> Void in
+            make.centerX.equalTo(tipLabel)
+        }
+        
+        photoImages[2].snp.makeConstraints { (make) -> Void in
+            make.right.equalTo(tipLabel)
         }
         
     }
