@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -44,6 +44,46 @@
 		74B09ED5228D80960065D3AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC8228D80960065D3AB /* AppDelegate.swift */; };
 		74E1A60A229188F500B38CC2 /* YouLuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E1A609229188F500B38CC2 /* YouLuTableViewCell.swift */; };
 		B71259684D475A4CB24E6E03 /* Pods_KSLifeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36AEA81B96721ADB27EEFF60 /* Pods_KSLifeTests.framework */; };
+		C453AF4A229F7CFA00369F10 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF3E229F7CF900369F10 /* common.swift */; };
+		C453AF4B229F7CFA00369F10 /* NavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF3F229F7CF900369F10 /* NavButton.swift */; };
+		C453AF4C229F7CFA00369F10 /* SwiftPopupPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF40229F7CF900369F10 /* SwiftPopupPresentationController.swift */; };
+		C453AF4D229F7CFA00369F10 /* PageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF41229F7CF900369F10 /* PageTitleView.swift */; };
+		C453AF4E229F7CFA00369F10 /* SwiftPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF42229F7CF900369F10 /* SwiftPopup.swift */; };
+		C453AF4F229F7CFA00369F10 /* SwiftPopupAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF43229F7CF900369F10 /* SwiftPopupAnimation.swift */; };
+		C453AF50229F7CFA00369F10 /* NewCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF44229F7CF900369F10 /* NewCollectionView.swift */; };
+		C453AF51229F7CFA00369F10 /* PageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF45229F7CFA00369F10 /* PageContentView.swift */; };
+		C453AF52229F7CFA00369F10 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF46229F7CFA00369F10 /* PhotoViewController.swift */; };
+		C453AF53229F7CFA00369F10 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF47229F7CFA00369F10 /* DropDownMenu.swift */; };
+		C453AF54229F7CFA00369F10 /* PopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF48229F7CFA00369F10 /* PopView.swift */; };
+		C453AF55229F7CFA00369F10 /* CycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF49229F7CFA00369F10 /* CycleView.swift */; };
+		C453AF68229F7D2700369F10 /* DayDishTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF59229F7D2700369F10 /* DayDishTableViewCell.swift */; };
+		C453AF69229F7D2700369F10 /* ActionSheetShowAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF5A229F7D2700369F10 /* ActionSheetShowAnimation.swift */; };
+		C453AF6A229F7D2700369F10 /* RadarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF5B229F7D2700369F10 /* RadarTableViewCell.swift */; };
+		C453AF6B229F7D2700369F10 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF5C229F7D2700369F10 /* ScoreView.swift */; };
+		C453AF6C229F7D2700369F10 /* CopyRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF5E229F7D2700369F10 /* CopyRecordViewController.swift */; };
+		C453AF6D229F7D2700369F10 /* AddDishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF5F229F7D2700369F10 /* AddDishViewController.swift */; };
+		C453AF6E229F7D2700369F10 /* PunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF60229F7D2700369F10 /* PunchViewController.swift */; };
+		C453AF6F229F7D2700369F10 /* AddDishSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF61229F7D2700369F10 /* AddDishSubView.swift */; };
+		C453AF70229F7D2700369F10 /* DiyDishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF62229F7D2700369F10 /* DiyDishViewController.swift */; };
+		C453AF71229F7D2700369F10 /* ActionSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF63229F7D2700369F10 /* ActionSheetViewController.swift */; };
+		C453AF72229F7D2700369F10 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF64229F7D2700369F10 /* AnalysisViewController.swift */; };
+		C453AF73229F7D2700369F10 /* DiyFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF65229F7D2700369F10 /* DiyFoodViewController.swift */; };
+		C453AF74229F7D2700369F10 /* PunchMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF66229F7D2700369F10 /* PunchMainViewController.swift */; };
+		C453AF75229F7D2700369F10 /* DishDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF67229F7D2700369F10 /* DishDetailViewController.swift */; };
+		C453AF80229F7D3C00369F10 /* MsgWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF78229F7D3C00369F10 /* MsgWriteViewController.swift */; };
+		C453AF81229F7D3C00369F10 /* FoodPreserveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF79229F7D3C00369F10 /* FoodPreserveViewController.swift */; };
+		C453AF82229F7D3C00369F10 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7A229F7D3C00369F10 /* MessageViewController.swift */; };
+		C453AF83229F7D3C00369F10 /* MsgDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7B229F7D3C00369F10 /* MsgDetailViewController.swift */; };
+		C453AF84229F7D3C00369F10 /* MsgDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7E229F7D3C00369F10 /* MsgDetailTableViewCell.swift */; };
+		C453AF85229F7D3C00369F10 /* MsgTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7F229F7D3C00369F10 /* MsgTableViewCell.swift */; };
+		C453AF92229F7D4E00369F10 /* MedicalServeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF88229F7D4E00369F10 /* MedicalServeViewController.swift */; };
+		C453AF93229F7D4E00369F10 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF89229F7D4E00369F10 /* FormViewController.swift */; };
+		C453AF94229F7D4E00369F10 /* DoctorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF8A229F7D4E00369F10 /* DoctorViewController.swift */; };
+		C453AF95229F7D4E00369F10 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF8D229F7D4E00369F10 /* CheckBoxView.swift */; };
+		C453AF96229F7D4E00369F10 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF8E229F7D4E00369F10 /* FormView.swift */; };
+		C453AF97229F7D4E00369F10 /* DoctorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF8F229F7D4E00369F10 /* DoctorTableViewCell.swift */; };
+		C453AF98229F7D4E00369F10 /* DetailMsgTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF90229F7D4E00369F10 /* DetailMsgTableViewCell.swift */; };
+		C453AF99229F7D4E00369F10 /* FoldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF91229F7D4E00369F10 /* FoldTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +149,46 @@
 		74E1A609229188F500B38CC2 /* YouLuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouLuTableViewCell.swift; sourceTree = "<group>"; };
 		9A6DCBDB48F937C60CA4BBE4 /* Pods_KSLifeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KSLifeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6A9D6DF693054324302DC29 /* Pods-KSLifeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeTests/Pods-KSLifeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C453AF3E229F7CF900369F10 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
+		C453AF3F229F7CF900369F10 /* NavButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
+		C453AF40229F7CF900369F10 /* SwiftPopupPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopupPresentationController.swift; sourceTree = "<group>"; };
+		C453AF41229F7CF900369F10 /* PageTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTitleView.swift; sourceTree = "<group>"; };
+		C453AF42229F7CF900369F10 /* SwiftPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopup.swift; sourceTree = "<group>"; };
+		C453AF43229F7CF900369F10 /* SwiftPopupAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopupAnimation.swift; sourceTree = "<group>"; };
+		C453AF44229F7CF900369F10 /* NewCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCollectionView.swift; sourceTree = "<group>"; };
+		C453AF45229F7CFA00369F10 /* PageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentView.swift; sourceTree = "<group>"; };
+		C453AF46229F7CFA00369F10 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		C453AF47229F7CFA00369F10 /* DropDownMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
+		C453AF48229F7CFA00369F10 /* PopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopView.swift; sourceTree = "<group>"; };
+		C453AF49229F7CFA00369F10 /* CycleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CycleView.swift; sourceTree = "<group>"; };
+		C453AF59229F7D2700369F10 /* DayDishTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayDishTableViewCell.swift; sourceTree = "<group>"; };
+		C453AF5A229F7D2700369F10 /* ActionSheetShowAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetShowAnimation.swift; sourceTree = "<group>"; };
+		C453AF5B229F7D2700369F10 /* RadarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadarTableViewCell.swift; sourceTree = "<group>"; };
+		C453AF5C229F7D2700369F10 /* ScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
+		C453AF5E229F7D2700369F10 /* CopyRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyRecordViewController.swift; sourceTree = "<group>"; };
+		C453AF5F229F7D2700369F10 /* AddDishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDishViewController.swift; sourceTree = "<group>"; };
+		C453AF60229F7D2700369F10 /* PunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PunchViewController.swift; sourceTree = "<group>"; };
+		C453AF61229F7D2700369F10 /* AddDishSubView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDishSubView.swift; sourceTree = "<group>"; };
+		C453AF62229F7D2700369F10 /* DiyDishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiyDishViewController.swift; sourceTree = "<group>"; };
+		C453AF63229F7D2700369F10 /* ActionSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetViewController.swift; sourceTree = "<group>"; };
+		C453AF64229F7D2700369F10 /* AnalysisViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
+		C453AF65229F7D2700369F10 /* DiyFoodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiyFoodViewController.swift; sourceTree = "<group>"; };
+		C453AF66229F7D2700369F10 /* PunchMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PunchMainViewController.swift; sourceTree = "<group>"; };
+		C453AF67229F7D2700369F10 /* DishDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DishDetailViewController.swift; sourceTree = "<group>"; };
+		C453AF78229F7D3C00369F10 /* MsgWriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MsgWriteViewController.swift; sourceTree = "<group>"; };
+		C453AF79229F7D3C00369F10 /* FoodPreserveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodPreserveViewController.swift; sourceTree = "<group>"; };
+		C453AF7A229F7D3C00369F10 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		C453AF7B229F7D3C00369F10 /* MsgDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MsgDetailViewController.swift; sourceTree = "<group>"; };
+		C453AF7E229F7D3C00369F10 /* MsgDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MsgDetailTableViewCell.swift; sourceTree = "<group>"; };
+		C453AF7F229F7D3C00369F10 /* MsgTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MsgTableViewCell.swift; sourceTree = "<group>"; };
+		C453AF88229F7D4E00369F10 /* MedicalServeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalServeViewController.swift; sourceTree = "<group>"; };
+		C453AF89229F7D4E00369F10 /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
+		C453AF8A229F7D4E00369F10 /* DoctorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorViewController.swift; sourceTree = "<group>"; };
+		C453AF8D229F7D4E00369F10 /* CheckBoxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
+		C453AF8E229F7D4E00369F10 /* FormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		C453AF8F229F7D4E00369F10 /* DoctorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorTableViewCell.swift; sourceTree = "<group>"; };
+		C453AF90229F7D4E00369F10 /* DetailMsgTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailMsgTableViewCell.swift; sourceTree = "<group>"; };
+		C453AF91229F7D4E00369F10 /* FoldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldTableViewCell.swift; sourceTree = "<group>"; };
 		D645F3294477FB701638E831 /* Pods-KSLifeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeUITests/Pods-KSLifeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D89657CC8B6D15B3D9092318 /* Pods-KSLife.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLife.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KSLife/Pods-KSLife.debug.xcconfig"; sourceTree = "<group>"; };
 		E0921375A7354C23FA589C29 /* Pods-KSLifeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeTests/Pods-KSLifeTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -228,6 +308,9 @@
 				74B09EC6228D80960065D3AB /* main */,
 				74B09EB4228D80960065D3AB /* MainPage */,
 				74B09EBD228D80960065D3AB /* Shared */,
+				C453AF86229F7D4E00369F10 /* Serve */,
+				C453AF56229F7D2700369F10 /* Punch */,
+				C453AF76229F7D3C00369F10 /* Circle */,
 				74B09EBF228D80960065D3AB /* User */,
 				74B09E88228D806F0065D3AB /* ViewController.swift */,
 				74B09E8A228D806F0065D3AB /* Main.storyboard */,
@@ -294,6 +377,18 @@
 			isa = PBXGroup;
 			children = (
 				74B09EBE228D80960065D3AB /* ClassExtensions.swift */,
+				C453AF3E229F7CF900369F10 /* common.swift */,
+				C453AF49229F7CFA00369F10 /* CycleView.swift */,
+				C453AF47229F7CFA00369F10 /* DropDownMenu.swift */,
+				C453AF3F229F7CF900369F10 /* NavButton.swift */,
+				C453AF44229F7CF900369F10 /* NewCollectionView.swift */,
+				C453AF45229F7CFA00369F10 /* PageContentView.swift */,
+				C453AF41229F7CF900369F10 /* PageTitleView.swift */,
+				C453AF46229F7CFA00369F10 /* PhotoViewController.swift */,
+				C453AF48229F7CFA00369F10 /* PopView.swift */,
+				C453AF42229F7CF900369F10 /* SwiftPopup.swift */,
+				C453AF43229F7CF900369F10 /* SwiftPopupAnimation.swift */,
+				C453AF40229F7CF900369F10 /* SwiftPopupPresentationController.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -348,6 +443,127 @@
 				74882ABA229E83FC00323AAA /* HomeArticlesModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C453AF56229F7D2700369F10 /* Punch */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF57229F7D2700369F10 /* Model */,
+				C453AF58229F7D2700369F10 /* View */,
+				C453AF5D229F7D2700369F10 /* ViewController */,
+			);
+			path = Punch;
+			sourceTree = "<group>";
+		};
+		C453AF57229F7D2700369F10 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C453AF58229F7D2700369F10 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF59229F7D2700369F10 /* DayDishTableViewCell.swift */,
+				C453AF5A229F7D2700369F10 /* ActionSheetShowAnimation.swift */,
+				C453AF5B229F7D2700369F10 /* RadarTableViewCell.swift */,
+				C453AF5C229F7D2700369F10 /* ScoreView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C453AF5D229F7D2700369F10 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF5E229F7D2700369F10 /* CopyRecordViewController.swift */,
+				C453AF5F229F7D2700369F10 /* AddDishViewController.swift */,
+				C453AF60229F7D2700369F10 /* PunchViewController.swift */,
+				C453AF61229F7D2700369F10 /* AddDishSubView.swift */,
+				C453AF62229F7D2700369F10 /* DiyDishViewController.swift */,
+				C453AF64229F7D2700369F10 /* AnalysisViewController.swift */,
+				C453AF65229F7D2700369F10 /* DiyFoodViewController.swift */,
+				C453AF66229F7D2700369F10 /* PunchMainViewController.swift */,
+				C453AF67229F7D2700369F10 /* DishDetailViewController.swift */,
+				C453AF63229F7D2700369F10 /* ActionSheetViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		C453AF76229F7D3C00369F10 /* Circle */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF7C229F7D3C00369F10 /* Model */,
+				C453AF7D229F7D3C00369F10 /* View */,
+				C453AF77229F7D3C00369F10 /* Controller */,
+			);
+			path = Circle;
+			sourceTree = "<group>";
+		};
+		C453AF77229F7D3C00369F10 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF79229F7D3C00369F10 /* FoodPreserveViewController.swift */,
+				C453AF78229F7D3C00369F10 /* MsgWriteViewController.swift */,
+				C453AF7A229F7D3C00369F10 /* MessageViewController.swift */,
+				C453AF7B229F7D3C00369F10 /* MsgDetailViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C453AF7C229F7D3C00369F10 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C453AF7D229F7D3C00369F10 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF7E229F7D3C00369F10 /* MsgDetailTableViewCell.swift */,
+				C453AF7F229F7D3C00369F10 /* MsgTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C453AF86229F7D4E00369F10 /* Serve */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF8B229F7D4E00369F10 /* Model */,
+				C453AF8C229F7D4E00369F10 /* View */,
+				C453AF87229F7D4E00369F10 /* Controller */,
+			);
+			path = Serve;
+			sourceTree = "<group>";
+		};
+		C453AF87229F7D4E00369F10 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF88229F7D4E00369F10 /* MedicalServeViewController.swift */,
+				C453AF89229F7D4E00369F10 /* FormViewController.swift */,
+				C453AF8A229F7D4E00369F10 /* DoctorViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C453AF8B229F7D4E00369F10 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C453AF8C229F7D4E00369F10 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C453AF8D229F7D4E00369F10 /* CheckBoxView.swift */,
+				C453AF8E229F7D4E00369F10 /* FormView.swift */,
+				C453AF8F229F7D4E00369F10 /* DoctorTableViewCell.swift */,
+				C453AF90229F7D4E00369F10 /* DetailMsgTableViewCell.swift */,
+				C453AF91229F7D4E00369F10 /* FoldTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -489,32 +705,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-KSLife/Pods-KSLife-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/WMPageController/WMPageController.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-KSLife/Pods-KSLife-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WMPageController.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-KSLife/Pods-KSLife-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KSLife/Pods-KSLife-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KSLife/Pods-KSLife-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D367F3489670EA9AA40E60DE /* [CP] Check Pods Manifest.lock */ = {
@@ -590,33 +789,73 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C453AF4A229F7CFA00369F10 /* common.swift in Sources */,
 				74B09ECC228D80960065D3AB /* RecommendTableViewCell.swift in Sources */,
 				742104DE228F06F200A23C83 /* YouLuViewController.swift in Sources */,
+				C453AF70229F7D2700369F10 /* DiyDishViewController.swift in Sources */,
+				C453AF51229F7CFA00369F10 /* PageContentView.swift in Sources */,
 				748C77772299037A00E1E97D /* MessageDoctorTableViewCell.swift in Sources */,
+				C453AF52229F7CFA00369F10 /* PhotoViewController.swift in Sources */,
+				C453AF68229F7D2700369F10 /* DayDishTableViewCell.swift in Sources */,
+				C453AF83229F7D3C00369F10 /* MsgDetailViewController.swift in Sources */,
 				748C77732298FE9400E1E97D /* MessageDoctorViewController.swift in Sources */,
+				C453AF93229F7D4E00369F10 /* FormViewController.swift in Sources */,
 				74B09ED3228D80960065D3AB /* DottedLineView.swift in Sources */,
+				C453AF74229F7D2700369F10 /* PunchMainViewController.swift in Sources */,
+				C453AF6E229F7D2700369F10 /* PunchViewController.swift in Sources */,
 				743212C6229514EC0076CCF3 /* AboutViewController.swift in Sources */,
+				C453AF6C229F7D2700369F10 /* CopyRecordViewController.swift in Sources */,
+				C453AF53229F7CFA00369F10 /* DropDownMenu.swift in Sources */,
+				C453AF72229F7D2700369F10 /* AnalysisViewController.swift in Sources */,
 				748C777F2299330100E1E97D /* CourseStudyViewController.swift in Sources */,
+				C453AF84229F7D3C00369F10 /* MsgDetailTableViewCell.swift in Sources */,
 				74B09ED4228D80960065D3AB /* MainTabBarController.swift in Sources */,
 				748C77812299352600E1E97D /* CourseTableViewCell.swift in Sources */,
 				74B09E89228D806F0065D3AB /* ViewController.swift in Sources */,
 				74B09ECF228D80960065D3AB /* ClassExtensions.swift in Sources */,
+				C453AF97229F7D4E00369F10 /* DoctorTableViewCell.swift in Sources */,
+				C453AF96229F7D4E00369F10 /* FormView.swift in Sources */,
+				C453AF4E229F7CFA00369F10 /* SwiftPopup.swift in Sources */,
+				C453AF4D229F7CFA00369F10 /* PageTitleView.swift in Sources */,
+				C453AF99229F7D4E00369F10 /* FoldTableViewCell.swift in Sources */,
 				74B09ECD228D80960065D3AB /* ModuleCollectionViewCell.swift in Sources */,
 				748C77712298FB4200E1E97D /* MyNewsPageViewController.swift in Sources */,
 				74882AB7229E6FFA00323AAA /* LoginViewController.swift in Sources */,
 				74B09EC9228D80960065D3AB /* MainPageViewController.swift in Sources */,
+				C453AF55229F7CFA00369F10 /* CycleView.swift in Sources */,
 				74B09ED5228D80960065D3AB /* AppDelegate.swift in Sources */,
+				C453AF75229F7D2700369F10 /* DishDetailViewController.swift in Sources */,
 				74882ABB229E83FC00323AAA /* HomeArticlesModel.swift in Sources */,
+				C453AF6F229F7D2700369F10 /* AddDishSubView.swift in Sources */,
+				C453AF94229F7D4E00369F10 /* DoctorViewController.swift in Sources */,
 				748C77792299320600E1E97D /* CourseViewController.swift in Sources */,
+				C453AF4B229F7CFA00369F10 /* NavButton.swift in Sources */,
+				C453AF92229F7D4E00369F10 /* MedicalServeViewController.swift in Sources */,
+				C453AF82229F7D3C00369F10 /* MessageViewController.swift in Sources */,
+				C453AF69229F7D2700369F10 /* ActionSheetShowAnimation.swift in Sources */,
+				C453AF71229F7D2700369F10 /* ActionSheetViewController.swift in Sources */,
+				C453AF6A229F7D2700369F10 /* RadarTableViewCell.swift in Sources */,
+				C453AF4C229F7CFA00369F10 /* SwiftPopupPresentationController.swift in Sources */,
+				C453AF50229F7CFA00369F10 /* NewCollectionView.swift in Sources */,
 				74B09ED0228D80960065D3AB /* PersonalPageViewController.swift in Sources */,
+				C453AF98229F7D4E00369F10 /* DetailMsgTableViewCell.swift in Sources */,
+				C453AF80229F7D3C00369F10 /* MsgWriteViewController.swift in Sources */,
 				74882AB9229E77CA00323AAA /* UserModel.swift in Sources */,
+				C453AF6D229F7D2700369F10 /* AddDishViewController.swift in Sources */,
+				C453AF95229F7D4E00369F10 /* CheckBoxView.swift in Sources */,
 				74B09ED2228D80960065D3AB /* PersonalRecordViewController.swift in Sources */,
+				C453AF54229F7CFA00369F10 /* PopView.swift in Sources */,
 				74B09ED1228D80960065D3AB /* PersonalInfoViewController.swift in Sources */,
+				C453AF6B229F7D2700369F10 /* ScoreView.swift in Sources */,
 				748C777B2299329600E1E97D /* CourseBuyViewController.swift in Sources */,
 				748C77752298FEBE00E1E97D /* MessageFriendsViewConttroller.swift in Sources */,
 				748C777D229932C500E1E97D /* CourseShouCangViewController.swift in Sources */,
+				C453AF85229F7D3C00369F10 /* MsgTableViewCell.swift in Sources */,
 				74E1A60A229188F500B38CC2 /* YouLuTableViewCell.swift in Sources */,
+				C453AF73229F7D2700369F10 /* DiyFoodViewController.swift in Sources */,
 				74B09ECA228D80960065D3AB /* UserView.swift in Sources */,
+				C453AF81229F7D3C00369F10 /* FoodPreserveViewController.swift in Sources */,
+				C453AF4F229F7CFA00369F10 /* SwiftPopupAnimation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

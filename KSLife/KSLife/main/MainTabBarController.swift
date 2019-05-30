@@ -24,11 +24,11 @@ class MainTabBarController: UITabBarController {
     func setController() {
         let one = MainPageViewController()
         one.title = "康食"
-        let two = UIViewController()
+        let two = MedicalServeViewController()
         two.title = "医服务"
-        let three = UIViewController()
+        let three = PunchMainViewController()
         three.title = "打卡"
-        let four = UIViewController()
+        let four = FoodPreserveViewController()
         four.title = "食营圈"
         let five = PersonalInfoViewController()
         five.title = "我的"
