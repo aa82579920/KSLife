@@ -18,9 +18,9 @@ class DiyDishViewController: PhotoViewController {
         setUpNav()
         remakeConstraints()
     }
-    
+    private let locationModules = ["北京", "天津", "河北", "山西", "内蒙古", "辽宁", "吉林", "黑龙江", "上海", "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南", "湖北", "湖南", "广东", "广西", "海南", "重庆", "四川", "贵州", "云南", "西藏", "陕西", "甘肃", "青海", "宁夏", "新疆", "台湾", "香港", "澳门"]
     private var cellTitles = ["基本信息","菜肴名称","照片(可选)","地域选择","机构选择"]
-    private let data = ["天津","云南","北京","上海","黑龙江","贵州"]
+//    private let data = ["天津","云南","北京","上海","黑龙江","贵州"]
     
     private lazy var tableView: UITableView = {[unowned self] in
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -51,12 +51,14 @@ class DiyDishViewController: PhotoViewController {
         return btn
     }()
     
-    private lazy var cellPickerView: UIPickerView = {[unowned self] in
-        let view = UIPickerView()
-        view.dataSource = self
-        view.delegate = self
-        view.backgroundColor = .white
-        return view
+    private lazy var cellLoalBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("天津", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btn.titleLabel?.textAlignment = .center
+        btn.addTarget(self, action: #selector(presentPickerView), for: .touchUpInside)
+        return btn
     }()
     
     private lazy var textView: UITextView = {[unowned self] in
@@ -92,19 +94,81 @@ class DiyDishViewController: PhotoViewController {
         btn.setTitleColor(.red, for: .normal)
         return btn
     }()
+    
+//    override func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        super.imagePickerController(picker, didFinishPickingMediaWithInfo: info)
+//        let image = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
+//        cellBtn.setImage(image, for: .normal)
+//    }
 }
 
 extension DiyDishViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    @objc func presentPickerView(_ sender: UIButton) {
+        if let rootView = UIApplication.shared.keyWindow {
+            
+            let emptyView = UIView(frame: rootView.bounds)
+            emptyView.backgroundColor = .clear
+            let cancelGesture = UITapGestureRecognizer(target: self, action: #selector(cancelPickerView(_:)))
+            emptyView.isUserInteractionEnabled = true
+            emptyView.addGestureRecognizer(cancelGesture)
+            
+            let pickerView = UIPickerView(frame: CGRect(x: 0, y: UIScreen.main.bounds.size.height, width: UIScreen.main.bounds.size.width, height: 250))
+            pickerView.backgroundColor = .lightGray
+            pickerView.delegate = self
+            pickerView.dataSource = self
+            emptyView.addSubview(pickerView)
+            
+            // UIToolBar
+            let toolBar = UIToolbar(frame: CGRect(x: 0, y: UIScreen.main.bounds.size.height, width: UIScreen.main.bounds.size.width, height: 44))
+            let cancelItem = UIBarButtonItem(title: "  取消", style: .done, target: self, action: #selector(toolBarCancelAction(_:)))
+            let doneItem = UIBarButtonItem(title: "确定  ", style: .done, target: self, action: #selector(toolBarDoneAction(_:)))
+            let flexItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            toolBar.items = [cancelItem, flexItem, doneItem]
+            emptyView.addSubview(toolBar)
+            
+            UIView.animate(withDuration: 0.25, animations: {
+                pickerView.frame = CGRect(x: 0, y: UIScreen.main.bounds.size.height - 250, width: UIScreen.main.bounds.size.width, height: 250)
+                toolBar.frame = CGRect(x: 0, y: UIScreen.main.bounds.size.height - 250 - 44, width: UIScreen.main.bounds.size.width, height: 44)
+            })
+            
+            rootView.addSubview(emptyView)
+        }
+    }
+    
+    @objc func cancelPickerView(_ sender: UITapGestureRecognizer) {
+        UIApplication.shared.keyWindow?.subviews.last?.removeFromSuperview()
+    }
+    
+    @objc func toolBarCancelAction(_ button: UIBarButtonItem) {
+        UIApplication.shared.keyWindow?.subviews.last?.removeFromSuperview()
+    }
+
+    @objc func toolBarDoneAction(_ button: UIBarButtonItem) {
+        guard let emptyView = UIApplication.shared.keyWindow?.subviews.last else {
+            return
+        }
+        guard let pickerView = emptyView.subviews.first as? UIPickerView else {
+            return
+        }
+        
+        let index = pickerView.selectedRow(inComponent: 0)
+        
+        cellLoalBtn.setTitle(self.locationModules[index], for: .normal)
+        
+        UIApplication.shared.keyWindow?.subviews.last?.removeFromSuperview()
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.locationModules[row]
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return data.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return data[row]
+        return self.locationModules.count
     }
 }
 
@@ -133,7 +197,7 @@ extension DiyDishViewController: UITableViewDelegate, UITableViewDataSource, UIT
         cell.backgroundColor = UIColor.white
         cell.selectionStyle = .none
         
-        let cellViews = [cellField, cellBtn, cellPickerView]
+        let cellViews = [cellField, cellBtn, cellLoalBtn]
         
         switch indexPath.section {
         case 0:
@@ -150,11 +214,11 @@ extension DiyDishViewController: UITableViewDelegate, UITableViewDataSource, UIT
                     make.width.equalTo(cellViews[1].snp.height)
                 }
             }
-//            if indexPath.row == 3 {
-//                cellViews[2].snp.makeConstraints { (make) -> Void in
-//                    make.width.equalTo(cellViews[1].snp.height)
-//                }
-//            }
+            if indexPath.row == 3 {
+                cellViews[2].snp.makeConstraints { (make) -> Void in
+                    make.width.equalTo(100)
+                }
+            }
         case 1:
             cell.contentView.addSubview(textView)
             textView.snp.makeConstraints { (make) -> Void in

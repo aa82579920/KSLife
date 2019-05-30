@@ -16,6 +16,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         super.viewDidLoad()
     }
     
+    private var senderView = UIView()
+    
     lazy var imagePickerController: UIImagePickerController = {[unowned self] in
         let pc = UIImagePickerController()
         pc.allowsEditing = true
@@ -23,7 +25,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         return pc
         }()
     
-    @objc func tapAvatar() {
+    @objc func tapAvatar(_ sender: UIView) {
+        senderView = sender
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let camera = UIAlertAction(title: "拍照", style: .default, handler: {_ in
             self.checkCameraPermission()
@@ -110,6 +113,14 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
+        let image = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
+        if senderView.isMember(of: UIButton.self) {
+            let view = senderView as! UIButton
+                view.setImage(image, for: .normal)
+        } else if (senderView.isMember(of: UIImageView.self) ){
+            let view = senderView as! UIImageView
+                view.image = image
+        }
     }
 
 }
