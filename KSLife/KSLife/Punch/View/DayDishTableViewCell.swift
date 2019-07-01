@@ -11,13 +11,19 @@ import UIKit
 enum DayDishCellStyle: String {
     case simple = "simpleStyle"
     case normal = "normalStyle"
+    case weight = "weightStyle"
 }
+let padding: CGFloat = 15
+let margin: CGFloat = screenW * 0.05
 
 class DayDishTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
+    
+    private var dish: Dish?
+    private var simpleDishs: SimpleDish?
     
     private lazy var dishImage: UIImageView = {
         let imageView = UIImageView()
@@ -43,26 +49,41 @@ class DayDishTableViewCell: UITableViewCell {
     
     private var style: DayDishCellStyle = .normal
     
-    convenience init(with style: DayDishCellStyle) {
+    convenience init(with style: DayDishCellStyle = .normal, dish: Dish) {
         self.init(style: .default, reuseIdentifier: style.rawValue)
         self.style = style
-        
-        switch style {
-        case .normal:
+        self.dish = dish
             contentView.addSubview(dishImage)
             contentView.addSubview(nameLabel)
             contentView.addSubview(weightLabel)
+        switch style {
+        case .normal:
             remakeNormalConstraints()
-        case .simple:
-            contentView.addSubview(dishImage)
-            contentView.addSubview(nameLabel)
-            remakeSimpleConstraints()
+        case .weight:
+            weightLabel.font = .systemFont(ofSize: 15, weight: .heavy)
+            weightLabel.textColor = .black
+            remakeWeightConstraints()
+        default:
+            break
         }
+            dishImage.sd_setImage(with: URL(string: dish.icon), placeholderImage: UIImage(named: "noImg"))
+            nameLabel.text = dish.name
+            weightLabel.text = "\(dish.amount)克"
+    }
+
+    convenience init(with style: DayDishCellStyle = .simple, dish: SimpleDish) {
+        self.init(style: .default, reuseIdentifier: style.rawValue)
+        self.style = style
+        self.simpleDishs = dish
+        contentView.addSubview(dishImage)
+        contentView.addSubview(nameLabel)
+        remakeSimpleConstraints()
+        
+        dishImage.sd_setImage(with: URL(string: dish.icon), placeholderImage: UIImage(named: "noImg"))
+        nameLabel.text = dish.name
     }
     
     func remakeNormalConstraints() {
-        let padding: CGFloat = 15
-        let margin: CGFloat = contentView.frame.width * 0.05
         
         dishImage.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(contentView).offset(padding)
@@ -82,10 +103,26 @@ class DayDishTableViewCell: UITableViewCell {
         }
     }
     
-    func remakeSimpleConstraints() {
-        let padding: CGFloat = 15
-        let margin: CGFloat = contentView.frame.width * 0.05
+    func remakeWeightConstraints() {
+        dishImage.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(contentView).offset(padding)
+            make.left.equalTo(contentView).offset(margin)
+            make.bottom.equalTo(contentView).offset(-padding)
+            make.width.equalTo(dishImage.snp.height)
+        }
         
+        nameLabel.snp.makeConstraints { (make) -> Void in
+            make.centerY.equalTo(dishImage)
+            make.left.equalTo(dishImage.snp.right).offset(margin)
+        }
+        
+        weightLabel.snp.makeConstraints { (make) -> Void in
+            make.centerY.equalTo(dishImage)
+            make.right.equalTo(contentView).offset(-padding)
+        }
+    }
+    
+    func remakeSimpleConstraints() {
         dishImage.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(contentView).offset(padding)
             make.left.equalTo(contentView).offset(margin)

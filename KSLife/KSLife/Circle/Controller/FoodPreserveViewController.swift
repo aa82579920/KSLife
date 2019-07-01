@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class FoodPreserveViewController: UIViewController {
     
@@ -16,11 +17,34 @@ class FoodPreserveViewController: UIViewController {
         setUpUI()
         remakeConstraints()
         self.navigationController!.delegate = self
+//        Alamofire.request("http://47.92.141.153/EGuider/blog/getAllBlogs", method: .post, parameters:["page": "0"], headers: [:]).responseJSON { response in
+//            switch response.result {
+//            case .success:
+//                print(response.result.value)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+        
+        getBlogs(uid: UserInfo.shared.user.uid, type: 100, page: 0, success: { list in
+            self.childVCs[0].blogs = list
+        })
+        getBlogs(uid: UserInfo.shared.user.uid, type: 101, page: 0, success: { list in
+            self.childVCs[1].blogs = list
+        })
+        getBlogs(uid: UserInfo.shared.user.uid, type: 102, page: 0, success: { list in
+            self.childVCs[2].blogs = list
+        })
+        getBanner(uid: UserInfo.shared.user.uid, success: { list in
+            self.cycleView.imgUrls = list
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setUpNav(animated)
     }
+    
+    private var blogs: [Blog] = []
     
     private let imageH: CGFloat = screenH * 0.2
     private let titleViewH: CGFloat = screenH * 0.06
@@ -38,15 +62,16 @@ class FoodPreserveViewController: UIViewController {
         return titleView
     }()
     
+    private var childVCs = [BlogViewController]()
+    
     private lazy var pageContentView: PageContentView = {[weak self] in
         
-        let contentH = screenH - statusH - titleViewH  - imageH
+        let contentH = screenH - statusH - titleViewH  - imageH - self!.getTabbarHeight()
         let contentFrame = CGRect(x: 0, y: statusH + imageH + titleViewH, width: screenW, height: contentH)
         
-        var childVCs = [MessageViewController]()
-        childVCs.append(MessageViewController())
-        childVCs.append(MessageViewController())
-        childVCs.append(MessageViewController())
+        childVCs.append(BlogViewController())
+        childVCs.append(BlogViewController())
+        childVCs.append(BlogViewController())
         
         let contentView = PageContentView(frame: contentFrame, childVCs: childVCs, parentVC: self)
         contentView.delegate = self
@@ -61,7 +86,7 @@ class FoodPreserveViewController: UIViewController {
     }()
     
     deinit {
-        self.navigationController!.delegate = nil
+        self.navigationController?.delegate = nil
     }
 }
 
@@ -106,9 +131,67 @@ extension FoodPreserveViewController {
     }
     
     @objc func input() {
-        let vc = MsgWriteViewController()
+        let vc = PostBlogViewController()
         vc.hidesBottomBarWhenPushed = true
+        vc.block = {
+            self.childVCs[0].msgTableView.reloadData()
+        }
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
+// Mark: -NetWork
+extension FoodPreserveViewController {
+    
+    func getBlogs(uid: String,  type: Int, page: Int, success: @escaping ([Blog]) -> Void) {
+//        let disGroup = DispatchGroup()
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBlogs, parameters: ["uid": uid, "page": "\(page)", "type": "\(type)"], success: { dict in
+            guard let data = dict["data"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                let tBlog = try JSONDecoder().decode([Blog].self, from: json)
+                success(tBlog)
+            } catch {
+                print("cant show blog")
+            }
+        }, failure: { error in
+            print(error)
+        })
+    }
+    
+    func getBlog(bid: Int, success: @escaping (Blog) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBlog, parameters: ["bid": "\(bid)"], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let blog = data["blog"] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: blog, options: [])
+                let tBlog = try JSONDecoder().decode(Blog.self, from: json)
+                success(tBlog)
+            } catch {
+                print("cant show blog")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getBanner(uid: String, success: @escaping ([String]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBanner, parameters: ["uid": "\(uid)"], success: { dict in
+            guard let data = dict["data"] as? [[String: Any]] else {
+                return
+            }
+            var list: [String] = []
+            for img in data {
+                if let url = img["imageUrl"] as? String {
+                     list.append(url)
+                }
+            }
+            success(list)
+        }, failure: { _ in
+            
+        })
+    }
+}

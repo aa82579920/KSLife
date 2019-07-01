@@ -15,7 +15,21 @@ class AddDishViewController: UIViewController {
         view.backgroundColor = .white
         setUpUI()
         setUpNav()
+        geHistory(uid: UserInfo.shared.user.uid, page: 0, success: { list in
+            self.simpleDishs = list
+        })
+        getRecipeList(success: { list in
+            self.subDishs = list
+            self.subTableViews[0].reloadData()
+        })
 //        remakeConstraints()
+    }
+    
+    private var subDishs: [SimpleDish] = []
+    private var simpleDishs: [SimpleDish] = [] {
+        didSet {
+            subViewOne.reloadData()
+        }
     }
     
     private let titleViewH: CGFloat = screenH * 0.06
@@ -30,6 +44,7 @@ class AddDishViewController: UIViewController {
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 0))
         field.leftViewMode = .always
         field.delegate = self
+        field.returnKeyType = .search
         
         let image = NSTextAttachment()
         image.image = UIImage(named: "search")
@@ -64,7 +79,7 @@ class AddDishViewController: UIViewController {
     
     private lazy var pageTitleViewSec: PageTitleView = {[weak self] in
         let titles = ["家常菜","川菜","湘菜","湘菜","粤菜","江浙沪菜","家常菜"]
-        let view = PageTitleView(frame: CGRect(x: 0, y: 0, width: screenW, height: titleViewH), titles: titles, with: .fixedType)
+        let view = PageTitleView(frame: CGRect(x: 0, y: 0, width: screenW, height: titleViewH), titles: titles, with: .flexibleType, fontSize: 14)
         view.delegate = self
         return view
         }()
@@ -152,11 +167,22 @@ class AddDishViewController: UIViewController {
 
 extension AddDishViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        switch tableView {
+        case subViewOne:
+             return simpleDishs.count == 0 ? 1 : simpleDishs.count
+        default:
+            return subDishs.count == 0 ? 1 : subDishs.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = DayDishTableViewCell(with: .simple)
+        var cell = UITableViewCell()
+        switch tableView {
+        case subViewOne:
+            cell = simpleDishs.count == 0 ? FoldTableViewCell(with: .none, name: "暂无数据") : DayDishTableViewCell(dish: simpleDishs[indexPath.row])
+        default:
+            cell = subDishs.count == 0 ? FoldTableViewCell(with: .none, name: "暂无数据") : DayDishTableViewCell(dish: subDishs[indexPath.row])
+        }
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         return cell
@@ -169,9 +195,28 @@ extension AddDishViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DishDetailViewController()
         vc.hidesBottomBarWhenPushed = true
+        var dish: SimpleDish?
+        switch tableView {
+        case subViewOne:
+            dish = simpleDishs[indexPath.row]
+        default:
+            dish = subDishs[indexPath.row]
+        }
+        vc.dish = dish
+        getDishInfo(kgId: dish!.kgID, success: { str in
+            vc.element = str
+        })
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch tableView {
+        case subViewOne:
+            return simpleDishs.count == 0 ? 160 : 70
+        default:
+            return 70
+        }
+    }
 }
 
 extension AddDishViewController: UITextFieldDelegate, PageTitleViewDelegate, PageContentViewDelegate{
@@ -185,6 +230,7 @@ extension AddDishViewController: UITextFieldDelegate, PageTitleViewDelegate, Pag
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         searchField.resignFirstResponder()
         return true
     }
@@ -194,6 +240,10 @@ extension AddDishViewController: UITextFieldDelegate, PageTitleViewDelegate, Pag
             pageTitleView.setTitleWithProgress(progress: progress, sourceIndex: sourceIndex, targetIndex: targetIndex)
         } else {
             pageTitleViewSec.setTitleWithProgress(progress: progress, sourceIndex: sourceIndex, targetIndex: targetIndex)
+            getRecipeList(page:targetIndex, success: { list in
+                self.subDishs = list
+                self.subTableViews[targetIndex].reloadData()
+            })
         }
     }
     
@@ -202,6 +252,10 @@ extension AddDishViewController: UITextFieldDelegate, PageTitleViewDelegate, Pag
             pageContentView.setCurrentIndex(currentIndex: index)
         } else {
             pageContentViewSec.setCurrentIndex(currentIndex: index)
+            getRecipeList(page:index, success: { list in
+                self.subDishs = list
+                self.subTableViews[index].reloadData()
+            })
         }
         
     }
@@ -280,3 +334,61 @@ extension AddDishViewController {
         self.navigationController?.navigationBar.tintColor = .black
     }
 }
+
+extension AddDishViewController {
+    func geHistory(uid: String, page: Int = 0, success: @escaping ([SimpleDish]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getUserHistoryRecords, parameters: ["uid": uid, "page": "\(0)"], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let recipeList = data["recipeList"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: recipeList, options: [])
+                let recipe = try JSONDecoder().decode([SimpleDish].self, from: json)
+                success(recipe)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getDishInfo(kgId: String, success: @escaping (String) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getDishInfo, parameters: ["kgId": kgId], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let elements = data["elements"] as? String else {
+                return
+            }
+           success(elements)
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func searchFoods(str: String) {
+        SolaSessionManager.solaSession(type: .post, url: RecordAPIs.searchFoods, parameters: ["keyword": str], success: { dict in
+            guard let data = dict["data"] as? [String: Any] else {
+                return
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getRecipeList(page: Int = 0, type: Int = 1, success: @escaping ([SimpleDish]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getRecipeList, parameters: ["page": "\(page)", "type": "\(type)"], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let recipeList = data["recipeList"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: recipeList, options: [])
+                let list = try JSONDecoder().decode([SimpleDish].self, from: json)
+                success(list)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+}
+

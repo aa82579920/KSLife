@@ -35,7 +35,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
             self.checkAlbumPermission()
         })
         let cancel = UIAlertAction(title: "取消", style: .default, handler: {_ in
-            self.dismiss(animated: true, completion: nil)
+            alert.dismiss(animated: true, completion: nil)
         })
         alert.addAction(camera)
         alert.addAction(album)

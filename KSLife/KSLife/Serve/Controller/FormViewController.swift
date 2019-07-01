@@ -9,6 +9,12 @@
 import UIKit
 
 class FormViewController: UIViewController {
+    
+    var questions: [Question] = [] {
+        didSet {
+            tablewView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +27,9 @@ class FormViewController: UIViewController {
     }
     
     private let itemH: CGFloat = 200
-    private let formTableViewCellID = "formTableViewCellID"
+    let formTableViewCellID = "formTableViewCellID"
     
-    private lazy var tablewView: UITableView = {
+    lazy var tablewView: UITableView = {
         [unowned self] in
         let tableView = UITableView(frame: self.view.bounds, style: .plain)
         tableView.estimatedRowHeight = itemH
@@ -36,7 +42,7 @@ class FormViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var button: UIButton = {
+    lazy var button: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: screenW, height: 50))
         button.setTitle("提交", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -49,14 +55,27 @@ class FormViewController: UIViewController {
 
 extension FormViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return questions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: formTableViewCellID, for: indexPath)
-        let formView = FormView(frame: CGRect(x: 0, y: 0, width: screenW, height: 250), questionStr: "1、您的年龄阶段", optionList: ["23岁及以下", "24-27", "28-30", "30及以上"])
-        cell.contentView.addSubview(formView)
-        formView.snp.makeConstraints { (make) -> Void in
+        
+        for view in cell.contentView.subviews {
+            view.removeFromSuperview()
+        }
+        
+        let question =  questions[indexPath.row]
+        var formView: FormView?
+        
+        if question.type == 0 {
+            formView = FormView(frame: CGRect(x: 0, y: 0, width: screenW, height: 250), questionStr: "\(indexPath.row + 1)、\(question.question)", optionList: question.optionList)
+        } else {
+            formView = CheckBoxView(frame: CGRect(x: 0, y: 0, width: screenW, height: 250), questionStr: "\(indexPath.row + 1)、\(question.question)", optionList: question.optionList)
+        }
+
+        cell.contentView.addSubview(formView!)
+        formView!.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(cell.contentView)
         }
         cell.selectionStyle = .none

@@ -13,6 +13,7 @@ target 'KSLife' do
   	pod 'Charts', '3.2.1'
         pod 'WMPageController', '2.3.0'
         pod 'SwiftyJSON', '4.0.0'
+	pod 'SwiftDate', '6.0.3'
   # Pods for KSLife
 
   target 'KSLifeTests' do

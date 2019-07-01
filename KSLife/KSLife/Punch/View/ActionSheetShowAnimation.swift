@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 open class ActionSheetShowAnimation: NSObject, UIViewControllerAnimatedTransitioning {
-    
+
     public var duration: TimeInterval = 0.8
     public var delay: TimeInterval = 0.0
     public var springWithDamping: CGFloat = 0.8

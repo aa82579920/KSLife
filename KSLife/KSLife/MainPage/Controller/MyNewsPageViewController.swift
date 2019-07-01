@@ -13,6 +13,11 @@ class MyNewsPageViewController: WMPageController {
         super.viewDidLoad()
         
         self.title = "我的消息"
+        let image = UIImage(named: "ic_back")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(close))
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.tintColor = .black
+        
         self.view.backgroundColor = .white
         
         setPageView()
@@ -34,5 +39,9 @@ class MyNewsPageViewController: WMPageController {
         titleColorNormal = UIColor.black    //标题非选择时的颜色, 颜色是可动画的
         menuBGColor = UIColor.white        //导航栏背景色
         
+    }
+    
+    @objc func close() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

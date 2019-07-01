@@ -1,5 +1,5 @@
 //
-//  MsgDetailTableViewCell.swift
+//  CommentTableViewCell.swift
 //  KSLife
 //
 //  Created by 毛线 on 2019/5/8.
@@ -8,8 +8,18 @@
 
 import UIKit
 
-class MsgDetailTableViewCell: UITableViewCell {
+class CommentTableViewCell: UITableViewCell {
     
+    var comment: Comment? {
+        didSet {
+            if let comment = comment {
+                nameLabel.text = comment.name
+                timeLabel.text = comment.time
+                detailLabel.text = comment.content
+                avatarImage.sd_setImage(with: URL(string: comment.photo), placeholderImage: UIImage(named: "scenery"))
+            }
+        }
+    }
     
     var fontSize: [CGFloat] = [13, 13, 14] {
         didSet {
@@ -27,8 +37,9 @@ class MsgDetailTableViewCell: UITableViewCell {
         }
     }
 
-    private lazy var avatarImage: UIImageView = {
+    var avatarImage: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     
@@ -85,7 +96,7 @@ class MsgDetailTableViewCell: UITableViewCell {
 
 }
 
-extension MsgDetailTableViewCell {
+extension CommentTableViewCell {
     
     private func remakeConstraints() {
         let padding: CGFloat = 15

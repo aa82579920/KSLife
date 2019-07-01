@@ -17,10 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-//        let mainVC = LoginViewController()
+//        let mainVC = MainTabBarController()
 //        self.window?.rootViewController = mainVC
-        let mainVC = MainTabBarController()
-        self.window?.rootViewController = mainVC
+        guard let userId = UserDefaults.standard.value(forKey: LoginInfo().userId) as? String, let pass = UserDefaults.standard.value(forKey: LoginInfo().token) as? String else {
+            let mainVC = LoginViewController()
+            self.window?.rootViewController = mainVC
+            return true
+        }
+        
+        UserInfo.shared.setUserInfo(mobile: userId, password: pass, success: {
+            let mainVC = MainTabBarController()
+            self.window?.rootViewController = mainVC
+        }, failure: {
+            let mainVC = LoginViewController()
+            self.window?.rootViewController = mainVC
+        })
 
         return true
     }

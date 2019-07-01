@@ -16,7 +16,18 @@ class MedicalServeViewController: UIViewController {
         setUpUI()
         remakeConstraints()
         self.navigationController!.delegate = self
+        getDoctorList(page: 0, success: { list in
+            self.doctors = list
+            self.allDoctors = list
+            self.tableView.reloadData()
+        })
+        getBanner(uid: UserInfo.shared.user.uid, success: { list in
+            self.cycleView.imgUrls = list
+        })
     }
+    
+    private var doctors: [Doctor] = []
+    private var allDoctors: [Doctor] = []
     
     private let doctorTableViewCellID = "doctorTableViewCellID"
     private let imageH: CGFloat = screenH * 0.4
@@ -51,6 +62,7 @@ class MedicalServeViewController: UIViewController {
     
     private lazy var searchBtn: UIButton = {
         let btn = NavButton(frame: CGRect.zero, title: "搜索")
+        btn.addTarget(self, action: #selector(search), for: .touchUpInside)
         return btn
     }()
     
@@ -74,18 +86,36 @@ class MedicalServeViewController: UIViewController {
         }()
     
     deinit {
-        self.navigationController!.delegate = nil
+        self.navigationController?.delegate = nil
     }
 }
 
+//Mark: searchDoctor
+extension MedicalServeViewController {
+    @objc func search() {
+        let str = self.searchField.text
+        if str == "" {
+            doctors = allDoctors
+            self.tableView.reloadData()
+        } else {
+            searchDoctor(with: str!, success: { new in
+                self.doctors = new
+                self.tableView.reloadData()
+            })
+        }
+    }
+}
+
+//Mark: tableView
 extension MedicalServeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return doctors.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: doctorTableViewCellID, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: doctorTableViewCellID, for: indexPath) as! DoctorTableViewCell
+        cell.doctor = doctors[indexPath.row]
         cell.selectionStyle = .none
         return cell
     }
@@ -96,6 +126,7 @@ extension MedicalServeViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DoctorViewController()
+        vc.doctor = self.doctors[indexPath.row]
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -163,3 +194,55 @@ extension MedicalServeViewController {
     }
 }
 
+extension MedicalServeViewController {
+    func getDoctorList(page: Int, success: @escaping ([Doctor]) -> Void) {
+        SolaSessionManager.solaSession(url: DoctorAPIs.getDoctorList, parameters: ["page": "0"], success: { dict in
+            if let data = dict["data"] as? [String: Any], let items = data["items"]  as? [Any]{
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: items, options: [])
+                    let doctorList = try JSONDecoder().decode([Doctor].self, from: json)
+                    success(doctorList)
+                } catch {
+                    print("sad")
+                }
+            } else {
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func searchDoctor(with: String,success: @escaping ([Doctor]) -> Void) {
+        SolaSessionManager.solaSession(url: DoctorAPIs.searchDoctor, parameters: ["q": with], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let items = data["items"]  as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: items, options: [])
+                let doctorList = try JSONDecoder().decode([Doctor].self, from: json)
+                success(doctorList)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getBanner(uid: String, success: @escaping ([String]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBanner, parameters: ["uid": "\(uid)"], success: { dict in
+            guard let data = dict["data"] as? [[String: Any]] else {
+                return
+            }
+            var list: [String] = []
+            for img in data {
+                if let url = img["imageUrl"] as? String {
+                    list.append(url)
+                }
+            }
+            success(list)
+        }, failure: { _ in
+            
+        })
+    }
+}

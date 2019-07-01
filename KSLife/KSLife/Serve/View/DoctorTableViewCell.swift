@@ -8,7 +8,17 @@
 
 import UIKit
 
-class DoctorTableViewCell: MsgDetailTableViewCell {
+class DoctorTableViewCell: CommentTableViewCell {
+    
+    var doctor: Doctor? {
+        didSet {
+            if let doctor = doctor {
+                details = [doctor.name, "收到鲜花数\(doctor.likeNum)", doctor.introduction]
+                avatarImage.sd_setImage(with: URL(string: doctor.photo), placeholderImage: UIImage(named: "noImg"))
+            }
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         fontSize = [16, 15, 14]

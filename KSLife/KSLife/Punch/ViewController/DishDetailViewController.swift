@@ -18,10 +18,35 @@ class DishDetailViewController: UIViewController {
         remakeConstraints()
         actionSheet.showAnimation = ActionSheetShowAnimation()
         actionSheet.dismissAnimation = ActionSheetDismissAnimation()
+        actionSheet.block = { weight in
+            FoodManager.shared.submitDiet(uid: UserInfo.shared.user.uid, kgId: self.dish!.kgID, amount: weight, unit: "克")
+            PunchViewController.needFresh = true
+        }
     }
     
-     var shouldLoadSections: [Int] = []
-     private let sectionName = ["基础营养素", "氨基酸", "脂肪酸", "其他"]
+    var dish: SimpleDish? {
+        didSet {
+            if let dish = dish {
+                 self.title = dish.name
+                imageView.sd_setImage(with: URL(string: dish.icon), placeholderImage: UIImage(named: "noImg"))
+                getRecipeInfo(kgId: dish.kgID, type: 1, success: {
+                     self.tableView.reloadData()
+                })
+            }
+        }
+    }
+    var element = "" {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    private var vitamin: [(String, String)] = []
+    private var amino: [(String, String)] = []
+    private var aliphatic: [(String, String)] = []
+    
+    private var shouldLoadSections: [Int] = []
+    private let sectionName = ["基础营养素", "氨基酸", "脂肪酸", "其他"]
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -37,6 +62,11 @@ class DishDetailViewController: UIViewController {
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.register(FoldTableViewCell.self, forCellReuseIdentifier: "foldCell")
         return tableView
+    }()
+    
+    private lazy var imageView: UIImageView = {
+        let image = UIImageView()
+        return image
     }()
     
     private lazy var button: UIButton = {
@@ -57,16 +87,15 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let n = section - 2
+        let all = [vitamin, amino, aliphatic]
         switch section {
         case 0, 1:
             return 1
+        case 2, 3, 4:
+            return shouldLoadSections.contains(n) ? all[n].count + 1 : 1
         default:
-            let n = section - 2
-            if shouldLoadSections.contains(n) {
-                return 10
-            } else {
-                return 1
-            }
+            return shouldLoadSections.contains(n) ? 2 : 1
         }
     }
     
@@ -77,8 +106,6 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource{
         
         switch indexPath.section {
         case 0:
-            let imageView = UIImageView()
-            imageView.image = UIImage(named: "scenery")
             cell.contentView.addSubview(imageView)
             imageView.sizeToFit()
             imageView.snp.makeConstraints { (make) -> Void in
@@ -89,13 +116,15 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource{
         case 1:
             let label = UILabel()
             cell.contentView.addSubview(label)
-            label.text = "红烧肉"
-            label.font = UIFont.systemFont(ofSize: 15)
+            label.text = element
+            label.font = UIFont.systemFont(ofSize: 13)
+            label.textColor = .lightGray
             label.sizeToFit()
+            label.numberOfLines = 0
             label.snp.makeConstraints { make in
-                make.top.equalTo(cell.contentView).offset(15)
+                make.top.left.equalTo(cell.contentView).offset(15)
                 make.centerX.equalTo(cell.contentView)
-                make.bottom.equalTo(cell.contentView).offset(-15)
+                make.bottom.right.equalTo(cell.contentView).offset(-15)
             }
         default:
             let n = indexPath.section - 2
@@ -111,7 +140,12 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource{
                 return cell
             } else {
                 if shouldLoadSections.contains(n) {
-                    cell = FoldTableViewCell(with: .item, name: "hhhhhhh")
+                    if n < 3 {
+                        let all = [vitamin, amino, aliphatic]
+                        cell = FoldTableViewCell(name: [all[n][indexPath.row - 1].0, all[n][indexPath.row - 1].1])
+                    } else {
+                        cell = FoldTableViewCell(with: .none, name: "暂无数据")
+                    }
                 }
             }
         }
@@ -151,7 +185,7 @@ extension DishDetailViewController {
         let image = UIImage(named: "ic_back")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(close))
         
-        self.title = "红烧肉"
+        self.title = dish?.name
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(color: UIColor.white), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -180,5 +214,33 @@ extension DishDetailViewController {
     
      @objc func popUpView() {
         actionSheet.show()
+    }
+}
+
+extension DishDetailViewController {
+    func getRecipeInfo(kgId: String, type: Int, success: @escaping () -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getRecipeInfo, parameters: ["kgId": kgId, "type": "\(type)"], success: { dict in
+            guard let data = dict["data"] as? [[String: Any]] else {
+                return
+            }
+            for item in data {
+                guard let type = item["type"] as? Int, let name = item["name"] as? String, let value = item["value"] as? Double, let unit = item["unit"] as? String else {
+                    return
+                }
+                switch type / 100 {
+                case 1:
+                    self.vitamin.append((name, "\(value)" + unit))
+                case 2:
+                    self.amino.append((name, "\(value)" + unit))
+                case 3:
+                    self.aliphatic.append((name, "\(value)" + unit))
+                default:
+                    break
+                }
+            }
+            success()
+        }, failure: { _ in
+            
+        })
     }
 }

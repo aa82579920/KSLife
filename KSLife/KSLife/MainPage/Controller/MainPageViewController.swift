@@ -16,7 +16,10 @@ class MainPageViewController: UIViewController {
 
     fileprivate var tableView: UITableView!
     fileprivate var collectionView: UICollectionView!
+    
     var articles = HomeArticles()
+    private var recomandDishs: [SimpleDish] = []
+    
     fileprivate let modules: [(name: String, img: UIImage?)] = [("能量摄入", UIImage(named: "nengliangsheru")),
                                                     ("能量燃烧", UIImage(named: "nengliangranshao")),
                                                      ("睡眠", UIImage(named: "shuimian")),
@@ -29,12 +32,28 @@ class MainPageViewController: UIViewController {
     fileprivate let userView = Bundle.main.loadNibNamed("UserView", owner: nil, options: nil)?.first as! UserView
 
     fileprivate let locationModules = ["北京", "天津", "河北", "山西", "内蒙古", "辽宁", "吉林", "黑龙江", "上海", "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南", "湖北", "湖南", "广东", "广西", "海南", "重庆", "四川", "贵州", "云南", "西藏", "陕西", "甘肃", "青海", "宁夏", "新疆", "台湾", "香港", "澳门"]
-
+    
+    private lazy var cycleView: CycleView = {
+        let view = CycleView(frame: CGRect(x: 0, y: 0, width: screenW, height: 160))
+        view.isUserInteractionEnabled = false 
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        setController()
+            self.setController()
+            self.setArticles()
+        getRecomRecipes(uid: UserInfo.shared.user.uid, success: { list in
+            self.recomandDishs = list
+            var urls = [String]()
+            for dish in list {
+                urls.append(dish.icon)
+            }
+            self.cycleView.imgUrls = urls
+            self.tableView.reloadData()
+        })
         
-        setArticles()
     }
     // 初始化信息
     func setController() {
@@ -69,13 +88,13 @@ class MainPageViewController: UIViewController {
         userView.imgView.addGestureRecognizer(tapGesture)
         
         // 设置头像
-        userView.imgView.sd_setImage(with: URL(string: "\(UserInfo.user.photo)"))
+        userView.imgView.sd_setImage(with: URL(string: "\(UserInfo.shared.user.photo)"))
         userView.locationBtn.addTarget(self, action: #selector(presentPickerView(_:)), for: .touchUpInside)
         userView.locationImgBtn.addTarget(self, action: #selector(presentPickerView(_:)), for: .touchUpInside)
     }
     // 主编推荐请求
     func setArticles() {
-        let loginUrl = "http://kangshilife.com/EGuider/home//getArticles?uid=\(UserInfo.user.uid)"
+        let loginUrl = "http://kangshilife.com/EGuider/home//getArticles?uid=\(UserInfo.shared.user.uid)"
         Alamofire.request(loginUrl, method: .post).responseJSON { response in
             switch response.result.isSuccess {
             case true:
@@ -94,11 +113,12 @@ class MainPageViewController: UIViewController {
                         newData.switchUrl = json["data"][i]["switchUrl"].string!
                         newData.createTime = json["data"][i]["createTime"].string!
                         newData.favor = json["data"][i]["favor"].int!
+                        newData.comment = json["data"][i]["comment"].int!
                         
                         self.articles.data.append(newData)
                     }
                     ArticlesInfoCell.articles = self.articles
-                    self.setController()
+                    self.tableView.reloadData()
                 }
             case false:
                 print(response.result.error)
@@ -113,29 +133,63 @@ extension MainPageViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section > 1 else {
+        switch section {
+        case 2:
+            return 1
+        case 3:
+            return articles.data.count == 0 ? 1 : articles.data.count
+        default:
             return 0
         }
-        // 返回 articles.data 的个数
-        return articles.data.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        return (Bundle.main.loadNibNamed("RecommendTableViewCell", owner: self, options: nil)?.first!) as! UITableViewCell.Type
-        ArticlesInfoCell.index = indexPath.row
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecommendTableViewCell") as! RecommendTableViewCell
+        var cell = UITableViewCell()
+        cell.selectionStyle = .none
+        switch indexPath.section {
+        case 2:
+//            let view = CycleView(frame: .zero)
+            cell.contentView.addSubview(cycleView)
+            cycleView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+         case 3:
+            if articles.data.count == 0 {
+                cell = FoldTableViewCell(with: .none, name: "暂无安排")
+            } else {
+                ArticlesInfoCell.index = indexPath.row
+                cell = tableView.dequeueReusableCell(withIdentifier: "RecommendTableViewCell") as! RecommendTableViewCell
+            }
+            cell.selectionStyle = .none
+        default:
+            break
+        }
         return cell
-
     }
 }
 
 extension MainPageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        if indexPath.section == 2 {
+            return 160
+        } else {
+            return 120
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
+        if indexPath.section == 3 {
+            let vc = ArticleViewController()
+            vc.article = articles.data[indexPath.row]
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if indexPath.section == 2 {
+            let vc = RecomandDishViewController()
+            vc.dishs = recomandDishs
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -322,4 +376,27 @@ extension MainPageViewController: UIPickerViewDataSource {
         return self.locationModules.count
     }
 
+}
+
+extension MainPageViewController {
+    func getRecomRecipes(uid: String, success: @escaping ([SimpleDish]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: HomeAPIs.getRecomRecipes, parameters: ["uid": uid], success: { dict in
+            guard let data = dict["data"] as? [String: Any] else {
+                return
+            }
+            var dishs: [SimpleDish] = []
+            for item in data.values {
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: item, options: [])
+                    let recomand = try JSONDecoder().decode(SimpleDish.self, from: json)
+                    dishs.append(recomand)
+                } catch {
+                    print("sad")
+                }
+            }
+            success(dishs)
+        }, failure: { _ in
+            
+        })
+    }
 }

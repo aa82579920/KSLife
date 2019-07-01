@@ -10,9 +10,53 @@ import UIKit
 
 class MsgTableViewCell: UITableViewCell {
     
-    private lazy var avatarImage: UIImageView = {
+    var blog: Blog? {
+        didSet {
+            if let blog = blog {
+                avatarImage.sd_setImage(with: URL(string: blog.userInfo.photo), placeholderImage: UIImage(named: "scenery"))
+                nameLabel.text = blog.userInfo.nickname
+                timeLabel.text = blog.time
+                throughLabel.text = "一天"
+                addressLabel.text = blog.cityName
+                detailLabel.text = blog.content
+                if blog.userInfo.uid == UserInfo.shared.user.uid {
+                    favBtn.isHidden = true
+                }
+                if blog.related {
+                    favBtn.isSelected = true
+                    favBtn.layer.borderColor = mainColor.cgColor
+                }
+                var num = 0
+                for i in 0 ..< blog.images.count {
+                    if let image = blog.images[i], image != "" {
+                        num += 1
+                    }
+                    if num > 0 {
+                        detailImage.sd_setImage(with: URL(string: blog.images[0]!), placeholderImage: UIImage(named: "scenery"))
+                    } else {
+                        detailImage.isHidden = true
+                    }
+                    if num > 1 {
+                        let label = UILabel()
+                        label.text = "多图"
+                        label.backgroundColor = mainColor
+                        label.textColor = .white
+                        detailImage.addSubview(label)
+                        label.snp.makeConstraints { (make) -> Void in
+                            make.top.right.equalTo(detailImage)
+                            make.width.equalTo(detailImage).multipliedBy(0.5)
+                            make.height.equalTo(detailImage).multipliedBy(0.25)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    lazy var avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "scenery")
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -53,9 +97,10 @@ class MsgTableViewCell: UITableViewCell {
         btn.setTitle("+关注", for: .normal)
         btn.setTitle("已关注", for: .selected)
         btn.setTitleColor(.black, for: .normal)
-        btn.setTitleColor(.white, for: .selected)
+        btn.setTitleColor(mainColor, for: .selected)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         btn.backgroundColor = .white
+        btn.layer.cornerRadius = 1
         btn.layer.borderWidth = 1
         btn.layer.borderColor = UIColor.lightGray.cgColor
         btn.addTarget(self, action: #selector(toFav), for: .touchUpInside)
@@ -111,8 +156,13 @@ class MsgTableViewCell: UITableViewCell {
 extension MsgTableViewCell {
     
     @objc func toFav() {
-        favBtn.isSelected = !favBtn.isSelected
-        favBtn.backgroundColor = favBtn.isSelected ? mainColor : UIColor.white
+        SolaSessionManager.solaSession(type: .post, url: RelationAPIs.beFriend,parameters: ["uid": UserInfo.shared.user.uid, "friend": blog!.userInfo.uid], success: { dict in
+            print(dict)
+            self.favBtn.isSelected = !self.favBtn.isSelected
+            self.favBtn.layer.borderColor = self.favBtn.isSelected ? mainColor.cgColor : UIColor.lightGray.cgColor
+        }, failure: { _ in
+            
+        })
     }
     
     func remakeConstraints() {
@@ -132,7 +182,7 @@ extension MsgTableViewCell {
         }
         
         timeLabel.snp.makeConstraints { (make) -> Void in
-            make.bottom.equalTo(nameLabel)
+            make.top.equalTo(nameLabel)
             make.left.equalTo(nameLabel.snp.right).offset(margin)
         }
         
@@ -156,7 +206,7 @@ extension MsgTableViewCell {
         detailLabel.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(nameLabel)
             make.top.equalTo(nameLabel.snp.bottom).offset(padding)
-            make.bottom.equalTo(contentView).offset(-margin)
+            make.bottom.equalTo(contentView).offset(-margin).priority(.low)
         }
         
         detailImage.snp.makeConstraints { (make) -> Void in
@@ -169,3 +219,5 @@ extension MsgTableViewCell {
         
     }
 }
+
+

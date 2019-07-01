@@ -21,6 +21,8 @@ struct HomeArticlesData {
     var switchUrl: String
     var createTime: String
     var favor: Int
+    var comment: Int
+    var flag: Int
     
     init() {
         self.id = 0
@@ -30,5 +32,7 @@ struct HomeArticlesData {
         self.switchUrl = ""
         self.createTime = ""
         self.favor = -1
+        self.comment = -1
+        self.flag = 0
     }
 }

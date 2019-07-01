@@ -7,8 +7,11 @@
 //
 
 import UIKit
-class MessageFriendsViewConttroller: UIViewController {
+class MessageFriendsViewConttroller: MessageDoctorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        getMessages(uid: UserInfo.shared.user.uid, type: 1, success: { list in
+            self.msgList = list
+        })
     }
 }

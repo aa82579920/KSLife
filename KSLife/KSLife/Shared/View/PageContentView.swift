@@ -47,19 +47,20 @@ class PageContentView: UIView {
         return collectionView
         }()
     
-    init(frame: CGRect, childVCs: [UIViewController], parentVC: UIViewController?) {
+    init(frame: CGRect, childVCs: [UIViewController], parentVC: UIViewController?, isScroll: Bool = true) {
         self.childVCs = childVCs
         self.parentVC = parentVC
         self.contentType = .vcContent
         super.init(frame: frame)
-        
+        self.collectionView.isScrollEnabled = isScroll
         setupUI()
     }
     
-    init(frame: CGRect, views: [UIView]) {
+    init(frame: CGRect, views: [UIView], isScroll: Bool = true) {
         self.childViews = views
          self.contentType = .viewContent
         super.init(frame: frame)
+        self.collectionView.isScrollEnabled = isScroll
         setupUI()
     }
     

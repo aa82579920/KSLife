@@ -1,5 +1,5 @@
 //
-//  MsgWriteViewController.swift
+//  PostBlogViewController.swift
 //  KSLife
 //
 //  Created by 毛线 on 2019/5/8.
@@ -8,7 +8,9 @@
 
 import UIKit
 
-class MsgWriteViewController: PhotoViewController {
+typealias BlogBlock = ()->(Void)
+
+class PostBlogViewController: PhotoViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,8 @@ class MsgWriteViewController: PhotoViewController {
     override func viewWillAppear(_ animated: Bool) {
         setUpNavBtn()
     }
+    
+    var block: BlogBlock?
     
     private lazy var tipLabel: UILabel = {
         let label = UILabel()
@@ -57,6 +61,8 @@ class MsgWriteViewController: PhotoViewController {
         }
     }
     
+    private var imageUrls: [String] = []
+    
     private lazy var helpLabel: UILabel = {
         let label = UILabel()
         label.text = "评论内容200字以内，建议采用直板图，最多能上传3张图片（jpg/jpeg/gif）jpg/jpeg/gif，单张图片大小不得超过3M"
@@ -70,6 +76,10 @@ class MsgWriteViewController: PhotoViewController {
         super.imagePickerController(picker, didFinishPickingMediaWithInfo: info)
         let image = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
         images.append(image)
+        upload(image: image, success: { url in
+            print(url)
+            self.imageUrls.append(url)
+        })
     }
     
     func refreshImage() {
@@ -101,17 +111,21 @@ class MsgWriteViewController: PhotoViewController {
     }
 }
 
-extension MsgWriteViewController {
+extension PostBlogViewController {
     @objc func cancel() {
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func deliver() {
         self.navigationController?.popViewController(animated: true)
+        let text = textView.text!
+        postBlog(uid: UserInfo.shared.user.uid, content: text, imageUrls: imageUrls)
+        block!()
     }
     
     @objc func deleteImg(sender: UIButton) {
         images.remove(at: sender.tag)
+        imageUrls.remove(at: sender.tag)
 //        photoImage.contentMode = .center
 //        photoImage.image = UIImage(named: "add")
 //        deleteBtn.isHidden = true
@@ -120,7 +134,7 @@ extension MsgWriteViewController {
 }
 
 //TextField输入长度限制
-extension MsgWriteViewController: UITextViewDelegate {
+extension PostBlogViewController: UITextViewDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for view in view.subviews {
             if (view.isKind(of: UITextView.self)) {
@@ -156,7 +170,7 @@ extension MsgWriteViewController: UITextViewDelegate {
 }
 
 //Autolayout
-extension MsgWriteViewController {
+extension PostBlogViewController {
     
     func setUpUI() {
         view.addSubview(tipLabel)
@@ -264,4 +278,31 @@ extension MsgWriteViewController {
         
     }
     
+}
+
+extension PostBlogViewController {
+    func postBlog(uid: String, content: String, cityId: Int? = nil, cityName: String? = nil, time: String? = nil, imageUrls: [String]?) {
+        var para: [String: String] = ["uid": uid, "content": content, "time": Date.getCurrentTime()]
+        let key = ["image0", "image1", "image2"]
+        if let urls = imageUrls {
+            for i in 0 ..< urls.count {
+                para[key[i]] = urls[i]
+            }
+        }
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.postBlog, parameters: para, success: { dict in
+            print(dict)
+        }, failure: { _ in
+
+        })
+    }
+    func upload(image: UIImage, success: @escaping (String) -> Void){
+        SolaSessionManager.upload(dictionay: ["image": image], url: BlogAPIs.upload, method: .post, progressBlock: nil, success: { dict in
+            guard let data = dict["data"] as? [String: Any], let url = data["url"] as? String else {
+                return
+            }
+            success(url)
+        }, failure: { error in
+            print(error)
+        })
+    }
 }

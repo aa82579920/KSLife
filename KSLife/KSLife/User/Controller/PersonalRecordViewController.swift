@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PersonalRecordViewController: UIViewController {
+class PersonalRecordViewController: PhotoViewController {
 
     var tableView: UITableView!
 
@@ -55,7 +55,7 @@ extension PersonalRecordViewController: UITableViewDataSource {
                     cell.textLabel?.textColor = .gray
                     cell.textLabel?.font = UIFont.systemFont(ofSize: 19.0, weight: UIFont.Weight.semibold)
                 } else {
-                    cell.textLabel?.text = "您的体型正常，处于哺乳期期间"
+                    cell.textLabel?.text = "您的体型正常，处于均衡饮食期间"
                 }
             } else {
                 if indexPath.row == 0 {
@@ -63,7 +63,7 @@ extension PersonalRecordViewController: UITableViewDataSource {
                     cell.textLabel?.textColor = .gray
                     cell.textLabel?.font = UIFont.systemFont(ofSize: 19.0, weight: UIFont.Weight.semibold)
                 } else {
-                    cell.textLabel?.text = "哺乳期"
+                    cell.textLabel?.text = "均衡饮食"
                 }
             }
             return cell
@@ -102,7 +102,20 @@ extension PersonalRecordViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        print(indexPath)
+        switch (indexPath.section, indexPath.row) {
+        case (3, 0):
+            let vc = TestSurveyViewController()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case (3, 1):
+            let vc = FoodRecordViewController()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case (3, 2):
+            self.tapAvatar(self.tableView)
+        default:
+            break
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -127,10 +140,10 @@ extension PersonalRecordViewController: UITableViewDelegate {
         imgView.layer.borderWidth = 3.0
         imgView.layer.borderColor = UIColor.lightGray.cgColor
         imgView.layer.cornerRadius = 80/2
-        imgView.image = UIImage(named: "upic")
+        imgView.sd_setImage(with: URL(string: "\(UserInfo.shared.user.photo)"), placeholderImage: UIImage(named: "upic"))
 
         let nickLabel = UILabel()
-        nickLabel.text = "不可弃也"
+        nickLabel.text = UserInfo.shared.user.nickname
         nickLabel.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         nickLabel.textAlignment = .center
         nickLabel.textColor = .black
@@ -218,19 +231,21 @@ extension PersonalRecordViewController: UITableViewDelegate {
         }
 
         let weightDescLabel = UILabel()
-        weightDescLabel.text = "60"
+        weightDescLabel.text = "\(UserInfo.shared.user.weight)"
         weightDescLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
         weightDescLabel.textAlignment = .center
         weightDescLabel.textColor = .gray
 
         let heightDescLabel = UILabel()
-        heightDescLabel.text = "170"
+        heightDescLabel.text = "\(UserInfo.shared.user.height)"
         heightDescLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
         heightDescLabel.textAlignment = .center
         heightDescLabel.textColor = .gray
 
         let BMIDescLabel = UILabel()
-        BMIDescLabel.text = "20.8"
+        let bmi = Double(UserInfo.shared.user.weight) / Double(UserInfo.shared.user.height) / Double(UserInfo.shared.user.height) * 10000
+        var s = String(format:"%.1f",bmi)
+        BMIDescLabel.text = s
         BMIDescLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
         BMIDescLabel.textAlignment = .center
         BMIDescLabel.textColor = .gray
@@ -263,3 +278,6 @@ extension PersonalRecordViewController: UITableViewDelegate {
 
 }
 
+extension PersonalRecordViewController {
+    
+}

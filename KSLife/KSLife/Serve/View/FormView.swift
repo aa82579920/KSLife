@@ -35,6 +35,7 @@ class FormView: UIView {
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.text = questionStr
+        label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.gray
         return label
@@ -78,6 +79,7 @@ class FormView: UIView {
         questionLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self).offset(margin)
             make.left.equalTo(self).offset(margin)
+            make.right.equalTo(self).offset(-margin)
         }
         
         for i in 0..<num {

@@ -1,5 +1,5 @@
 //
-//  MsgDetailViewController.swift
+//  DetailBlogViewController.swift
 //  KSLife
 //
 //  Created by 毛线 on 2019/5/8.
@@ -7,8 +7,35 @@
 //
 
 import UIKit
+import Alamofire
 
-class MsgDetailViewController: UIViewController {
+class DetailBlogViewController: UIViewController {
+    
+    private var tabBarH: CGFloat = 83
+    
+    var blog: Blog? {
+        didSet {
+            if let blog = blog {
+                nameLabel.text = blog.userInfo.nickname
+                timeLabel.text = blog.time
+                detailLabel.text = blog.content
+                for i in 0 ..< blog.images.count {
+                    if let image = blog.images[i], image != "" {
+                        let imageView = UIImageView()
+                        imageView.sd_setImage(with: URL(string: image), placeholderImage: UIImage(named: "scenery"))
+                        detailImages.append(imageView)
+                    }
+                }
+                
+                favButton.setTitle("\(blog.favor)个关注", for: .normal)
+                reButton.setTitle("\(blog.comments?.count ?? 0)个回复", for: .normal)
+                comments = blog.comments ?? []
+                detailTableView.reloadData()
+            }
+        }
+    }
+    
+    var comments: [Comment] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +47,7 @@ class MsgDetailViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        tabBarH = (tabBarController?.tabBar.frame.height) ?? 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,7 +56,9 @@ class MsgDetailViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        detailImage.addCorner(roundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight], cornerSize: CGSize(width: 10, height: 10))
+        for image in detailImages {
+            image.addCorner(roundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight], cornerSize: CGSize(width: 10, height: 10))
+        }
     }
     
     private let detailTableViewCellID = "detailTableViewCellID"
@@ -60,10 +90,12 @@ class MsgDetailViewController: UIViewController {
         return label
     }()
     
-    private lazy var detailImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "scenery")
-        return imageView
+    private lazy var detailImages: [UIImageView] = {
+        let imageViews = [UIImageView]()
+        for imageView in imageViews {
+            imageView.image = UIImage(named: "scenery")
+        }
+        return imageViews
     }()
     
     private lazy var tableHeaderView: UIView = {
@@ -95,7 +127,7 @@ class MsgDetailViewController: UIViewController {
         tableView.separatorStyle = .singleLine
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorInset = UIEdgeInsets.zero
-        tableView.register(MsgDetailTableViewCell.self, forCellReuseIdentifier: detailTableViewCellID)
+        tableView.register(CommentTableViewCell.self, forCellReuseIdentifier: detailTableViewCellID)
         return tableView
     }()
 
@@ -143,15 +175,15 @@ class MsgDetailViewController: UIViewController {
 //    }
 }
 
-extension MsgDetailViewController {
+extension DetailBlogViewController {
     @objc func fav() {
         favButton.isSelected = !favButton.isSelected
     }
 }
 
-extension MsgDetailViewController: UITableViewDataSource, UITableViewDelegate {
+extension DetailBlogViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return comments.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -161,9 +193,10 @@ extension MsgDetailViewController: UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = .none
             return cell
         } else {
-            let cell = detailTableView.dequeueReusableCell(withIdentifier: detailTableViewCellID, for: indexPath)
+            let cell = detailTableView.dequeueReusableCell(withIdentifier: detailTableViewCellID, for: indexPath) as! CommentTableViewCell
             cell.backgroundColor = UIColor.white
             cell.selectionStyle = .none
+            cell.comment = blog?.comments?[indexPath.row - 1]
             //        cell.layoutMargins = UIEdgeInsets.zero
             return cell
         }
@@ -184,7 +217,7 @@ extension MsgDetailViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 //遵守UITextFieldDelegate
-extension MsgDetailViewController: UITextFieldDelegate, UIScrollViewDelegate {
+extension DetailBlogViewController: UITextFieldDelegate, UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         textField.resignFirstResponder()
@@ -195,6 +228,15 @@ extension MsgDetailViewController: UITextFieldDelegate, UIScrollViewDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let text = textField.text
+        postComment(bid: blog!.id, uid: UserInfo.shared.user.uid, comment: text ?? "", success: { msg in
+            if msg == "OK" {
+                textField.text = ""
+                print(self.comments.count)
+                self.tipWithMessage(msg: "评论成功")
+                self.getComments(bid: self.blog!.id)
+            }
+        })
         textField.resignFirstResponder()
         return true
     }
@@ -262,7 +304,7 @@ extension MsgDetailViewController: UITextFieldDelegate, UIScrollViewDelegate {
     }
 }
 
-extension MsgDetailViewController {
+extension DetailBlogViewController {
     
     func setUpNav(_ animated: Bool) {
         
@@ -288,7 +330,9 @@ extension MsgDetailViewController {
         tableHeaderView.addSubview(nameLabel)
         tableHeaderView.addSubview(timeLabel)
         tableHeaderView.addSubview(detailLabel)
-        tableHeaderView.addSubview(detailImage)
+        for view in detailImages {
+            tableHeaderView.addSubview(view)
+        }
         
         tableFooterView.addSubview(footerLabel)
         
@@ -321,32 +365,51 @@ extension MsgDetailViewController {
         
         timeLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(nameLabel)
-            make.left.equalTo(nameLabel.snp.right)
+            make.left.equalTo(nameLabel.snp.right).offset(margin)
         }
         
         detailLabel.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(nameLabel)
             make.right.equalTo(tableHeaderView).offset(-margin)
             make.top.equalTo(nameLabel.snp.bottom).offset(margin)
-        }
-        
-        detailImage.snp.makeConstraints { (make) -> Void in
-            var scale: CGFloat = 0
-            guard let image = detailImage.image else {
-                detailLabel.snp.makeConstraints { (make) -> Void in
+            if detailImages.count == 0 {
                 make.bottom.equalTo(tableHeaderView).offset(-margin)
-                }
-                return
             }
-            scale = image.size.height / image.size.width
-            
-            make.left.equalTo(nameLabel)
-            make.right.equalTo(tableHeaderView).offset(-margin)
-            make.top.equalTo(detailLabel.snp.bottom).offset(margin)
-            make.bottom.equalTo(tableHeaderView).offset(-margin)
-            make.height.equalTo(detailImage.snp.width).multipliedBy(scale)
         }
         
+        if detailImages.count > 0 {
+            detailImages[0].snp.makeConstraints { (make) -> Void in make.top.equalTo(detailLabel.snp.bottom).offset(margin)
+            }
+            detailImages[detailImages.count - 1].snp.makeConstraints { (make) -> Void in
+                make.bottom.equalTo(tableHeaderView).offset(-margin)
+            }
+            for i in 0 ..< detailImages.count{
+
+                detailImages[i].snp.makeConstraints { (make) -> Void in
+                    var scale: CGFloat = 0
+                    guard let image = detailImages[i].image else {
+                        detailLabel.snp.makeConstraints { (make) -> Void in
+                            make.bottom.equalTo(tableHeaderView).offset(-margin)
+                        }
+                        return
+                    }
+                    scale = image.size.height / image.size.width
+
+                    make.left.equalTo(nameLabel)
+                    make.right.equalTo(tableHeaderView).offset(-margin)
+                    make.height.equalTo(detailImages[i].snp.width).multipliedBy(scale)
+                }
+            }
+        }
+
+        if detailImages.count > 1 {
+            for i in 1 ..< detailImages.count {
+                detailImages[i].snp.makeConstraints { (make) -> Void in
+                    make.top.equalTo(detailImages[i - 1].snp.bottom).offset(margin)
+
+                }
+            }
+        }
     }
     
     func remakeReplayViewConstraints() {
@@ -387,13 +450,49 @@ extension MsgDetailViewController {
         detailTableView.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(view)
             make.top.equalTo(view)
-            make.bottom.equalTo(view).offset(-(self.tabBarController?.tabBar.frame.height ?? 0))
+//            make.bottom.equalTo(view).offset(-(self.tabBarController?.tabBar.frame.height ?? 0))
         }
         
         replayView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(detailTableView.snp.bottom)
+            make.height.equalTo(tabBarH)
             make.width.equalTo(view)
             make.bottom.equalTo(view)
         }
+    }
+}
+
+extension DetailBlogViewController {
+    func postComment(bid: Int, uid: String, comment: String, success: @escaping (String) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.postComment, parameters: ["bid": "\(bid)", "uid": "\(uid)", "comment": comment], success: { dict in
+            guard let msg = dict["msg"] as? String else {
+                return
+            }
+            success(msg)
+        }, failure: { error in
+            print(error)
+        })
+    }
+    
+    func getComments(bid: Int, type: Int = 0, page: Int = 0) {
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getComments, parameters: ["bid": "\(bid)", "type": "\(type)", "page": "\(page)"], success: { dict in
+            guard let data = dict["data"] as? [Any] else {
+                return
+            }
+            var comments = [Comment]()
+            for comment in data {
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: comment, options: [])
+                    let com = try JSONDecoder().decode(Comment.self, from: json)
+                    comments.append(com)
+                } catch {
+                    print("cant show comment")
+                }
+            }
+            self.comments = comments
+            self.detailTableView.reloadData()
+        }, failure: { error in
+            print(error)
+        })
     }
 }

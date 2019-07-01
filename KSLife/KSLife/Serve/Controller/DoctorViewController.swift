@@ -9,10 +9,14 @@
 import UIKit
 
 class DoctorViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setUpUI()
+        sendFlowerView.block = { num in
+            self.sureSend()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -20,12 +24,36 @@ class DoctorViewController: UIViewController {
         setUpNav(animated)
     }
     
-    var shouldLoadSections: [Int] = []
+    var doctor: Doctor? {
+        didSet {
+            if let doctor = doctor {
+                getDoctorMsg(uid: doctor.uid, success: { msg in
+                    self.doctorMsg = msg
+                    self.activitys = msg.activity ?? []
+                })
+                getCircle(uid: doctor.uid , success: { circle in
+                    self.circleList = circle
+                })
+                getSurveyList(uid: doctor.uid, success: { survey in
+                    self.surveyList = survey
+                })
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    var doctorMsg: DoctorMsg?
+    private var activitys: [Activity] = []
+    private var surveyList: [Survey] = []
+    private var circleList: [Circle] = []
+    
+    private var shouldLoadSections: [Int] = []
     
     
     private let sectionName = ["医师近期安排", "咨询", "医友圈", "调查问卷", "全部课程"]
     private let itemH: CGFloat = 100
     
+    private let circleTableViewCellID = "circleTableViewCellID"
     private lazy var tableView: UITableView = {[unowned self] in
         let tableView = UITableView(frame: self.view.bounds, style: .grouped)
         tableView.estimatedRowHeight = itemH
@@ -37,8 +65,16 @@ class DoctorViewController: UIViewController {
         tableView.separatorStyle = .singleLine
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorInset = UIEdgeInsets.zero
+        tableView.register(CircleTableViewCell.self, forCellReuseIdentifier: circleTableViewCellID)
+        tableView.register(DetailMsgTableViewCell.self, forCellReuseIdentifier: "detailMsgTableViewCell")
         return tableView
         }()
+    
+    private var sendFlowerView: SendFlowerView = {
+        let view = SendFlowerView()
+        view.whiteViewEndFrame = CGRect(x: 20, y: screenH * 0.3, width: screenW - 40, height: screenH * 0.2)
+        return view
+    }()
 }
 
 extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
@@ -49,10 +85,15 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
         case let section where section > 1 && section < 2 + sectionName.count:
             let n = section - 2
             if shouldLoadSections.contains(n) {
-                if section == 6 {
+                switch section {
+                case 2:
+                    return activitys.count == 0 ? 2 : activitys.count + 1
+                case 4:
+                    return circleList.count == 0 ? 2 : circleList.count + 1
+                case 5:
+                    return surveyList.count == 0 ? 2 : surveyList.count + 1
+                default:
                     return 2
-                } else {
-                    return 5
                 }
             } else {
                 return 1
@@ -73,7 +114,7 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let imageView = UIImageView()
-            imageView.image = UIImage(named: "scenery")
+            imageView.sd_setImage(with: URL(string: doctor?.poster ?? ""), placeholderImage: UIImage(named: "noImg"))
             cell.contentView.addSubview(imageView)
             imageView.snp.makeConstraints { (make) -> Void in
                 make.height.equalTo(screenH * 0.4)
@@ -82,7 +123,11 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
                 make.bottom.equalTo(cell.contentView).priority(.low)
             }
         case 1:
-            cell = DetailMsgTableViewCell()
+            let cell = DetailMsgTableViewCell()
+            cell.button.addTarget(self, action: #selector(sendFlo), for: .touchUpInside)
+            cell.doctor = self.doctor
+            cell.selectionStyle = .none
+            return cell
         case let section where section > 1 && section < 2 + sectionName.count:
             let n = indexPath.section - 2
             
@@ -99,13 +144,13 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
                 if shouldLoadSections.contains(n) {
                     switch indexPath.section {
                     case 2:
-                         cell = FoldTableViewCell(with: .docPlan, name: "hhhhhhh")
+                        cell = (activitys.count == 0) ? FoldTableViewCell(with: .none, name: "暂无安排") : ActivityTableViewCell(activity: activitys[indexPath.row - 1])
                     case 4:
-                        cell = FoldTableViewCell(with: .docCircle, name: "hhhhhhh")
+                        cell = (circleList.count == 0) ? FoldTableViewCell(with: .none, name: "暂无动态") : CircleTableViewCell(name: doctor?.name ?? "", circle: circleList[indexPath.row - 1])
                     case 5:
-                        cell = FoldTableViewCell(with: .docForm, name: "hhhhhhh")
+                        cell = (surveyList.count == 0) ? FoldTableViewCell(with: .none, name: "暂无问卷") : FormTableViewCell(name: surveyList[indexPath.row - 1].title)
                     case 6:
-                        cell = FoldTableViewCell(with: .none, name: "")
+                        cell = FoldTableViewCell(with: .none, name: "亲，没找到相关数据")
                     default:
                         break
                     }
@@ -121,6 +166,9 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.section == 5 && indexPath.row != 0) {
             let vc = FormViewController()
+            getQuestions(sid: "\(surveyList[indexPath.row - 1].sid)", success: { qs in
+                vc.questions = qs
+            })
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -139,7 +187,7 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
                     self.shouldLoadSections.append(n)
                 }
                 tableView.reloadData()
-                tableView.scrollToRow(at: IndexPath(row: 0, section: indexPath.section), at: .top, animated: true)
+//                tableView.scrollToRow(at: IndexPath(row: 0, section: indexPath.section), at: .top, animated: true)
             } else {
 
             }
@@ -166,8 +214,11 @@ extension DoctorViewController {
         self.navigationController?.navigationBar.tintColor = .black
         
         let rightBtn = NavButton(frame: CGRect(x: 0, y: 5, width: 80, height: 30), backgroundColor: UIColor(hex6: 0xCB4042), titleColor: UIColor.white, title: "预约")
+        rightBtn.backgroundColor = rightBtn.isSelected ? UIColor.yellow : UIColor(hex6: 0xCB4042)
+        rightBtn.setTitle("待签约", for: .selected)
+        rightBtn.addTarget(self, action: #selector(followDoc), for: .touchUpInside)
         rightBtn.cardRadius = 5
-        rightBtn.addTarget(self, action: #selector(booking), for: .touchUpInside)
+//        rightBtn.addTarget(self, action: #selector(followDoc), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBtn)
     }
     
@@ -175,8 +226,130 @@ extension DoctorViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func booking() {
-        
+    @objc func sendFlo() {
+        getRemainFlower(success: { num in
+            if num == 0 {
+                self.tipWithLabel(msg: "余额不足，当前鲜花数为0，请充值后再送花！", frame: CGRect(x: screenW * 0.1, y: screenH * 0.75, width: screenW * 0.8, height: 30))
+            } else {
+                self.sendFlowerView.restNum = num
+                self.sendFlowerView.addAnimate()
+            }
+        })
     }
     
+    func sureSend() {
+        sendLike(doctorId: doctor!.uid, likeNum: sendFlowerView.num)
+        self.sendFlowerView.tapBtnAndcancelBtnClick()
+    }
+    
+    @objc func followDoc(_ sender: UIButton) {
+        let ops = sender.isSelected ? 2 : 1
+        follow(uid: doctor!.uid, ops: ops, success: {
+            sender.isSelected = true
+        })
+        
+    }
+}
+
+extension DoctorViewController {
+    func getDoctorMsg(uid: String, success: @escaping (DoctorMsg) -> Void) {
+        SolaSessionManager.solaSession(url: DoctorAPIs.getDoctorDetail, parameters: ["uid": uid], success: { dict in
+            guard let data = dict["data"] as? [String: Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                let doctorMsg = try JSONDecoder().decode(DoctorMsg.self, from: json)
+                success(doctorMsg)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getCircle(uid: String, success: @escaping ([Circle]) -> Void) {
+        SolaSessionManager.solaSession(url: DoctorAPIs.getCircle, parameters: ["uid": uid], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let circle = data["circle"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: circle, options: [])
+                let circleList = try JSONDecoder().decode([Circle].self, from: json)
+                success(circleList)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getSurveyList(uid: String, success: @escaping ([Survey]) -> Void) {
+        SolaSessionManager.solaSession(url: SurveyAPIs.getSurveyList, parameters: ["uid": uid], success: { dict in
+            guard let data = dict["data"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                let surveyList = try JSONDecoder().decode([Survey].self, from: json)
+                success(surveyList)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getQuestions(sid: String, success: @escaping ([Question]) -> Void) {
+        SolaSessionManager.solaSession(url: SurveyAPIs.getQuestion, parameters: ["sid": sid], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let item = data["question"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: item, options: [])
+                let questions = try JSONDecoder().decode([Question].self, from: json)
+                success(questions)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getRemainFlower(uid: String = UserInfo.shared.user.uid, success: @escaping (Int) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.getRemainFlower, parameters: ["uid": uid], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let likeNum = data["like_num"] as? Int else {
+                return
+            }
+            success(likeNum)
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func sendLike(doctorId: String, likeNum: Int) {
+        SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.getRemainFlower, parameters: ["uid": doctorId, "like_num": "\(likeNum)"], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let likeNum = data["like_num"] as? Int else {
+                return
+            }
+            print(data)
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func follow(uid: String, ops: Int,success: @escaping () -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.getRemainFlower, parameters: ["uid": uid, "ops": "\(ops)"], success: { dict in
+            guard let data = dict["data"] as? [String: Any] else {
+                return
+            }
+            success()
+        }, failure: { _ in
+            
+        })
+    }
 }

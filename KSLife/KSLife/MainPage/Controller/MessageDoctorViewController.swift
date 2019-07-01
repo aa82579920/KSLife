@@ -9,12 +9,21 @@
 import UIKit
 class MessageDoctorViewController: UIViewController {
     
+    var msgList: [Message] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setTableView()
+        getMessages(uid: UserInfo.shared.user.uid, type: 2, success: { list in
+            self.msgList = list
+        })
     }
     
     func setTableView() {
@@ -24,20 +33,42 @@ class MessageDoctorViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    func getMessages(uid: String, type: Int, page: Int = 0, success: @escaping ([Message]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: MsgAPIs.getMessages, parameters: ["uid": uid, "type": "\(type)", "page": "\(page)"], success: { dict in
+            guard let data = dict["data"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                let list = try JSONDecoder().decode([Message].self, from: json)
+                success(list)
+            } catch {
+                print("error")
+            }
+        }, failure: { _ in
+            
+        })
+    }
 }
 
 extension MessageDoctorViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return msgList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return MessageDoctorTableViewCell(index: indexPath.row)
+        let cell = MessageDoctorTableViewCell(index: indexPath.row)
+        cell.selectionStyle = .none
+        cell.msg = msgList[indexPath.row]
+        return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("cell被点击了")
+        let vc = MessageViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

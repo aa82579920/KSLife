@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DropDownMenuDelegate {
-    func setDropDownDelegate(sender: DropDownMenu)
+    func setDropDownDelegate(str: String?)
 }
 
 class DropDownMenu: UIView {
@@ -25,7 +25,7 @@ class DropDownMenu: UIView {
     private var buttonFrame =  CGRect.zero
     private var titleList: [String] = []
 
-    class func returnIndexByString(string: String, fromArray array: [String]) -> Int{
+    static func returnIndexByString(string: String, fromArray array: [String]) -> Int{
         let index = array.firstIndex(of: string).hashValue
         return index
     }
@@ -103,10 +103,6 @@ extension DropDownMenu: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.cellForRow(at: indexPath)
         self.btnSender.setTitle(cell?.textLabel?.text, for: .normal)
-        myDelegate()
-    }
-    
-    func myDelegate() {
-        self.deleget?.setDropDownDelegate(sender: self)
+        self.deleget?.setDropDownDelegate(str: cell?.textLabel?.text)
     }
 }

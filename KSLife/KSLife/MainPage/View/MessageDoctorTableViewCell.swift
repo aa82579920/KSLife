@@ -15,6 +15,23 @@ class MessageDoctorTableViewCell: UITableViewCell {
     let dayLable = UILabel()
     let countLable = UILabel()
     
+    var msg: Message? {
+        didSet {
+            if let msg = msg {
+                if msg.receiver.uid == UserInfo.shared.user.uid {
+                    nameLable.text = msg.sender.nickname ?? "康食君"
+                    headImageView.sd_setImage(with: URL(string: msg.sender.photo ?? ""), placeholderImage: UIImage(named: "upic"))
+                } else {
+                    nameLable.text = msg.receiver.nickname ?? "康食君"
+                    headImageView.sd_setImage(with: URL(string: msg.receiver.photo ?? ""), placeholderImage: UIImage(named: "upic"))
+                }
+                contentLable.text = msg.content
+                dayLable.text = msg.time
+                countLable.text = "\(msg.number)"
+            }
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }

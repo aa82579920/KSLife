@@ -32,14 +32,14 @@ class PunchMainViewController: UIViewController {
     
     private lazy var pageContentView: PageContentView = {[weak self] in
         
-        let contentH = screenH - statusH - navigationBarH - titleViewH
+        let contentH = screenH - statusH - navigationBarH - titleViewH - getTabbarHeight()
         let contentFrame = CGRect(x: 0, y: statusH + navigationBarH + titleViewH, width: screenW, height: contentH)
         
         var childVCs = [UIViewController]()
         childVCs.append(PunchViewController())
         childVCs.append(AnalysisViewController())
         
-        let contentView = PageContentView(frame: contentFrame, childVCs: childVCs, parentVC: self)
+        let contentView = PageContentView(frame: contentFrame, childVCs: childVCs, parentVC: self, isScroll: false)
         contentView.delegate = self
         return contentView
         }()
@@ -75,7 +75,9 @@ extension PunchMainViewController {
     }
     
     @objc func restore() {
-        
+        let vc = FoodRecordViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func close() {
@@ -83,3 +85,4 @@ extension PunchMainViewController {
     }
     
 }
+

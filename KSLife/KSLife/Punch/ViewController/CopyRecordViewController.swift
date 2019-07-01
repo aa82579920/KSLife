@@ -17,6 +17,16 @@ class CopyRecordViewController: UIViewController {
         setUpNav()
     }
     
+    var dishs: [Dish] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
+    private var addDishs: [Dish] = []
+    
+    private var num = 0
+    
     private let copyDishTableViewCellID = "copyDishTableViewCellID"
     private let itemH: CGFloat = 90
     
@@ -36,11 +46,15 @@ class CopyRecordViewController: UIViewController {
 extension CopyRecordViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return dishs.count == 0 ? 1 : dishs.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return dishs.count == 0 ? 160 : itemH
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = DayDishTableViewCell(with: .normal)
+        let cell = dishs.count == 0 ? FoldTableViewCell(with: .none, name: "亲，没找到相关数据") : DayDishTableViewCell(with: .normal, dish: dishs[indexPath.row])
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         return cell
@@ -48,6 +62,27 @@ extension CopyRecordViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.001
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    private func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCell.EditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "添加"
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        addDishs.append(dishs[indexPath.row])
+        dishs.remove(at: indexPath.row)
+        tableView.reloadData()
     }
 }
 
@@ -57,7 +92,12 @@ extension CopyRecordViewController {
     }
     
     @objc func ensure(){
-        
+//        submitRecords(dishs: self.addDishs) {
+//            PunchViewController.needFresh = true
+//        }
+        submitRecords(dishs: addDishs)
+        PunchViewController.needFresh = true
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -83,5 +123,13 @@ extension CopyRecordViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.tintColor = .black
+    }
+}
+extension CopyRecordViewController {
+    func submitRecords(dishs: [Dish]) {
+        for dish in dishs {
+            let uid = UserInfo.shared.user.uid, kgId = dish.kgID, amount = dish.amount, unit = dish.unit
+            FoodManager.shared.submitDiet(uid: uid, kgId: kgId, amount: amount, unit: unit)
+        }
     }
 }

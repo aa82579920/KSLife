@@ -9,6 +9,12 @@
 import UIKit
 
 class ScoreView: UIView {
+    
+    var score: String = "0.0" {
+        didSet {
+            scoreLabel.text = score
+        }
+    }
 
     private lazy var titileLabel: UILabel = {
         let label = UILabel()
@@ -37,7 +43,7 @@ class ScoreView: UIView {
     
     private lazy var scoreLabel: UILabel = {
         let label = UILabel()
-        label.text = "0.0"
+        label.text = score
         label.font = UIFont.systemFont(ofSize: 40)
         label.textColor = UIColor.red
         return label

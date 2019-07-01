@@ -23,6 +23,7 @@ class PageTitleView: UIView {
     private let scrollLineH: CGFloat = 2
     
      private var titleType: PageTitleType = .flexibleType
+    private var fontSize: CGFloat = 16
     
     private var titles: [String]
     private var currentIndex: Int = 0
@@ -47,9 +48,10 @@ class PageTitleView: UIView {
         return line
     }()
     
-    init(frame: CGRect, titles: [String], with type: PageTitleType) {
+    init(frame: CGRect, titles: [String], with type: PageTitleType, fontSize: CGFloat = 16) {
         self.titles = titles
         self.titleType = type
+        self.fontSize = fontSize
         super.init(frame: frame)
         setupUI()
     }
@@ -79,7 +81,7 @@ extension PageTitleView {
             
             label.text = title
             label.tag = index
-            label.font = UIFont.systemFont(ofSize: 16)
+            label.font = UIFont.systemFont(ofSize: fontSize)
             label.textColor = UIColor(r: normalColor.0, g: normalColor.1, b: normalColor.2)
             label.textAlignment = .center
             

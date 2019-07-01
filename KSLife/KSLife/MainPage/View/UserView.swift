@@ -24,7 +24,7 @@ class UserView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        helloLabel.text = "ashjcfh"
+        helloLabel.text = "亲，您好！"
 
 
     }

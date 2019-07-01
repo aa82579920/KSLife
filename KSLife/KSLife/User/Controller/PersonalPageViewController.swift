@@ -15,7 +15,7 @@ class PersonalPageViewController: UIViewController {
     fileprivate var imgView: UIImageView = {
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60 ))
         imgView.backgroundColor = .white
-        imgView.image = UIImage(named: "upic")
+        imgView.sd_setImage(with: URL(string: UserInfo.shared.user.photo), placeholderImage: UIImage(named: "upic"))
         return imgView
     }()
 
@@ -94,7 +94,7 @@ extension PersonalPageViewController: UITableViewDataSource {
         }
         if indexPath.row == 0 {
             cell.textLabel?.text = "昵称"
-            label.text = "不可弃也"
+            label.text = UserInfo.shared.user.nickname
         } else if indexPath.row == 1 {
             cell.textLabel?.text = "个性签名"
             label.text = "寂寞的程序员"

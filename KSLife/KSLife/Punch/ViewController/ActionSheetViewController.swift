@@ -8,12 +8,17 @@
 
 import UIKit
 
+typealias AddBlock = (_ diet: String)->(Void)
 class ActionSheetViewController: SwiftPopup {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
     }
+    
+    var block: AddBlock?
+    
+    private var weight: Int = 0
     
     private lazy var tableView: UITableView = {[unowned self] in
         let tableView = UITableView(frame: CGRect(x: 0, y: screenH * 0.3, width: screenW, height: screenH * 0.7), style: .plain)
@@ -83,6 +88,9 @@ class ActionSheetViewController: SwiftPopup {
     }()
     
     @objc func actionClose(_ sender: Any) {
+        if let block = block {
+            block("\(weight)")
+        }
         dismiss()
     }
     
@@ -104,12 +112,15 @@ class ActionSheetViewController: SwiftPopup {
     
     @objc func sliderValueChanged() {
         slider.value = round(slider.value)
-        self.btn.setTitle("确定\(Int(slider.value * 150))(g)", for: .normal)
+        weight = Int(slider.value * 150)
+        self.btn.setTitle("确定\(weight)(g)", for: .normal)
+        
     }
     
     @objc func dropDown() {
-        let arr = ["杯小","杯中","杯大","盘小","盘中","盘大","碗小","碗中","碗大"]
+        let arr = ["杯（小150g-水）","杯（中300g-水）","杯（大550g-水）","盘（小100g）","盘（中300g）","盘（大500g）","碗（小200g）","碗（中350g）","碗（大500g）", "个（小50g）", "个（中100g）", "个（大150g）"]
         setupDropDownMenu(dropDownMenu: dropDownMenu, titleArray: arr, button: dropBtn)
+        
     }
     
     func setupDropDownMenu(dropDownMenu: DropDownMenu, titleArray: [String], button: UIButton) {
@@ -132,8 +143,11 @@ class ActionSheetViewController: SwiftPopup {
 }
 
 extension ActionSheetViewController: UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, DropDownMenuDelegate{
-    func setDropDownDelegate(sender: DropDownMenu) {
-        sender.tag = 1000
+    func setDropDownDelegate(str: String?) {
+        let regex = NSRegularExpression("[0-9]+")
+        let a = regex.matchesString(str ?? "")
+        weight = Int(a) ?? 0
+        self.btn.setTitle("确定\(weight)(g)", for: .normal)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -146,7 +160,10 @@ extension ActionSheetViewController: UITableViewDelegate, UITableViewDataSource,
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        self.btn.setTitle("确定\(textField.text ?? "")(g)", for: .normal)
+        if let text = textField.text {
+            self.btn.setTitle("确定\(text)(g)", for: .normal)
+            weight = Int(text) ?? 0
+        }
         return true
     }
     

@@ -103,4 +103,92 @@ extension UIViewController {
     func getTabbarHeight() -> CGFloat {
         return self.tabBarController?.tabBar.bounds.size.height ?? 0
     }
+    
+    func tipWithMessage(msg: String) {
+        let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+        alert.view.backgroundColor = .lightGray
+        self.present(alert, animated: true, completion: nil)
+        self.perform(#selector(dismiss), with: alert, afterDelay: 3.0)
+    }
+
+    func tipWithLabel(msg: String, frame: CGRect = CGRect(x: screenW * 0.25, y: 500, width: screenW * 0.5, height: 30)) {
+       let tiplabel = UILabel(frame: frame)
+        tiplabel.text = msg
+        tiplabel.font = .systemFont(ofSize: 12)
+        tiplabel.numberOfLines = 0
+        tiplabel.backgroundColor = .lightGray
+        tiplabel.layer.cornerRadius = 5
+        tiplabel.layer.masksToBounds = true
+        tiplabel.textAlignment = .center
+        tiplabel.textColor = .white
+        self.view.addSubview(tiplabel)
+        
+        UIView.animate(withDuration: 3.0, animations: {
+            tiplabel.alpha = CGFloat(0)
+        }, completion: { _ in
+            tiplabel.removeFromSuperview()
+        })
+    }
+}
+
+extension Date {
+    func getDay() -> Int{
+        let calendar = Calendar.current
+        let com = calendar.dateComponents([.year,.month,.day], from: self)
+        return com.day ?? 0
+    }
+}
+
+extension NSRegularExpression {
+    convenience init(_ pattern: String) {
+        do {
+            try self.init(pattern: pattern)
+        } catch {
+            preconditionFailure("Illegal regular expression: \(pattern).")
+        }
+    }
+    
+    func matches(_ string: String) -> Bool {
+        let range = NSRange(location: 0, length: string.utf16.count)
+        return firstMatch(in: string, options: [], range: range) != nil
+    }
+    
+    func matchesString(_ string: String) -> String {
+        let range = NSRange(location: 0, length: string.utf16.count)
+        let result = firstMatch(in: string, options: [], range: range)
+        if let result = result {
+            let star = result.range(at: 0).location
+            let length = result.range(at: 0).length
+            let index1 = string.index(string.startIndex, offsetBy: star)
+            let index2 = string.index(string.startIndex, offsetBy: star + length)
+            return String(string[index1..<index2])
+        } else {
+            return ""
+        }
+    }
+    
+}
+
+
+extension String{
+    /// MD5 加密字符串
+    var MD5: String {
+        let cStr = self.cString(using: .utf8);
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 16)
+        CC_MD5(cStr!,(CC_LONG)(strlen(cStr!)), buffer)
+        let md5String = NSMutableString()
+        for i in 0..<16 {
+            md5String.appendFormat("%02x", buffer[i])
+        }
+        free(buffer)
+        return md5String as String
+    }
+}
+
+extension Date{
+    static func getCurrentTime() -> String{
+        let nowDate = NSDate()
+        let interval = Int(nowDate.timeIntervalSince1970)
+        return "\(interval)"
+    }
 }

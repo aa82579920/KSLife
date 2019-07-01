@@ -15,7 +15,7 @@ class PersonalInfoViewController: UIViewController {
 
     fileprivate let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "用户名"
+        label.text = UserInfo.shared.user.nickname
         label.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         label.textAlignment = .left
         label.textColor = .black
@@ -24,7 +24,7 @@ class PersonalInfoViewController: UIViewController {
 
     fileprivate let digitLabel: UILabel = {
         let label = UILabel()
-        label.text = "康食号："
+        label.text = "康食号：" + UserInfo.shared.user.uid
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
         label.textAlignment = .left
         label.textColor = .black
@@ -37,7 +37,7 @@ class PersonalInfoViewController: UIViewController {
 //        imgView.layer.masksToBounds = true
 //        imgView.layer.cornerRadius = 120/2
         //imgView.image = UIImage.resizedImage(image: UIImage(named: "upic")!, scaledToWidth: 30.0)
-        imgView.image = UIImage(named: "upic")
+        imgView.sd_setImage(with: URL(string: UserInfo.shared.user.photo), placeholderImage: UIImage(named: "upic"))
         return imgView
     }()
 
@@ -68,7 +68,7 @@ class PersonalInfoViewController: UIViewController {
         self.view.addSubview(tableView)
 
 
-        self.outBtn.addTarget(self, action: #selector(logout(_:)), for: .touchUpInside)
+        self.outBtn.addTarget(self, action: #selector(logout), for: .touchUpInside)
 
     }
 
@@ -81,7 +81,7 @@ class PersonalInfoViewController: UIViewController {
 }
 
 extension PersonalInfoViewController {
-    @objc func logout(_ sender: UIButton) {
+    @objc func logout() {
 
     }
 }
@@ -203,7 +203,6 @@ extension PersonalInfoViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        print(indexPath)
         if indexPath.section == 0 {
             let personlVC = PersonalPageViewController()
             personlVC.hidesBottomBarWhenPushed = true
@@ -217,6 +216,10 @@ extension PersonalInfoViewController: UITableViewDelegate {
                 let youLuVC = YouLuViewController()
                 youLuVC.hidesBottomBarWhenPushed = true // 嵌套Navigatiion时隐藏tabBar
                 self.navigationController?.pushViewController(youLuVC, animated: true)
+            } else if indexPath.row == 2 {
+                let vc = MyNewsPageViewController()
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
             }else if indexPath.row == 3 {
                 let courseVC = CourseViewController()
                 courseVC.hidesBottomBarWhenPushed = true

@@ -10,7 +10,7 @@ import UIKit
 
 class CycleView: UIView {
     
-    private let cycleCellID = "cycleCellID"
+    let cycleCellID = "cycleCellID"
     var cycleTimer : Timer?
     
     override init(frame: CGRect) {
@@ -18,6 +18,13 @@ class CycleView: UIView {
         self.backgroundColor = .white
         addSubview(collectionView)
         collectionView.frame = bounds
+        addCycleTimer()
+    }
+    
+    var imgUrls: [String]? {
+        didSet {
+            collectionView.reloadData()
+        }
     }
     
     private lazy var collectionView: UICollectionView = {[weak self] in
@@ -46,13 +53,13 @@ class CycleView: UIView {
 //Mark:- 遵守collectionView的dataSource
 extension CycleView: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1000
+        return (imgUrls?.count ?? 0) * 1000
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cycleCellID, for: indexPath)
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "scenery")
+        imageView.sd_setImage(with: URL(string: imgUrls![indexPath.row % imgUrls!.count]), placeholderImage: UIImage(named: "scenery"))
         cell.contentView.addSubview(imageView)
         imageView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(cell.contentView)
