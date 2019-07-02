@@ -43,6 +43,12 @@
 		74B09ED4228D80960065D3AB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC7228D80960065D3AB /* MainTabBarController.swift */; };
 		74B09ED5228D80960065D3AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B09EC8228D80960065D3AB /* AppDelegate.swift */; };
 		74E1A60A229188F500B38CC2 /* YouLuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E1A609229188F500B38CC2 /* YouLuTableViewCell.swift */; };
+		74FBF4A522CA346900E8B022 /* MessageFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBF4A422CA346900E8B022 /* MessageFriendTableViewCell.swift */; };
+		74FBF4A822CA3B5400E8B022 /* DangAnProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBF4A722CA3B5400E8B022 /* DangAnProfile.swift */; };
+		74FBF4AA22CB247E00E8B022 /* SetNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBF4A922CB247E00E8B022 /* SetNameController.swift */; };
+		74FBF4AC22CB2D1100E8B022 /* SetIntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBF4AB22CB2D1100E8B022 /* SetIntroController.swift */; };
+		74FBF4AE22CB3C9500E8B022 /* CourseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBF4AD22CB3C9500E8B022 /* CourseData.swift */; };
+		74FBF4B022CB47A000E8B022 /* CoursePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBF4AF22CB47A000E8B022 /* CoursePlayerViewController.swift */; };
 		B71259684D475A4CB24E6E03 /* Pods_KSLifeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36AEA81B96721ADB27EEFF60 /* Pods_KSLifeTests.framework */; };
 		C453AF4A229F7CFA00369F10 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF3E229F7CF900369F10 /* common.swift */; };
 		C453AF4B229F7CFA00369F10 /* NavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF3F229F7CF900369F10 /* NavButton.swift */; };
@@ -147,6 +153,12 @@
 		74B09EC7228D80960065D3AB /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		74B09EC8228D80960065D3AB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74E1A609229188F500B38CC2 /* YouLuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouLuTableViewCell.swift; sourceTree = "<group>"; };
+		74FBF4A422CA346900E8B022 /* MessageFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFriendTableViewCell.swift; sourceTree = "<group>"; };
+		74FBF4A722CA3B5400E8B022 /* DangAnProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DangAnProfile.swift; sourceTree = "<group>"; };
+		74FBF4A922CB247E00E8B022 /* SetNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNameController.swift; sourceTree = "<group>"; };
+		74FBF4AB22CB2D1100E8B022 /* SetIntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetIntroController.swift; sourceTree = "<group>"; };
+		74FBF4AD22CB3C9500E8B022 /* CourseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseData.swift; sourceTree = "<group>"; };
+		74FBF4AF22CB47A000E8B022 /* CoursePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursePlayerViewController.swift; sourceTree = "<group>"; };
 		9A6DCBDB48F937C60CA4BBE4 /* Pods_KSLifeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KSLifeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6A9D6DF693054324302DC29 /* Pods-KSLifeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeTests/Pods-KSLifeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C453AF3E229F7CF900369F10 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
@@ -369,6 +381,7 @@
 				74B09EBB228D80960065D3AB /* ModuleCollectionViewCell.swift */,
 				74B09EBC228D80960065D3AB /* RecommendTableViewCell.xib */,
 				748C77762299037A00E1E97D /* MessageDoctorTableViewCell.swift */,
+				74FBF4A422CA346900E8B022 /* MessageFriendTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -396,6 +409,7 @@
 		74B09EBF228D80960065D3AB /* User */ = {
 			isa = PBXGroup;
 			children = (
+				74FBF4A622CA3B2100E8B022 /* Model */,
 				74B09EC0228D80960065D3AB /* Controller */,
 				74B09EC4228D80960065D3AB /* View */,
 			);
@@ -411,9 +425,12 @@
 				742104DD228F06F200A23C83 /* YouLuViewController.swift */,
 				743212C5229514EC0076CCF3 /* AboutViewController.swift */,
 				748C77782299320600E1E97D /* CourseViewController.swift */,
-				748C777A2299329600E1E97D /* CourseBuyViewController.swift */,
 				748C777C229932C500E1E97D /* CourseShouCangViewController.swift */,
+				748C777A2299329600E1E97D /* CourseBuyViewController.swift */,
 				748C777E2299330100E1E97D /* CourseStudyViewController.swift */,
+				74FBF4A922CB247E00E8B022 /* SetNameController.swift */,
+				74FBF4AB22CB2D1100E8B022 /* SetIntroController.swift */,
+				74FBF4AF22CB47A000E8B022 /* CoursePlayerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -441,6 +458,15 @@
 			isa = PBXGroup;
 			children = (
 				74882ABA229E83FC00323AAA /* HomeArticlesModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		74FBF4A622CA3B2100E8B022 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				74FBF4A722CA3B5400E8B022 /* DangAnProfile.swift */,
+				74FBF4AD22CB3C9500E8B022 /* CourseData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -795,8 +821,10 @@
 				C453AF70229F7D2700369F10 /* DiyDishViewController.swift in Sources */,
 				C453AF51229F7CFA00369F10 /* PageContentView.swift in Sources */,
 				748C77772299037A00E1E97D /* MessageDoctorTableViewCell.swift in Sources */,
+				74FBF4A522CA346900E8B022 /* MessageFriendTableViewCell.swift in Sources */,
 				C453AF52229F7CFA00369F10 /* PhotoViewController.swift in Sources */,
 				C453AF68229F7D2700369F10 /* DayDishTableViewCell.swift in Sources */,
+				74FBF4AA22CB247E00E8B022 /* SetNameController.swift in Sources */,
 				C453AF83229F7D3C00369F10 /* MsgDetailViewController.swift in Sources */,
 				748C77732298FE9400E1E97D /* MessageDoctorViewController.swift in Sources */,
 				C453AF93229F7D4E00369F10 /* FormViewController.swift in Sources */,
@@ -826,6 +854,7 @@
 				74B09ED5228D80960065D3AB /* AppDelegate.swift in Sources */,
 				C453AF75229F7D2700369F10 /* DishDetailViewController.swift in Sources */,
 				74882ABB229E83FC00323AAA /* HomeArticlesModel.swift in Sources */,
+				74FBF4B022CB47A000E8B022 /* CoursePlayerViewController.swift in Sources */,
 				C453AF6F229F7D2700369F10 /* AddDishSubView.swift in Sources */,
 				C453AF94229F7D4E00369F10 /* DoctorViewController.swift in Sources */,
 				748C77792299320600E1E97D /* CourseViewController.swift in Sources */,
@@ -849,12 +878,15 @@
 				C453AF6B229F7D2700369F10 /* ScoreView.swift in Sources */,
 				748C777B2299329600E1E97D /* CourseBuyViewController.swift in Sources */,
 				748C77752298FEBE00E1E97D /* MessageFriendsViewConttroller.swift in Sources */,
+				74FBF4AE22CB3C9500E8B022 /* CourseData.swift in Sources */,
 				748C777D229932C500E1E97D /* CourseShouCangViewController.swift in Sources */,
 				C453AF85229F7D3C00369F10 /* MsgTableViewCell.swift in Sources */,
+				74FBF4A822CA3B5400E8B022 /* DangAnProfile.swift in Sources */,
 				74E1A60A229188F500B38CC2 /* YouLuTableViewCell.swift in Sources */,
 				C453AF73229F7D2700369F10 /* DiyFoodViewController.swift in Sources */,
 				74B09ECA228D80960065D3AB /* UserView.swift in Sources */,
 				C453AF81229F7D3C00369F10 /* FoodPreserveViewController.swift in Sources */,
+				74FBF4AC22CB2D1100E8B022 /* SetIntroController.swift in Sources */,
 				C453AF4F229F7CFA00369F10 /* SwiftPopupAnimation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

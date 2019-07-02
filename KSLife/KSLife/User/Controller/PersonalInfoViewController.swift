@@ -15,7 +15,7 @@ class PersonalInfoViewController: UIViewController {
 
     fileprivate let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "用户名"
+        label.text = "\(UserInfo.user.nickname)"
         label.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         label.textAlignment = .left
         label.textColor = .black
@@ -24,7 +24,7 @@ class PersonalInfoViewController: UIViewController {
 
     fileprivate let digitLabel: UILabel = {
         let label = UILabel()
-        label.text = "康食号："
+        label.text = "康食号：\(UserInfo.user.uid)"
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
         label.textAlignment = .left
         label.textColor = .black
@@ -33,11 +33,12 @@ class PersonalInfoViewController: UIViewController {
 
     fileprivate var imgView: UIImageView = {
         let imgView = UIImageView()
-        imgView.backgroundColor = .white
 //        imgView.layer.masksToBounds = true
 //        imgView.layer.cornerRadius = 120/2
         //imgView.image = UIImage.resizedImage(image: UIImage(named: "upic")!, scaledToWidth: 30.0)
-        imgView.image = UIImage(named: "upic")
+        imgView.sd_setImage(with: URL(string: "\(UserInfo.user.photo)"))
+        imgView.layer.masksToBounds = true
+        imgView.layer.cornerRadius = imgView.frame.width/2
         return imgView
     }()
 
