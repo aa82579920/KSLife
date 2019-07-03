@@ -5,7 +5,7 @@
 //  Created by 王春杉 on 2019/5/25.
 //  Copyright © 2019 王春杉. All rights reserved.
 //
-
+// 我的消息 食友页面
 import UIKit
 class MessageFriendsViewConttroller: MessageDoctorViewController {
     override func viewDidLoad() {
