@@ -28,16 +28,18 @@ class CourseBuyViewController: UIViewController {
 
 extension CourseBuyViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return CourseInfo.courseInfo.enroll.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return CourseTableViewCell(index: indexPath.row)
+        return CourseTableViewCell(index: indexPath.row, type: 0)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("cell被点击了")
+        let playVC = CoursePlayerViewController()
+        playVC.hidesBottomBarWhenPushed = true // 嵌套Navigatiion时隐藏tabBar
+        self.navigationController?.pushViewController(playVC, animated: true)
     }
 }

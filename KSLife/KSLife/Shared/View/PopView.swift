@@ -84,7 +84,7 @@ extension PopView {
         superView.addSubview(self)
         
         self.backgroundView.frame = CGRect(x: origin.x, y: origin.y + length, width: 0, height: 0)
-        let originX = origin.x - width / 2
+        let originX = origin.x - self.width / 2
         let originY = origin.y + length
         let width = self.width
         let height = self.height

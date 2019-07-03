@@ -33,11 +33,12 @@ class PersonalInfoViewController: UIViewController {
 
     fileprivate var imgView: UIImageView = {
         let imgView = UIImageView()
-        imgView.backgroundColor = .white
 //        imgView.layer.masksToBounds = true
 //        imgView.layer.cornerRadius = 120/2
         //imgView.image = UIImage.resizedImage(image: UIImage(named: "upic")!, scaledToWidth: 30.0)
         imgView.sd_setImage(with: URL(string: UserInfo.shared.user.photo), placeholderImage: UIImage(named: "upic"))
+        imgView.layer.masksToBounds = true
+        imgView.layer.cornerRadius = imgView.frame.width/2
         return imgView
     }()
 

@@ -4,28 +4,59 @@
 //
 //  Created by uareagay on 2019/4/23.
 //  Copyright © 2019 cn.edu.twt. All rights reserved.
-//
+
+//  档案页面
 
 import UIKit
+import Alamofire
+import  SwiftyJSON
 
 class PersonalRecordViewController: PhotoViewController {
 
     var tableView: UITableView!
-
+    var dangAnProfile = DangAnProfile()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "档案"
 
+        setProfile()
 
-        self.tableView = UITableView(frame: self.view.bounds, style: .grouped)
-
-        tableView.delegate = self
-        tableView.dataSource = self
-
-        self.view.addSubview(tableView)
-
-
-
+    }
+    // 获取档案信息
+    func setProfile() {
+        let loginUrl = "http://kangshilife.com/EGuider/user/getProfile?uid=\(UserInfo.shared.user.uid)"
+        Alamofire.request(loginUrl, method: .post).responseJSON { response in
+            switch response.result.isSuccess {
+            case true:
+                //把得到的JSON数据转为数组
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    if json["status"].int == 200 {
+                        print("asdasd=====")
+                        self.dangAnProfile.age = json["data"]["age"].int!
+                        self.dangAnProfile.bmi = json["data"]["bmi"].int!
+                        self.dangAnProfile.demand = json["data"]["demand"].string!
+                        self.dangAnProfile.height = json["data"]["height"].int!
+                        self.dangAnProfile.mobile = json["data"]["mobile"].string!
+                        self.dangAnProfile.nickname = json["data"]["nickname"].string!
+                        self.dangAnProfile.photo = json["data"]["photo"].string!
+                        self.dangAnProfile.physicalStatus = json["data"]["physicalStatus"].string!
+                        self.dangAnProfile.province_name = json["data"]["province_name"].string!
+                        self.dangAnProfile.sex = json["data"]["sex"].int!
+                        self.dangAnProfile.weight = json["data"]["weight"].int!
+                    }
+                    self.tableView = UITableView(frame: self.view.bounds, style: .grouped)
+                    
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    
+                    self.view.addSubview(self.tableView)
+                }
+            case false:
+                print(response.result.error)
+            }
+            
+        }
     }
 }
 
@@ -55,7 +86,7 @@ extension PersonalRecordViewController: UITableViewDataSource {
                     cell.textLabel?.textColor = .gray
                     cell.textLabel?.font = UIFont.systemFont(ofSize: 19.0, weight: UIFont.Weight.semibold)
                 } else {
-                    cell.textLabel?.text = "您的体型正常，处于均衡饮食期间"
+                    cell.textLabel?.text = "\(dangAnProfile.physicalStatus)"
                 }
             } else {
                 if indexPath.row == 0 {
@@ -63,7 +94,7 @@ extension PersonalRecordViewController: UITableViewDataSource {
                     cell.textLabel?.textColor = .gray
                     cell.textLabel?.font = UIFont.systemFont(ofSize: 19.0, weight: UIFont.Weight.semibold)
                 } else {
-                    cell.textLabel?.text = "均衡饮食"
+                    cell.textLabel?.text = "\(dangAnProfile.demand)"
                 }
             }
             return cell
@@ -140,16 +171,16 @@ extension PersonalRecordViewController: UITableViewDelegate {
         imgView.layer.borderWidth = 3.0
         imgView.layer.borderColor = UIColor.lightGray.cgColor
         imgView.layer.cornerRadius = 80/2
-        imgView.sd_setImage(with: URL(string: "\(UserInfo.shared.user.photo)"), placeholderImage: UIImage(named: "upic"))
+        imgView.sd_setImage(with: URL(string: "\(dangAnProfile.photo)"))
 
         let nickLabel = UILabel()
-        nickLabel.text = UserInfo.shared.user.nickname
+        nickLabel.text = "\(dangAnProfile.nickname)"
         nickLabel.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         nickLabel.textAlignment = .center
         nickLabel.textColor = .black
 
         let infoLabel = UILabel()
-        infoLabel.text = "男 20岁 天津"
+        infoLabel.text = "男 \(dangAnProfile.age)岁 \(dangAnProfile.province_name)"
         infoLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.regular)
         infoLabel.textAlignment = .center
         infoLabel.textColor = .gray
@@ -231,21 +262,19 @@ extension PersonalRecordViewController: UITableViewDelegate {
         }
 
         let weightDescLabel = UILabel()
-        weightDescLabel.text = "\(UserInfo.shared.user.weight)"
+        weightDescLabel.text = "\(dangAnProfile.weight)"
         weightDescLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
         weightDescLabel.textAlignment = .center
         weightDescLabel.textColor = .gray
 
         let heightDescLabel = UILabel()
-        heightDescLabel.text = "\(UserInfo.shared.user.height)"
+        heightDescLabel.text = "\(dangAnProfile.height)"
         heightDescLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
         heightDescLabel.textAlignment = .center
         heightDescLabel.textColor = .gray
 
         let BMIDescLabel = UILabel()
-        let bmi = Double(UserInfo.shared.user.weight) / Double(UserInfo.shared.user.height) / Double(UserInfo.shared.user.height) * 10000
-        var s = String(format:"%.1f",bmi)
-        BMIDescLabel.text = s
+        BMIDescLabel.text = "\(dangAnProfile.bmi)"
         BMIDescLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
         BMIDescLabel.textAlignment = .center
         BMIDescLabel.textColor = .gray

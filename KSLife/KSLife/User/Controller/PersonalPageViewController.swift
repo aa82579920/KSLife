@@ -118,6 +118,17 @@ extension PersonalPageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         print(indexPath)
+        if indexPath.section ==  0 {
+            
+        }else {
+            if indexPath.row == 0 {
+                let setNameVC = SetNameController()
+                self.navigationController?.pushViewController(setNameVC, animated: true)
+            }else if indexPath.row == 1 {
+                let setIntroVC = SetIntroController()
+                self.navigationController?.pushViewController(setIntroVC, animated: true)
+            }
+        }
     }
 
 }
