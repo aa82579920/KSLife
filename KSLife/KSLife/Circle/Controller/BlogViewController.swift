@@ -27,7 +27,7 @@ class BlogViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.showsVerticalScrollIndicator = false
-        tableView.register(MsgTableViewCell.self, forCellReuseIdentifier: msgTableViewCellID)
+        tableView.register(BlogTableViewCell.self, forCellReuseIdentifier: msgTableViewCellID)
         return tableView
     }()
     
@@ -48,7 +48,7 @@ extension BlogViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = msgTableView.dequeueReusableCell(withIdentifier: msgTableViewCellID, for: indexPath) as! MsgTableViewCell
+        let cell = msgTableView.dequeueReusableCell(withIdentifier: msgTableViewCellID, for: indexPath) as! BlogTableViewCell
         let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewClick))
         
         cell.avatarImage.addGestureRecognizer(singleTapGesture)

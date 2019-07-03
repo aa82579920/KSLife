@@ -1,5 +1,5 @@
 //
-//  MsgTableViewCell.swift
+//  BlogTableViewCell.swift
 //  KSLife
 //
 //  Created by 毛线 on 2019/5/12.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MsgTableViewCell: UITableViewCell {
+class BlogTableViewCell: UITableViewCell {
     
     var blog: Blog? {
         didSet {
@@ -153,7 +153,7 @@ class MsgTableViewCell: UITableViewCell {
 
 }
 
-extension MsgTableViewCell {
+extension BlogTableViewCell {
     
     @objc func toFav() {
         SolaSessionManager.solaSession(type: .post, url: RelationAPIs.beFriend,parameters: ["uid": UserInfo.shared.user.uid, "friend": blog!.userInfo.uid], success: { dict in

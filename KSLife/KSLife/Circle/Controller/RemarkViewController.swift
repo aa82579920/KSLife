@@ -39,7 +39,7 @@ class RemarkViewController: ViewController,  UITableViewDataSource, UITableViewD
     private lazy var tableView: UITableView = {
         [unowned self] in
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.rowHeight = 50
+        tableView.estimatedRowHeight = 110
         tableView.sectionFooterHeight = 20
         tableView.sectionHeaderHeight = 0
         tableView.delegate = self

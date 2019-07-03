@@ -69,6 +69,7 @@
 		C41CF4D122A7E6BC00F9AB7D /* RecomandDishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4D022A7E6BC00F9AB7D /* RecomandDishViewController.swift */; };
 		C41CF4D322A91F8B00F9AB7D /* PopBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4D222A91F8B00F9AB7D /* PopBaseView.swift */; };
 		C41CF4D522A9231800F9AB7D /* PopTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4D422A9231800F9AB7D /* PopTextView.swift */; };
+		C442987322CB3F1400764610 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C442987222CB3F1400764610 /* MessageTableViewCell.swift */; };
 		C453AF4A229F7CFA00369F10 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF3E229F7CF900369F10 /* common.swift */; };
 		C453AF4B229F7CFA00369F10 /* NavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF3F229F7CF900369F10 /* NavButton.swift */; };
 		C453AF4C229F7CFA00369F10 /* SwiftPopupPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF40229F7CF900369F10 /* SwiftPopupPresentationController.swift */; };
@@ -98,8 +99,8 @@
 		C453AF81229F7D3C00369F10 /* FoodPreserveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF79229F7D3C00369F10 /* FoodPreserveViewController.swift */; };
 		C453AF82229F7D3C00369F10 /* BlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7A229F7D3C00369F10 /* BlogViewController.swift */; };
 		C453AF83229F7D3C00369F10 /* DetailBlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7B229F7D3C00369F10 /* DetailBlogViewController.swift */; };
-		C453AF84229F7D3C00369F10 /* MsgDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7E229F7D3C00369F10 /* MsgDetailTableViewCell.swift */; };
-		C453AF85229F7D3C00369F10 /* MsgTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7F229F7D3C00369F10 /* MsgTableViewCell.swift */; };
+		C453AF84229F7D3C00369F10 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7E229F7D3C00369F10 /* CommentTableViewCell.swift */; };
+		C453AF85229F7D3C00369F10 /* BlogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF7F229F7D3C00369F10 /* BlogTableViewCell.swift */; };
 		C453AF92229F7D4E00369F10 /* MedicalServeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF88229F7D4E00369F10 /* MedicalServeViewController.swift */; };
 		C453AF93229F7D4E00369F10 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF89229F7D4E00369F10 /* FormViewController.swift */; };
 		C453AF94229F7D4E00369F10 /* DoctorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF8A229F7D4E00369F10 /* DoctorViewController.swift */; };
@@ -210,6 +211,7 @@
 		C41CF4D022A7E6BC00F9AB7D /* RecomandDishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomandDishViewController.swift; sourceTree = "<group>"; };
 		C41CF4D222A91F8B00F9AB7D /* PopBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopBaseView.swift; sourceTree = "<group>"; };
 		C41CF4D422A9231800F9AB7D /* PopTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PopTextView.swift; path = ../../Shared/View/PopTextView.swift; sourceTree = "<group>"; };
+		C442987222CB3F1400764610 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		C453AF3E229F7CF900369F10 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
 		C453AF3F229F7CF900369F10 /* NavButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
 		C453AF40229F7CF900369F10 /* SwiftPopupPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopupPresentationController.swift; sourceTree = "<group>"; };
@@ -239,8 +241,8 @@
 		C453AF79229F7D3C00369F10 /* FoodPreserveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodPreserveViewController.swift; sourceTree = "<group>"; };
 		C453AF7A229F7D3C00369F10 /* BlogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogViewController.swift; sourceTree = "<group>"; };
 		C453AF7B229F7D3C00369F10 /* DetailBlogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBlogViewController.swift; sourceTree = "<group>"; };
-		C453AF7E229F7D3C00369F10 /* MsgDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MsgDetailTableViewCell.swift; sourceTree = "<group>"; };
-		C453AF7F229F7D3C00369F10 /* MsgTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MsgTableViewCell.swift; sourceTree = "<group>"; };
+		C453AF7E229F7D3C00369F10 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		C453AF7F229F7D3C00369F10 /* BlogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogTableViewCell.swift; sourceTree = "<group>"; };
 		C453AF88229F7D4E00369F10 /* MedicalServeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalServeViewController.swift; sourceTree = "<group>"; };
 		C453AF89229F7D4E00369F10 /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		C453AF8A229F7D4E00369F10 /* DoctorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorViewController.swift; sourceTree = "<group>"; };
@@ -630,8 +632,9 @@
 		C453AF7D229F7D3C00369F10 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C453AF7E229F7D3C00369F10 /* MsgDetailTableViewCell.swift */,
-				C453AF7F229F7D3C00369F10 /* MsgTableViewCell.swift */,
+				C453AF7E229F7D3C00369F10 /* CommentTableViewCell.swift */,
+				C453AF7F229F7D3C00369F10 /* BlogTableViewCell.swift */,
+				C442987222CB3F1400764610 /* MessageTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -943,7 +946,7 @@
 				C41CF4B022A1BDBD00F9AB7D /* InsertLabel.swift in Sources */,
 				C45FAAB022A071FC0040FA3C /* DateSelectCollectionViewCell.swift in Sources */,
 				C41CF4AE22A1AAB900F9AB7D /* CircleTableViewCell.swift in Sources */,
-				C453AF84229F7D3C00369F10 /* MsgDetailTableViewCell.swift in Sources */,
+				C453AF84229F7D3C00369F10 /* CommentTableViewCell.swift in Sources */,
 				74B09ED4228D80960065D3AB /* MainTabBarController.swift in Sources */,
 				C41CF4CB22A6B00200F9AB7D /* UserAPIs.swift in Sources */,
 				C48CBC5022C9F5D500370115 /* MsgAPIs.swift in Sources */,
@@ -992,6 +995,7 @@
 				74882AB9229E77CA00323AAA /* UserModel.swift in Sources */,
 				C41CF4CD22A6B2CE00F9AB7D /* SignInViewController.swift in Sources */,
 				C41CF4B822A2107F00F9AB7D /* BlogAPIs.swift in Sources */,
+				C442987322CB3F1400764610 /* MessageTableViewCell.swift in Sources */,
 				C453AF6D229F7D2700369F10 /* AddDishViewController.swift in Sources */,
 				C453AF95229F7D4E00369F10 /* CheckBoxView.swift in Sources */,
 				C41CF4B222A1CA2700F9AB7D /* ActivityTableViewCell.swift in Sources */,
@@ -1004,7 +1008,7 @@
 				748C777B2299329600E1E97D /* CourseBuyViewController.swift in Sources */,
 				748C77752298FEBE00E1E97D /* MessageFriendsViewConttroller.swift in Sources */,
 				748C777D229932C500E1E97D /* CourseShouCangViewController.swift in Sources */,
-				C453AF85229F7D3C00369F10 /* MsgTableViewCell.swift in Sources */,
+				C453AF85229F7D3C00369F10 /* BlogTableViewCell.swift in Sources */,
 				C41CF4A622A0DB2300F9AB7D /* DoctorAPIs.swift in Sources */,
 				C41CF4B422A1D89D00F9AB7D /* FormTableViewCell.swift in Sources */,
 				74E1A60A229188F500B38CC2 /* YouLuTableViewCell.swift in Sources */,

@@ -14,6 +14,7 @@ class FoodPreserveViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        tabBarH = self.getTabbarHeight()
         setUpUI()
         remakeConstraints()
         self.navigationController!.delegate = self
@@ -44,6 +45,7 @@ class FoodPreserveViewController: UIViewController {
         setUpNav(animated)
     }
     
+    private var tabBarH: CGFloat = 83
     private var blogs: [Blog] = []
     
     private let imageH: CGFloat = screenH * 0.2
@@ -66,7 +68,7 @@ class FoodPreserveViewController: UIViewController {
     
     private lazy var pageContentView: PageContentView = {[weak self] in
         
-        let contentH = screenH - statusH - titleViewH  - imageH - self!.getTabbarHeight()
+        let contentH = screenH - statusH - titleViewH  - imageH - tabBarH
         let contentFrame = CGRect(x: 0, y: statusH + imageH + titleViewH, width: screenW, height: contentH)
         
         childVCs.append(BlogViewController())
