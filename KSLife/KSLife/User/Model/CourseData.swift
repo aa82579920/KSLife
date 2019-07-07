@@ -56,6 +56,7 @@ struct Enroll {
     var doctor: String!
     var content_file: String!
     var content_image: String!
+    var newContent : [String]!
     
     init() {
         self.lid = 0
@@ -69,6 +70,7 @@ struct Enroll {
         self.doctor = ""
         self.content_file = ""
         self.content_image = ""
+        self.newContent = []
     }
 }
 struct Follow {

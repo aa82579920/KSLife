@@ -38,7 +38,8 @@ extension CourseBuyViewController: UITableViewDelegate, UITableViewDataSource {
         return 100
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let playVC = CoursePlayerViewController()
+        CourseInfo.index = indexPath.row
+        let playVC = CoursePlayerController()
         playVC.hidesBottomBarWhenPushed = true // 嵌套Navigatiion时隐藏tabBar
         self.navigationController?.pushViewController(playVC, animated: true)
     }

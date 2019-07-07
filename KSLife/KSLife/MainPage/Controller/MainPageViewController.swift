@@ -94,7 +94,7 @@ class MainPageViewController: UIViewController {
     }
     // 主编推荐请求
     func setArticles() {
-        let loginUrl = "http://kangshilife.com/EGuider/home//getArticles?uid=\(UserInfo.shared.user.uid)"
+        let loginUrl = "http://kangshilife.com/EGuider/home/getArticles?uid=\(UserInfo.shared.user.uid)"
         Alamofire.request(loginUrl, method: .post).responseJSON { response in
             switch response.result.isSuccess {
             case true:

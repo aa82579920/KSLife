@@ -12,6 +12,7 @@ import Alamofire
 import SwiftyJSON
 struct CourseInfo {
     static var courseInfo: CourseData = CourseData()
+    static var index: Int = -1
 }
 class CourseViewController: WMPageController {
     override func viewDidLoad() {
@@ -30,7 +31,7 @@ class CourseViewController: WMPageController {
                 if let value = response.result.value {
                     let json = JSON(value)
                     if json["status"].int == 200 {
-                        
+                        CourseInfo.courseInfo = CourseData()
                         var enrollCounts = json["data"]["enroll"].count
                         for i in 0..<enrollCounts {
                             var newEnroll = Enroll()
@@ -45,6 +46,7 @@ class CourseViewController: WMPageController {
                             newEnroll.title = json["data"]["enroll"][i]["title"].string!
                             newEnroll.url = json["data"]["enroll"][i]["url"].string!
                             newEnroll.viewnum = json["data"]["enroll"][i]["viewnum"].int!
+                            newEnroll.newContent = self.stringFix(oldString: newEnroll.content_image)
                             CourseInfo.courseInfo.enroll.append(newEnroll)
                         }
                     }
@@ -62,7 +64,33 @@ class CourseViewController: WMPageController {
         
         
     }
-    
+    // MARK: - 处理Url字符串
+    func stringFix(oldString: String) -> [String] {
+        let substringArray: [Substring] = oldString.split(separator: ",")
+        let stringArrray: [String] = substringArray.compactMap{"\($0)"}
+        var newStringArray: [String] = []
+        var i = 0
+        for item in stringArrray {
+            if i == 0 {
+                let startIndex = item.index(item.startIndex, offsetBy: 2)
+                let endIndex = item.index(item.endIndex, offsetBy: -1)
+                let newString = String(item[startIndex..<endIndex])
+                newStringArray.append(newString)
+            }else if i == stringArrray.count-1 {
+                let startIndex = item.index(item.startIndex, offsetBy: 1)
+                let endIndex = item.index(item.endIndex, offsetBy: 0)
+                let newString = String(item[startIndex..<endIndex])
+                newStringArray.append(newString)
+            } else {
+                let startIndex = item.index(item.startIndex, offsetBy: 1)
+                let endIndex = item.index(item.endIndex, offsetBy: -1)
+                let newString = String(item[startIndex..<endIndex])
+                newStringArray.append(newString)
+            }
+            i += 1
+        }
+        return newStringArray
+    }
     func setPageView() {
         
         menuItemWidth = Device.width/3   // 每个 MenuItem 的宽度
