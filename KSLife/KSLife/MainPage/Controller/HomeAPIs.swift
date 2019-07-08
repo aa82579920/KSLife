@@ -10,4 +10,5 @@ import Foundation
 struct HomeAPIs {
     static let favorArticle = "/home/favorArticle"
     static let getRecomRecipes = "/home/getRecomRecipes"
+    static let getHomeInfo = "/home/getHomeInfo"
 }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -63,8 +62,8 @@
                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51p-Uh-7NN">
-                    <rect key="frame" x="340" y="25" width="30" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51p-Uh-7NN">
+                    <rect key="frame" x="321" y="20" width="38" height="40"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="h5f-bD-MU4"/>
@@ -72,22 +71,34 @@
                     </constraints>
                     <state key="normal" image="xiaoxi"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcN-E3-Q2D">
-                    <rect key="frame" x="307" y="28" width="25" height="25"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zyR-pa-xA1">
+                    <rect key="frame" x="339" y="20" width="20" height="20"/>
+                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
+                    </accessibility>
                     <constraints>
-                        <constraint firstAttribute="width" constant="25" id="hq9-iL-vL2"/>
-                        <constraint firstAttribute="height" constant="25" id="kFQ-XT-UgT"/>
+                        <constraint firstAttribute="width" constant="20" id="9Ch-3f-tvS"/>
+                        <constraint firstAttribute="height" constant="20" id="efy-0m-6FL"/>
                     </constraints>
-                    <state key="normal" image="naozhong"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <state key="normal" title="1">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="zyR-pa-xA1" firstAttribute="top" secondItem="51p-Uh-7NN" secondAttribute="top" id="141-G5-CXv"/>
+                <constraint firstItem="zyR-pa-xA1" firstAttribute="trailing" secondItem="51p-Uh-7NN" secondAttribute="trailing" id="35b-QE-4mX"/>
                 <constraint firstItem="chx-lB-gHV" firstAttribute="leading" secondItem="Yb1-6i-y2G" secondAttribute="trailing" id="8VI-P8-bIi"/>
                 <constraint firstAttribute="bottom" secondItem="Yb1-6i-y2G" secondAttribute="bottom" constant="30" id="FD5-Mf-xEi"/>
                 <constraint firstItem="aPg-sD-Ode" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KHl-Xd-0NT"/>
-                <constraint firstItem="kcN-E3-Q2D" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Lco-I5-wW2"/>
                 <constraint firstAttribute="bottom" secondItem="aPg-sD-Ode" secondAttribute="bottom" constant="15" id="OTd-9Z-Q5B"/>
                 <constraint firstItem="51p-Uh-7NN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="a47-4g-vo7"/>
                 <constraint firstItem="Yb1-6i-y2G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="aSc-8i-c5c"/>
@@ -96,24 +107,22 @@
                 <constraint firstItem="aPg-sD-Ode" firstAttribute="leading" secondItem="chx-lB-gHV" secondAttribute="trailing" constant="10" id="fFi-gL-OTy"/>
                 <constraint firstItem="chx-lB-gHV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="pRD-ZV-w0P"/>
                 <constraint firstAttribute="trailing" secondItem="aPg-sD-Ode" secondAttribute="trailing" constant="75" id="rJy-No-NCa"/>
-                <constraint firstItem="kcN-E3-Q2D" firstAttribute="leading" secondItem="aPg-sD-Ode" secondAttribute="trailing" constant="5" id="t5S-wn-p3a"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="helloLabel" destination="t9N-zr-M3h" id="iru-ZZ-XnO"/>
                 <outlet property="imgView" destination="7bD-fr-bBM" id="kHG-KP-MKp"/>
                 <outlet property="locationBtn" destination="chx-lB-gHV" id="ahl-Tv-wVk"/>
                 <outlet property="locationImgBtn" destination="Yb1-6i-y2G" id="Hx6-cu-gAU"/>
                 <outlet property="messageBtn" destination="51p-Uh-7NN" id="37l-Ms-TVu"/>
+                <outlet property="msgTag" destination="zyR-pa-xA1" id="ES0-Fx-AG4"/>
             </connections>
             <point key="canvasLocation" x="-735.50724637681162" y="-518.97321428571422"/>
         </view>
     </objects>
     <resources>
-        <image name="dituIc" width="24" height="24"/>
-        <image name="naozhong" width="90" height="90"/>
-        <image name="upic" width="92" height="92"/>
-        <image name="xiaoxi" width="90" height="90"/>
+        <image name="dituIc" width="12" height="12"/>
+        <image name="upic" width="46" height="46"/>
+        <image name="xiaoxi" width="45" height="45"/>
     </resources>
 </document>

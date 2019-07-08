@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MJRefresh
+
 class MessageDoctorViewController: UIViewController {
     
     var msgList: [Message] = [] {
@@ -24,6 +26,17 @@ class MessageDoctorViewController: UIViewController {
         getMessages(uid: UserInfo.shared.user.uid, type: 2, success: { list in
             self.msgList = list
         })
+        
+        let header = MJRefreshNormalHeader()
+        header.setRefreshingTarget(self, refreshingAction: Selector(("refresh")))
+        tableView.mj_header = header
+    }
+    
+    @objc func refresh() {
+        getMessages(uid: UserInfo.shared.user.uid, type: 2, success: { list in
+            self.msgList = list
+        })
+        self.tableView.mj_header.endRefreshing()
     }
     
     func setTableView() {
@@ -68,7 +81,11 @@ extension MessageDoctorViewController: UITableViewDelegate, UITableViewDataSourc
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MessageViewController()
+        vc.isFromList = true
         vc.hidesBottomBarWhenPushed = true
+        vc.mid = msgList[indexPath.row].mid
+        vc.recUid = (msgList[indexPath.row].sender.uid == UserInfo.shared.user.uid) ? msgList[indexPath.row].receiver!.uid : msgList[indexPath.row].sender.uid
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
 }

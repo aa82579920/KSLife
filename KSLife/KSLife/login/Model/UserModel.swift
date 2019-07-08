@@ -56,7 +56,7 @@ class UserInfo {
     
     func setUserInfo(mobile: String, password: String, success: @escaping () -> Void, failure: @escaping () -> Void) {
         let loginUrl = "http://kangshilife.com/EGuider/user/login"
-        Alamofire.request(loginUrl, method: .post, parameters: ["mobile": "13312135091", "password": "aa770119".MD5]).responseJSON { response in
+        Alamofire.request(loginUrl, method: .post, parameters: ["mobile": mobile, "password": password.MD5]).responseJSON { response in
             switch response.result.isSuccess {
             case true:
                 //把得到的JSON数据转为数组
@@ -89,3 +89,4 @@ class UserInfo {
         }
     }
 }
+

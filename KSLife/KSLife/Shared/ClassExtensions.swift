@@ -110,19 +110,24 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
         self.perform(#selector(dismiss), with: alert, afterDelay: 3.0)
     }
-
+    
     func tipWithLabel(msg: String, frame: CGRect = CGRect(x: screenW * 0.25, y: 500, width: screenW * 0.5, height: 30)) {
-       let tiplabel = UILabel(frame: frame)
+        let tiplabel = InsertLabel(frame: frame, textInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         tiplabel.text = msg
-        tiplabel.font = .systemFont(ofSize: 12)
+        tiplabel.font = .systemFont(ofSize: 13)
         tiplabel.numberOfLines = 0
         tiplabel.backgroundColor = .lightGray
         tiplabel.layer.cornerRadius = 5
         tiplabel.layer.masksToBounds = true
         tiplabel.textAlignment = .center
         tiplabel.textColor = .white
-        self.view.addSubview(tiplabel)
-        
+        view.addSubview(tiplabel)
+        tiplabel.snp.makeConstraints { make in
+            make.width.lessThanOrEqualTo(view).multipliedBy(0.9)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view).offset(screenH * 0.7)
+            make.height.equalTo(30)
+        }
         UIView.animate(withDuration: 3.0, animations: {
             tiplabel.alpha = CGFloat(0)
         }, completion: { _ in
@@ -132,11 +137,6 @@ extension UIViewController {
 }
 
 extension Date {
-    func getDay() -> Int{
-        let calendar = Calendar.current
-        let com = calendar.dateComponents([.year,.month,.day], from: self)
-        return com.day ?? 0
-    }
 }
 
 extension NSRegularExpression {
@@ -190,5 +190,27 @@ extension Date{
         let nowDate = NSDate()
         let interval = Int(nowDate.timeIntervalSince1970)
         return "\(interval)"
+    }
+    
+    static func compareCurrntTime(timeStamp: TimeInterval) ->String{
+        
+        let date = Date(timeIntervalSince1970: timeStamp)
+        var timeInterval = date.timeIntervalSinceNow
+        timeInterval = -timeInterval
+        var result: String
+        if timeStamp < 60 {
+            result = "刚刚"
+        } else if  Int(timeInterval/60) < 60 {
+            result = String.init(format:"%@分前",String(Int(timeInterval/60)))
+        } else if Int((timeInterval/60)/60) < 24 {
+            result = String.init(format:"%@时前",String(Int((timeInterval/60)/60)))
+        } else if Int((timeInterval/60)/60/24) < 30 {
+            result = String.init(format:"%@天前",String(Int((timeInterval/60)/60/24)))
+        } else {
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat="一个月前"
+            result = dateformatter.string(from: date as Date)
+        }
+        return result
     }
 }

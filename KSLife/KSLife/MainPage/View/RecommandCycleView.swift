@@ -2,7 +2,7 @@
 //  RecommandCycleView.swift
 //  KSLife
 //
-//  Created by 毛线 on 2019/6/25.
+//  Created by 毛线 on 2019/7/8.
 //  Copyright © 2019 王春杉. All rights reserved.
 //
 
@@ -18,6 +18,8 @@ class RecommandCycleView: CycleView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var names: [String] = []
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cycleCellID, for: indexPath)
         let imageView = UIImageView()
@@ -28,8 +30,10 @@ class RecommandCycleView: CycleView {
         }
         let label = UILabel()
         label.backgroundColor = UIColor(hex6: 0x787D7B, alpha: 0.5)
-        label.text = "两周内日打卡三道菜以上满七天可以获个性化食谱"
+        label.text = names[indexPath.row % names.count]
         label.textColor = .white
+        label.textAlignment = .center
+        cell.contentView.addSubview(label)
         label.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(cell.contentView)
             make.height.equalTo(cell.contentView).multipliedBy(0.2)

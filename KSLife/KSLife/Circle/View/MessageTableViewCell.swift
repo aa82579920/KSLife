@@ -10,6 +10,10 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
     
+    private var isComing = false
+    
+    var isShowTime = true
+    
     private lazy var avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "upic")
@@ -18,7 +22,7 @@ class MessageTableViewCell: UITableViewCell {
         imageView.layer.masksToBounds = true
         return imageView
     }()
-
+    
     private lazy var timeLabel: InsertLabel = {
         let label = InsertLabel(frame: .zero, textInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         label.text = "07-02 16:10:05"
@@ -29,7 +33,7 @@ class MessageTableViewCell: UITableViewCell {
         label.layer.masksToBounds = true
         return label
     }()
-
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "康食君"
@@ -37,7 +41,7 @@ class MessageTableViewCell: UITableViewCell {
         label.textColor = .lightGray
         return label
     }()
-
+    
     private lazy var detailLabel: UILabel = {
         let label = UILabel()
         label.text = "哈哈哈哈哈哈"
@@ -59,45 +63,67 @@ class MessageTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        self.backgroundColor = UIColor.init(hex6: 0xF5F6FA)
-        contentView.addSubview(avatarImage)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(timeLabel)
-        contentView.addSubview(textBackgroundImageView)
-        contentView.addSubview(detailLabel)
-        setUpWithModel()
+        self.backgroundColor = .clear
     }
     
-    func setUpWithModel() {
-        
-        textBackgroundImageView.backgroundColor = mainColor
-        timeLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(contentView).offset(10)
-            make.height.equalTo(20)
-//            make.width.lessThanOrEqualTo(150)
-            make.centerX.equalTo(contentView)
+    func setUpWithModel(message: Message) {
+        contentView.addSubview(avatarImage)
+        contentView.addSubview(nameLabel)
+        if isShowTime {
+            contentView.addSubview(timeLabel)
         }
+        contentView.addSubview(textBackgroundImageView)
+        contentView.addSubview(detailLabel)
+        
+        if isShowTime {
+            timeLabel.text = message.time
+            timeLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(contentView).offset(10)
+                make.height.equalTo(20)
+                make.centerX.equalTo(contentView)
+            }
+        }
+        avatarImage.sd_setImage(with: URL(string: message.sender.photo ?? ""), placeholderImage: UIImage(named: "upic"))
+        nameLabel.text = message.sender.nickname ?? "康食君"
+        detailLabel.text = message.content
+        isComing = message.sender.uid == UserInfo.shared.user.uid ? false : true
+        detailLabel.textColor = isComing ? .black : .white
+        textBackgroundImageView.backgroundColor = isComing ? .white : mainColor
         
         avatarImage.snp.makeConstraints { (make) in
+            if isComing {
+                make.left.equalTo(contentView).offset(10)
+            } else {
                 make.right.equalTo(contentView).offset(-10)
-            make.top.equalTo(timeLabel.snp.bottom).offset(10)
+            }
+            if isShowTime{ make.top.equalTo(timeLabel.snp.bottom).offset(10)
+            } else {
+                make.top.equalTo(contentView).offset(10)
+            }
             make.width.height.equalTo(45)
         }
         
         nameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(avatarImage)
             make.height.equalTo(15)
-            make.right.equalTo(avatarImage.snp.left).offset(-20)
-            
+            if isComing {
+                make.left.equalTo(avatarImage.snp.right).offset(20)
+            } else {
+                make.right.equalTo(avatarImage.snp.left).offset(-20)
+            }
         }
         
         detailLabel.snp.makeConstraints { (make) in
             make.top.equalTo(nameLabel.snp.bottom).offset(20)
             make.width.lessThanOrEqualTo(220)
             make.bottom.equalTo(contentView).offset(-20)
+            if isComing {
+                make.left.equalTo(avatarImage.snp.right).offset(20)
+            } else {
                 make.right.equalTo(avatarImage.snp.left).offset(-20)
+            }
         }
-
+        
         textBackgroundImageView.snp.makeConstraints { (make) in
             make.top.equalTo(detailLabel).offset(-10)
             make.left.equalTo(detailLabel).offset(-10)

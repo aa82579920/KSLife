@@ -51,7 +51,7 @@ class PostBlogViewController: PhotoViewController {
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 1.0
         return view
-    }()
+        }()
     
     private var photoImages: [UIImageView] = []
     private var deleteBtns: [UIButton] = []
@@ -126,9 +126,9 @@ extension PostBlogViewController {
     @objc func deleteImg(sender: UIButton) {
         images.remove(at: sender.tag)
         imageUrls.remove(at: sender.tag)
-//        photoImage.contentMode = .center
-//        photoImage.image = UIImage(named: "add")
-//        deleteBtn.isHidden = true
+        //        photoImage.contentMode = .center
+        //        photoImage.image = UIImage(named: "add")
+        //        deleteBtn.isHidden = true
     }
     
 }
@@ -292,7 +292,7 @@ extension PostBlogViewController {
         SolaSessionManager.solaSession(type: .post, url: BlogAPIs.postBlog, parameters: para, success: { dict in
             print(dict)
         }, failure: { _ in
-
+            
         })
     }
     func upload(image: UIImage, success: @escaping (String) -> Void){

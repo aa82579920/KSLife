@@ -9,7 +9,7 @@
 import UIKit
 
 class FriendViewController: ViewController,  UITableViewDataSource, UITableViewDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
@@ -20,7 +20,7 @@ class FriendViewController: ViewController,  UITableViewDataSource, UITableViewD
             self.remark = remark
             self.remarkLabel.text = remark
         })
-    } 
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         setUpNav(animated)
@@ -33,7 +33,7 @@ class FriendViewController: ViewController,  UITableViewDataSource, UITableViewD
             tableView.reloadData()
         }
     }
-
+    
     private lazy var remarkLabel: UILabel = {
         let label = UILabel()
         label.text = user?.nickname ?? ""
@@ -70,7 +70,7 @@ class FriendViewController: ViewController,  UITableViewDataSource, UITableViewD
         let cell = UITableViewCell()
         cell.backgroundColor = .white
         cell.selectionStyle = .none
-    
+        
         switch indexPath.section {
         case 0:
             let image = UIImageView()
@@ -176,6 +176,7 @@ class FriendViewController: ViewController,  UITableViewDataSource, UITableViewD
     @objc func sendMessage() {
         let vc = MessageViewController()
         vc.hidesBottomBarWhenPushed = true
+        vc.recUid = user!.uid
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

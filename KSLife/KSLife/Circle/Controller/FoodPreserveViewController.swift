@@ -18,27 +18,35 @@ class FoodPreserveViewController: UIViewController {
         setUpUI()
         remakeConstraints()
         self.navigationController!.delegate = self
-//        Alamofire.request("http://47.92.141.153/EGuider/blog/getAllBlogs", method: .post, parameters:["page": "0"], headers: [:]).responseJSON { response in
-//            switch response.result {
-//            case .success:
-//                print(response.result.value)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-        
-        getBlogs(uid: UserInfo.shared.user.uid, type: 100, page: 0, success: { list in
-            self.childVCs[0].blogs = list
-        })
-        getBlogs(uid: UserInfo.shared.user.uid, type: 101, page: 0, success: { list in
-            self.childVCs[1].blogs = list
-        })
-        getBlogs(uid: UserInfo.shared.user.uid, type: 102, page: 0, success: { list in
-            self.childVCs[2].blogs = list
-        })
+        //        Alamofire.request("http://47.92.141.153/EGuider/blog/getAllBlogs", method: .post, parameters:["page": "0"], headers: [:]).responseJSON { response in
+        //            switch response.result {
+        //            case .success:
+        //                print(response.result.value)
+        //            case .failure(let error):
+        //                print(error)
+        //            }
+        //        }
+        childVCs[0].type = 100
+        childVCs[1].type = 101
+        childVCs[2].type = 102
+        //        getBlogs(uid: UserInfo.shared.user.uid, type: 100, page: 0, success: { list in
+        //            self.childVCs[0].blogs = list
+        //        })
+        //        getBlogs(uid: UserInfo.shared.user.uid, type: 101, page: 0, success: { list in
+        //            self.childVCs[1].blogs = list
+        //        })
+        //        getBlogs(uid: UserInfo.shared.user.uid, type: 102, page: 0, success: { list in
+        //            self.childVCs[2].blogs = list
+        //        })
         getBanner(uid: UserInfo.shared.user.uid, success: { list in
             self.cycleView.imgUrls = list
         })
+        
+        //        for item in childVCs {
+        //            let header = MJRefreshNormalHeader()
+        //            header.setRefreshingTarget(self, refreshingAction: Selector(("getNe 000wBlog"))
+        //            item.msgTableView.mj_header = header
+        //        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,8 +60,8 @@ class FoodPreserveViewController: UIViewController {
     private let titleViewH: CGFloat = screenH * 0.06
     
     private lazy var cycleView: CycleView = {
-       let view = CycleView(frame: CGRect(x: 0, y: statusH, width: screenW, height: imageH))
-       return view
+        let view = CycleView(frame: CGRect(x: 0, y: statusH, width: screenW, height: imageH))
+        return view
     }()
     
     private lazy var pageTitleView: PageTitleView = {[weak self] in
@@ -62,7 +70,7 @@ class FoodPreserveViewController: UIViewController {
         let titleView = PageTitleView(frame: titleFrame, titles: titles, with: .flexibleType)
         titleView.delegate = self
         return titleView
-    }()
+        }()
     
     private var childVCs = [BlogViewController]()
     
@@ -119,7 +127,7 @@ extension FoodPreserveViewController {
     }
     
     func setUpNav(_ animated: Bool) {
-      
+        
     }
     
     func remakeConstraints() {
@@ -145,41 +153,6 @@ extension FoodPreserveViewController {
 // Mark: -NetWork
 extension FoodPreserveViewController {
     
-    func getBlogs(uid: String,  type: Int, page: Int, success: @escaping ([Blog]) -> Void) {
-//        let disGroup = DispatchGroup()
-        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBlogs, parameters: ["uid": uid, "page": "\(page)", "type": "\(type)"], success: { dict in
-            guard let data = dict["data"] as? [Any] else {
-                return
-            }
-            do {
-                let json = try JSONSerialization.data(withJSONObject: data, options: [])
-                let tBlog = try JSONDecoder().decode([Blog].self, from: json)
-                success(tBlog)
-            } catch {
-                print("cant show blog")
-            }
-        }, failure: { error in
-            print(error)
-        })
-    }
-    
-    func getBlog(bid: Int, success: @escaping (Blog) -> Void) {
-        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBlog, parameters: ["bid": "\(bid)"], success: { dict in
-            guard let data = dict["data"] as? [String: Any], let blog = data["blog"] else {
-                return
-            }
-            do {
-                let json = try JSONSerialization.data(withJSONObject: blog, options: [])
-                let tBlog = try JSONDecoder().decode(Blog.self, from: json)
-                success(tBlog)
-            } catch {
-                print("cant show blog")
-            }
-        }, failure: { _ in
-            
-        })
-    }
-    
     func getBanner(uid: String, success: @escaping ([String]) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBanner, parameters: ["uid": "\(uid)"], success: { dict in
             guard let data = dict["data"] as? [[String: Any]] else {
@@ -188,7 +161,7 @@ extension FoodPreserveViewController {
             var list: [String] = []
             for img in data {
                 if let url = img["imageUrl"] as? String {
-                     list.append(url)
+                    list.append(url)
                 }
             }
             success(list)
@@ -197,3 +170,4 @@ extension FoodPreserveViewController {
         })
     }
 }
+

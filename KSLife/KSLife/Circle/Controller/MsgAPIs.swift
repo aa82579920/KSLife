@@ -11,4 +11,6 @@ struct MsgAPIs {
     static let getMessages = "/msg/getMessages"
     static let getMessage = "/msg/getMessage"
     static let postMessage = "/msg/postMessage"
+    static let getNewReply = "/msg/getNewReply"
+    static let checkMessage = "/msg/checkMessage"
 }

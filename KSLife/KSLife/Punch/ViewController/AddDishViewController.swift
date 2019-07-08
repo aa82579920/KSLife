@@ -9,7 +9,7 @@
 import UIKit
 
 class AddDishViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -22,7 +22,7 @@ class AddDishViewController: UIViewController {
             self.subDishs = list
             self.subTableViews[0].reloadData()
         })
-//        remakeConstraints()
+        //        remakeConstraints()
     }
     
     private var subDishs: [SimpleDish] = []
@@ -57,15 +57,15 @@ class AddDishViewController: UIViewController {
         field.attributedPlaceholder = allStr
         
         return field
-    }()
+        }()
     
     private lazy var pageTitleView: PageTitleView = {[weak self] in
         let titles = ["最爱","菜肴","自定套餐","自定菜肴","自定食品"]
         let view = PageTitleView(frame: CGRect(x: 0, y: statusH + navigationBarH + searchViewH, width: screenW, height: titleViewH), titles: titles, with: .flexibleType)
         view.delegate = self
         return view
-    }()
-
+        }()
+    
     private lazy var pageContentView: PageContentView = { [weak self] in
         let contentH = screenH - statusH - navigationBarH - titleViewH - searchViewH
         let contentFrame = CGRect(x: 0, y: statusH + navigationBarH + titleViewH + searchViewH, width: screenW, height: contentH)
@@ -73,7 +73,7 @@ class AddDishViewController: UIViewController {
         let view = PageContentView(frame: contentFrame, views: views)
         view.delegate = self
         return view
-    }()
+        }()
     
     private lazy var subTableViews: [UITableView] = []
     
@@ -169,7 +169,7 @@ extension AddDishViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView {
         case subViewOne:
-             return simpleDishs.count == 0 ? 1 : simpleDishs.count
+            return simpleDishs.count == 0 ? 1 : simpleDishs.count
         default:
             return subDishs.count == 0 ? 1 : subDishs.count
         }
@@ -267,15 +267,27 @@ extension AddDishViewController {
     }
     
     @objc func addDiy(){
-        let vc = DiyDishViewController()
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+        DoctorAPIs.getRemainFlower(success: { num in
+            if num < 100 {
+                self.tipWithLabel(msg: "鲜花数量少于100， 不允许添加")
+            } else {
+                let vc = DiyDishViewController()
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        })
     }
     
     @objc func addDiyFood() {
-        let vc = DiyFoodViewController()
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+        DoctorAPIs.getRemainFlower(success: { num in
+            if num < 10 {
+                self.tipWithLabel(msg: "鲜花数量少于10， 不允许添加")
+            } else {
+                let vc = DiyFoodViewController()
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        })
     }
 }
 
@@ -297,30 +309,30 @@ extension AddDishViewController {
         }
     }
     
-//    func remakeConstraints() {
-//        let padding: CGFloat = 15
-//        let margin: CGFloat = 20
-//
-//        searchField.snp.makeConstraints { (make) -> Void in
-//            make.top.equalTo(view).offset(padding)
-//            make.left.equalTo(view).offset(padding)
-//            make.right.equalTo(view).offset(-padding)
-//        }
-//
-//        pageTitleView.snp.makeConstraints { (make) -> Void in
-//            make.top.equalTo(searchField.snp.bottom).offset(margin)
-//            make.left.equalTo(view)
-//            make.right.equalTo(view)
-//            make.height.equalTo(titleViewH)
-//        }
-//
-//        pageContentView.snp.makeConstraints { (make) -> Void in
-//            make.top.equalTo(pageTitleView.snp.bottom)
-//            make.left.equalTo(view)
-//            make.right.equalTo(view)
-//            make.bottom.equalTo(view)
-//        }
-//    }
+    //    func remakeConstraints() {
+    //        let padding: CGFloat = 15
+    //        let margin: CGFloat = 20
+    //
+    //        searchField.snp.makeConstraints { (make) -> Void in
+    //            make.top.equalTo(view).offset(padding)
+    //            make.left.equalTo(view).offset(padding)
+    //            make.right.equalTo(view).offset(-padding)
+    //        }
+    //
+    //        pageTitleView.snp.makeConstraints { (make) -> Void in
+    //            make.top.equalTo(searchField.snp.bottom).offset(margin)
+    //            make.left.equalTo(view)
+    //            make.right.equalTo(view)
+    //            make.height.equalTo(titleViewH)
+    //        }
+    //
+    //        pageContentView.snp.makeConstraints { (make) -> Void in
+    //            make.top.equalTo(pageTitleView.snp.bottom)
+    //            make.left.equalTo(view)
+    //            make.right.equalTo(view)
+    //            make.bottom.equalTo(view)
+    //        }
+    //    }
     
     func setUpNav() {
         let image = UIImage(named: "ic_back")
@@ -358,7 +370,7 @@ extension AddDishViewController {
             guard let data = dict["data"] as? [String: Any], let elements = data["elements"] as? String else {
                 return
             }
-           success(elements)
+            success(elements)
         }, failure: { _ in
             
         })

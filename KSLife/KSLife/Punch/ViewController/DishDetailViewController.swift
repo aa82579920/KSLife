@@ -19,22 +19,29 @@ class DishDetailViewController: UIViewController {
         actionSheet.showAnimation = ActionSheetShowAnimation()
         actionSheet.dismissAnimation = ActionSheetDismissAnimation()
         actionSheet.block = { weight in
-            FoodManager.shared.submitDiet(uid: UserInfo.shared.user.uid, kgId: self.dish!.kgID, amount: weight, unit: "克")
+            FoodManager.shared.submitDiet(uid: UserInfo.shared.user.uid, kgId: self.dish!.kgID, amount: weight, unit: "克", success: {
+                self.tipWithLabel(msg: "添加成功")
+            }, failure: { error in
+                self.tipWithLabel(msg: error)
+            })
             PunchViewController.needFresh = true
         }
     }
     
+    var isShowBtn: Bool = true
+    
     var dish: SimpleDish? {
         didSet {
             if let dish = dish {
-                 self.title = dish.name
+                self.title = dish.name
                 imageView.sd_setImage(with: URL(string: dish.icon), placeholderImage: UIImage(named: "noImg"))
-                getRecipeInfo(kgId: dish.kgID, type: 1, success: {
-                     self.tableView.reloadData()
+                getRecipeInfo(kgId: dish.kgID, type: dish.type, success: {
+                    self.tableView.reloadData()
                 })
             }
         }
     }
+    
     var element = "" {
         didSet {
             tableView.reloadData()
@@ -110,13 +117,14 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource{
             imageView.sizeToFit()
             imageView.snp.makeConstraints { (make) -> Void in
                 make.width.equalTo(screenW)
-//                make.height.equalTo(screenH * 0.4)
+                //                make.height.equalTo(screenH * 0.4)
                 make.edges.equalTo(cell.contentView)
             }
         case 1:
             let label = UILabel()
             cell.contentView.addSubview(label)
             label.text = element
+            label.textAlignment = .center
             label.font = UIFont.systemFont(ofSize: 13)
             label.textColor = .lightGray
             label.sizeToFit()
@@ -178,7 +186,9 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource{
 extension DishDetailViewController {
     func setUpUI() {
         view.addSubview(tableView)
-        view.addSubview(button)
+        if isShowBtn {
+            view.addSubview(button)
+        }
     }
     
     func setUpNav() {
@@ -192,17 +202,23 @@ extension DishDetailViewController {
         self.navigationController?.navigationBar.tintColor = .black
     }
     
-     func remakeConstraints() {
+    func remakeConstraints() {
         tableView.snp.makeConstraints { make in
             make.width.equalTo(screenW)
             make.top.equalTo(view)
-            make.bottom.equalTo(button.snp.top)
+            if isShowBtn {
+                make.bottom.equalTo(button.snp.top)
+            } else {
+                make.bottom.equalTo(view)
+            }
+            
         }
-        
-        button.snp.makeConstraints { make in
-            make.width.equalTo(screenW)
-            make.height.equalTo(50)
-            make.bottom.equalTo(view)
+        if isShowBtn {
+            button.snp.makeConstraints { make in
+                make.width.equalTo(screenW)
+                make.height.equalTo(50)
+                make.bottom.equalTo(view)
+            }
         }
     }
 }
@@ -212,7 +228,7 @@ extension DishDetailViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-     @objc func popUpView() {
+    @objc func popUpView() {
         actionSheet.show()
     }
 }

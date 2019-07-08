@@ -9,7 +9,7 @@
 import UIKit
 
 class PunchViewController: UIViewController {
-
+    
     static var needFresh = false
     static var dietIds = [String]()
     
@@ -24,6 +24,9 @@ class PunchViewController: UIViewController {
         getHomeInfo(uid: UserInfo.shared.user.uid, success: { dishs in
             self.dishs = dishs
             self.todayDishs = dishs
+        })
+        DoctorAPIs.getRemainFlower(success: { num in
+            self.scoreView.flower = num
         })
     }
     
@@ -66,7 +69,7 @@ class PunchViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.register(DayDishTableViewCell.self, forCellReuseIdentifier: dayDishTableViewCellID)
         return tableView
-    }()
+        }()
     
     private lazy var scoreView = ScoreView(frame: .zero)
     
@@ -105,7 +108,7 @@ extension PunchViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCell.EditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     }
-
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let change = UITableViewRowAction(style: .normal, title: "修改") {
             action, index in
@@ -114,7 +117,7 @@ extension PunchViewController: UITableViewDelegate, UITableViewDataSource {
             field.borderStyle = .roundedRect
             alert.view.addSubview(field)
             field.snp.makeConstraints { make in
-//                make.bottom.equalTo(alert.view).offset(-padding)
+                //                make.bottom.equalTo(alert.view).offset(-padding)
                 make.bottom.equalTo(alert.view).offset(-50)
                 make.height.equalTo(35)
                 make.width.equalTo(alert.view).multipliedBy(0.9)
@@ -197,7 +200,10 @@ extension PunchViewController {
                 vc.dishs = dishs
             })
         default:
-            break
+            let vc = SetMealsViewController()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+            return
         }
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
@@ -222,7 +228,7 @@ extension PunchViewController {
             btns.append(btn)
             view.addSubview(btn)
         }
-
+        
         for i in 0..<3 {
             let dayBtn = UIButton(frame: CGRect.zero)
             dayBtn.tag = i
@@ -307,7 +313,7 @@ extension PunchViewController {
             make.left.equalTo(dayBtns[1].snp.right)
         }
     }
-        
+    
 }
 
 extension UIAlertController {

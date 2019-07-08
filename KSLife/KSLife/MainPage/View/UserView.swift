@@ -21,12 +21,13 @@ class UserView: UIView {
     
     @IBOutlet weak var messageBtn: UIButton!
 
+    @IBOutlet weak var msgTag: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 
         helloLabel.text = "亲，您好！"
-
-
+        msgTag.isHidden = true
     }
     /*
     // Only override draw() if you perform custom drawing.
@@ -35,5 +36,4 @@ class UserView: UIView {
         // Drawing code
     }
     */
-
 }

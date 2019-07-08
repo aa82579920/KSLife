@@ -9,7 +9,7 @@
 import UIKit
 
 class SignInViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
@@ -22,8 +22,39 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
         setUpNav(animated)
     }
     
+    private var timer: Timer?
+    
+    private var isCounting: Bool = false {
+        willSet(newValue) {
+            if newValue {
+                timer = Timer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+                RunLoop.main.add(timer!, forMode: .common)
+            } else {
+                timer?.invalidate()
+                timer = nil
+            }
+        }
+    }
+    
+    private var remainingSeconds: Int = 0 {
+        willSet(newSeconds) {
+            let seconds = newSeconds%60
+            codeBtn.setTitle(String(format:
+                "(%02d)重新发送", seconds), for: .normal)
+        }
+    }
+    
     private let placeText = ["手机号：", "验证码：", "密码："]
     private var fields: [UITextField] = []
+    
+    private lazy var codeBtn: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = mainColor
+        button.setTitle("获取验证码", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(getCode), for: .touchUpInside)
+        return button
+    }()
     
     private lazy var tableView: UITableView = {
         [unowned self] in
@@ -74,16 +105,11 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
                     make.left.equalTo(cell.contentView).offset(5)
                     make.right.top.bottom.equalTo(cell.contentView)
                 }
+                field.delegate = self
                 fields.append(field)
                 if indexPath.row == 2 {
-                    let button = UIButton()
-                    button.backgroundColor = mainColor
-                    button.setTitle("获取验证码", for: .normal)
-                    button.setTitleColor(.white, for: .normal)
-                    button.addTarget(self, action: #selector(getCode), for: .touchUpInside)
-                    
-                    cell.contentView.addSubview(button)
-                    button.snp.makeConstraints {make in
+                    cell.contentView.addSubview(codeBtn)
+                    codeBtn.snp.makeConstraints {make in
                         make.right.bottom.equalTo(cell.contentView).offset(-5)
                         make.top.equalTo(cell.contentView).offset(5)
                         make.width.equalTo(cell.contentView).multipliedBy(0.3)
@@ -95,7 +121,7 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
             button.backgroundColor = mainColor
             button.setTitle("下一步", for: .normal)
             cell.contentView.addSubview(button)
-            button.addTarget(self, action: #selector(getter: next), for: .touchUpInside)
+            button.addTarget(self, action: #selector(signIn), for: .touchUpInside)
             button.snp.makeConstraints {make in
                 make.left.right.centerY.equalToSuperview()
             }
@@ -124,8 +150,8 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
         
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(color: mainColor), for: .default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.isTranslucent = true
+        //        self.navigationController?.navigationBar.shadowImage = UIImage()
+        //        self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.tintColor = .black
     }
     
@@ -134,13 +160,13 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     @objc func getCode() {
-        guard let mobile = fields[0].text, let code = fields[1].text, let pass = fields[2].text else {
+        guard let mobile = fields[0].text else {
             return
         }
         var msg: String?
         if mobile.count == 0 {
             msg = "手机号不能为空"
-        } else if !NSRegularExpression("^((13[0-9])|(15[^4,\\D]) |(17[0,0-9])|(18[0,0-9]))\\d{8}$").matches(pass) {
+        } else if !NSRegularExpression("^((13[0-9])|(15[^4,\\D]) |(17[0,0-9])|(18[0,0-9]))\\d{8}$").matches(mobile) {
             msg = "手机号输入错误"
         } else {
             SolaSessionManager.solaSession(type: .post, url: UserAPIs.checkDuplicate, parameters: ["mobile": mobile], success: { dict in
@@ -148,22 +174,60 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
                     return
                 }
                 if duplicate == 0 {
+                    self.remainingSeconds = 59
+                    self.isCounting = !self.isCounting
                     SolaSessionManager.solaSession(type: .post, url: UserAPIs.getMobileVerifyCode, parameters: ["mobile": mobile], success: { _ in
                         msg = "已发送"
+                        self.tipWithLabel(msg: "已发送")
                     }, failure: { _ in
                         
                     })
                 } else {
                     msg = "手机号已注册"
+                    self.tipWithLabel(msg: "手机号已注册")
                 }
-            }, failure: { _ in
-                
+            }, failure: { error in
+                print(error)
             })
         }
         tipWithLabel(msg: msg ?? "")
     }
     
-    @objc func next() {
+    @objc func signIn() {
+        guard let mobile = fields[0].text, let code = fields[1].text, let pass = fields[2].text else {
+            return
+        }
         
+        SolaSessionManager.solaSession(type: .post, url: UserAPIs.register, parameters: ["mobile": mobile, "code": code, "password": pass.MD5, "role": "1"], success: { dict in
+            self.tipWithLabel(msg: "注册成功")
+        }, failure: { _ in
+            
+        })
+    }
+    
+    @objc func updateTimer(timer: Timer) {
+        if remainingSeconds > 0 {
+            remainingSeconds -= 1
+        }
+        
+        if remainingSeconds == 0 {
+            codeBtn.setTitle("获取验证码", for: .normal)
+            codeBtn.isEnabled = true
+            isCounting = !isCounting
+            timer.invalidate()
+        }
+    }
+}
+
+extension SignInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        for field in fields {
+            field.resignFirstResponder()
+        }
     }
 }

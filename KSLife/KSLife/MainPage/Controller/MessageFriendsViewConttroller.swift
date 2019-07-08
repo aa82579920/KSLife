@@ -14,4 +14,12 @@ class MessageFriendsViewConttroller: MessageDoctorViewController {
             self.msgList = list
         })
     }
+    
+    @objc override func refresh() {
+        getMessages(uid: UserInfo.shared.user.uid, type: 1, success: { list in
+            self.msgList = list
+        })
+        self.tableView.mj_header.endRefreshing()
+    }
 }
+

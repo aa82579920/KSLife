@@ -20,16 +20,25 @@ class ArticleViewController: UIViewController {
                 favButton.setTitle("\(article.favor)", for: .normal)
                 favButton.setTitle("\(article.favor + 1)", for: .selected)
                 reButton.setTitle("\(article.comment)", for: .normal)
+                BlogAPIs.getComments(bid: article.id, type: 1, success: { list in
+                    self.comments = list
+                })
                 tableView.reloadData()
             }
         }
     }
-
+    
+    private var comments: [Comment] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
         view.addSubview(replayView)
-
+        
         replayView.addSubview(textField)
         replayView.addSubview(favButton)
         replayView.addSubview(reButton)
@@ -103,7 +112,7 @@ extension ArticleViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
+        let cell = UITableViewCell()
         if indexPath.section == 0 {
             cell.contentView.addSubview(imageView)
             imageView.snp.makeConstraints {make in
@@ -113,19 +122,20 @@ extension ArticleViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 scale = image.size.height / image.size.width
                 make.edges.equalTo(cell.contentView)
-               make.height.equalTo(imageView.snp.width).multipliedBy(scale)
+                make.height.equalTo(imageView.snp.width).multipliedBy(scale)
             }
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: commentTableViewCellID, for: indexPath)
-            
+            let cell = tableView.dequeueReusableCell(withIdentifier: commentTableViewCellID, for: indexPath) as! CommentTableViewCell
+            cell.comment = comments[indexPath.row]
             cell.backgroundColor = UIColor.white
             cell.selectionStyle = .none
+            return cell
         }
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return article!.comment + 1
+        return comments.count + 1
     }
 }
 
@@ -201,6 +211,20 @@ extension ArticleViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text {
+            BlogAPIs.postComment(bid: article!.id, uid: UserInfo.shared.user.uid, comment: text, success: { msg in
+                if msg == "OK" {
+                    textField.text = ""
+                    print(self.comments.count)
+                    self.tipWithMessage(msg: "评论成功")
+                    BlogAPIs.getComments(bid: self.article!.id, success: { comments in
+                        self.comments = comments
+                        self.tableView.reloadData()
+                    })
+                }
+                
+            })
+        }
         textField.resignFirstResponder()
         return true
     }

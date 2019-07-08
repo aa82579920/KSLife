@@ -29,11 +29,13 @@ struct Dish: Codable {
 struct SimpleDish: Codable {
     let kgID, name: String
     let icon: String
-//    let type: Int
+    let groupName: String?
+    let type: Int
+    //    let type: Int
     
     enum CodingKeys: String, CodingKey {
         case kgID = "kgId"
-        case name, icon
+        case name, icon, groupName, type
     }
 }
 
@@ -45,4 +47,13 @@ struct Nutrient: Codable {
 struct DishDiet {
     let kgID, amount, unit:String
     let type: Int
+}
+
+struct SetMeal: Codable {
+    let id: Int
+    let hid: Int
+    let setName: String
+    let intro: String
+    let icon: String
+    let status: Int
 }

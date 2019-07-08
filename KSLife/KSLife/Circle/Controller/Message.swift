@@ -10,7 +10,8 @@ import Foundation
 
 struct Message: Codable {
     let mid: Int
-    let sender, receiver: Receiver
+    let sender: Receiver
+    let receiver: Receiver?
     let content, time: String
     let number: Int
 }

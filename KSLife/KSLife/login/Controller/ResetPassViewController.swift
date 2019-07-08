@@ -9,7 +9,7 @@
 import UIKit
 
 class ResetPassViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
@@ -22,9 +22,40 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
         setUpNav(animated)
     }
     
+    private var timer: Timer?
+    
+    private var isCounting: Bool = false {
+        willSet(newValue) {
+            if newValue {
+                timer = Timer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+                RunLoop.main.add(timer!, forMode: .common)
+            } else {
+                timer?.invalidate()
+                timer = nil
+            }
+        }
+    }
+    
+    private var remainingSeconds: Int = 0 {
+        willSet(newSeconds) {
+            let seconds = newSeconds%60
+            codeBtn.setTitle(String(format:
+                "(%02d)重新发送", seconds), for: .normal)
+        }
+    }
+    
     private var fields: [UITextField] = []
     private let titles = ["手机号：", "验证码：", "新密码：", "确认密码："]
     private let placeText = ["请输入注册的手机号", "请输入验证码", "密码", "确认密码"]
+    
+    private lazy var codeBtn: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = mainColor
+        button.setTitle("获取验证码", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(getCode), for: .touchUpInside)
+        return button
+    }()
     
     private lazy var tableView: UITableView = {
         [unowned self] in
@@ -60,6 +91,9 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
             let field = UITextField()
             field.placeholder = placeText[indexPath.row]
             field.backgroundColor = .white
+            if indexPath.row != 3 {
+                field.returnKeyType = .next
+            }
             fields.append(field)
             cell.contentView.addSubview(field)
             label.snp.makeConstraints {make in
@@ -72,17 +106,11 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
                 make.left.equalTo(label.snp.right)
             }
             if indexPath.row == 1 {
-                let button = UIButton()
-                button.backgroundColor = mainColor
-                button.setTitle("获取验证码", for: .normal)
-                button.setTitleColor(.white, for: .normal)
-                button.addTarget(self, action: #selector(getCode), for: .touchUpInside)
-                
-                cell.contentView.addSubview(button)
-                button.snp.makeConstraints {make in
-                        make.right.bottom.equalTo(cell.contentView).offset(-5)
+                cell.contentView.addSubview(codeBtn)
+                codeBtn.snp.makeConstraints {make in
+                    make.right.bottom.equalTo(cell.contentView).offset(-5)
                     make.top.equalTo(cell.contentView).offset(5)
-                        make.width.equalTo(cell.contentView).multipliedBy(0.3)
+                    make.width.equalTo(cell.contentView).multipliedBy(0.3)
                 }
             }
         } else {
@@ -115,6 +143,19 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc func updateTimer(timer: Timer) {
+        if remainingSeconds > 0 {
+            remainingSeconds -= 1
+        }
+        
+        if remainingSeconds == 0 {
+            codeBtn.setTitle("获取验证码", for: .normal)
+            codeBtn.isEnabled = true
+            isCounting = !isCounting
+            timer.invalidate()
+        }
+    }
+    
     @objc func getCode() {
         guard let mobile = fields[0].text else {
             tipWithLabel(msg: "手机号不能为空")
@@ -126,8 +167,10 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
         } else if !regex.matches(mobile) {
             tipWithLabel(msg: "手机号输入错误")
         } else {
+            remainingSeconds = 59
+            isCounting = !isCounting
             SolaSessionManager.solaSession(type: .post, url: UserAPIs.getMobileVerifyCode, parameters: ["mobile": mobile], success: { _ in
-                self.tipWithMessage(msg: "已发送")
+                self.tipWithLabel(msg: "已发送")
             }, failure: { _ in
                 
             })
@@ -158,5 +201,13 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         tipWithLabel(msg: msg!)
+    }
+}
+
+extension ResetPassViewController {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        for textField in fields {
+            textField.resignFirstResponder()
+        }
     }
 }

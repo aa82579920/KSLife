@@ -7,16 +7,19 @@
 //
 
 import UIKit
+import MJRefresh
 
 class BlogViewController: UIViewController {
     
     private let itemH: CGFloat = 110
     private let msgTableViewCellID = "msgTableViewCellID"
+    var type: Int?
     var blogs = [Blog]() {
         didSet {
             msgTableView.reloadData()
         }
     }
+    private var page: Int = 0
     
     lazy var msgTableView: UITableView = {[unowned self] in
         let tableView = UITableView(frame: self.view.bounds, style: .grouped)
@@ -29,11 +32,21 @@ class BlogViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.register(BlogTableViewCell.self, forCellReuseIdentifier: msgTableViewCellID)
         return tableView
-    }()
+        }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(msgTableView)
+        getBlogs(uid: UserInfo.shared.user.uid, type: type!, page: 0, success: { list in
+            self.blogs = list
+        })
+        let header = MJRefreshNormalHeader()
+        header.setRefreshingTarget(self, refreshingAction: Selector(("refresh")))
+        msgTableView.mj_header = header
+        
+        let footer = MJRefreshFooter()
+        footer.setRefreshingTarget(self, refreshingAction: Selector(("getMore")))
+        msgTableView.mj_footer = footer
     }
     
 }
@@ -81,5 +94,60 @@ extension BlogViewController: UITableViewDelegate, UITableViewDataSource {
         }
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func refresh() {
+        page = 0
+        getBlogs(uid: UserInfo.shared.user.uid, type: type!, page: 0, success: { list in
+            self.blogs = list
+        })
+        self.msgTableView.mj_header.endRefreshing()
+    }
+    
+    @objc func getMore() {
+        page += 1
+        getBlogs(uid: UserInfo.shared.user.uid, type: type!, page: page, success: { list in
+            if list.count >= 0 {
+                self.blogs += list
+            }
+        })
+        self.msgTableView.mj_footer.endRefreshing()
+    }
+}
+
+extension BlogViewController {
+    func getBlogs(uid: String,  type: Int, page: Int, success: @escaping ([Blog]) -> Void) {
+        //        let disGroup = DispatchGroup()
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBlogs, parameters: ["uid": uid, "page": "\(page)", "type": "\(type)"], success: { dict in
+            guard let data = dict["data"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                let tBlog = try JSONDecoder().decode([Blog].self, from: json)
+                success(tBlog)
+            } catch {
+                print("cant show blog")
+            }
+        }, failure: { error in
+            print(error)
+        })
+    }
+    
+    func getBlog(bid: Int, success: @escaping (Blog) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBlog, parameters: ["bid": "\(bid)"], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let blog = data["blog"] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: blog, options: [])
+                let tBlog = try JSONDecoder().decode(Blog.self, from: json)
+                success(tBlog)
+            } catch {
+                print("cant show blog")
+            }
+        }, failure: { _ in
+            
+        })
     }
 }

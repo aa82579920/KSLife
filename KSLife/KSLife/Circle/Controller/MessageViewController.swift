@@ -7,19 +7,66 @@
 //
 
 import UIKit
+import MJRefresh
 
 class MessageViewController: ViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        var isTrues = true;
+        if isFromList {
+            isTrues = (recUid == nil || mid == nil) ? false : true;
+        } else {
+            isTrues = recUid == nil ? false : true;
+        }
+        
+        if !isFromList {
+            checkMessage(uid: UserInfo.shared.user.uid, recUid: recUid!, success: { list in
+                self.mid = list[0].mid
+                self.getMessage(mid: self.mid!, success: { list in
+                    self.messages = list.reversed()
+                })
+            })
+        } else {
+            getMessage(mid: mid!, success: { list in
+                self.messages = list.reversed()
+            })
+        }
+        addTimer()
+        let header = MJRefreshNormalHeader()
+        header.setRefreshingTarget(self, refreshingAction: Selector(("getHistoryMsg")))
+        tableView.mj_header = header
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         setUpNav(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        removeTimer()
+    }
+    
+    var replyTimer : Timer?
+    
+    var isFromList = false
+    
+    var mid: Int?
+    
+    var recUid: String?
+    
+    private var page: Int = 0
+    
+    private var messages: [Message] = [] {
+        didSet {
+            tableView.reloadData()
+            if page == 0 {
+                tableView.scrollToRow(at: IndexPath(row: tableView.numberOfRows(inSection: 0) - 1, section: 0), at: .bottom, animated: false)
+            }
+        }
     }
     
     private let sendViewH: CGFloat = 60
@@ -63,18 +110,23 @@ class MessageViewController: ViewController {
         view.backgroundColor = UIColor.white
         return view
     }()
-
+    
 }
 
 extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MessageTableViewCell(style: .default, reuseIdentifier: messageTableViewCellID)
-        cell.setUpWithModel()
+        if indexPath.row > 0 {
+            if (messages[indexPath.row].time.toDate()!.date.timeIntervalSince1970 - messages[indexPath.row - 1].time.toDate()!.date.timeIntervalSince1970) < 60 {
+                cell.isShowTime = false
+            }
+        }
+        cell.setUpWithModel(message: messages[indexPath.row])
         return cell
     }
 }
@@ -144,7 +196,7 @@ extension MessageViewController {
     func setUpUI(){
         sendView.addSubview(textField)
         sendView.addSubview(sendButton)
-    
+        
         view.addSubview(tableView)
         view.addSubview(sendView)
         
@@ -200,7 +252,115 @@ extension MessageViewController {
 }
 
 extension MessageViewController {
-    @objc func send() {
+    
+    private func addTimer(){
+        replyTimer = Timer(timeInterval: 5, target: self, selector: #selector(getReply), userInfo: nil, repeats: true)
+        RunLoop.main.add(replyTimer!, forMode: .common)
+    }
+    private func removeTimer(){
+        replyTimer?.invalidate()
+        replyTimer = nil
+    }
+    
+    @objc func getReply() {
+        let zone = NSTimeZone.local
+        let interval = zone.secondsFromGMT()
         
+        getNewReply(mid: mid!, sendUid: recUid!, beginTime: Date(timeIntervalSinceNow: -5).addingTimeInterval(TimeInterval(interval)).toFormat("yyyy-MM-dd HH:mm:ss", locale: Locale(identifier: "zh_CN")), success: { list in
+            if list.count > 0 {
+                self.messages += list
+            }
+        })
+    }
+    
+    @objc func send() {
+        if let content = textField.text {
+            let recUid = messages[0].sender.uid == UserInfo.shared.user.uid ? messages[0].receiver!.uid : messages[0].sender.uid
+            postMessage(sendUid: UserInfo.shared.user.uid, recUid: recUid, content: content, success: { msg in
+                if msg == "OK" {
+                    self.getMessage(mid: self.mid!, success: { list in
+                        self.messages = list.reversed()
+                    })
+                    self.textField.text = ""
+                } else {
+                    print(msg)
+                    self.tipWithLabel(msg: "消息发送失败")
+                }
+            })
+        }
+    }
+    
+    @objc func getHistoryMsg() {
+        page += 1
+        getMessage(mid: mid!, page: page, success: { list in
+            self.messages = list.reversed() + self.messages
+        })
+        self.tableView.mj_header.endRefreshing()
+    }
+    
+    func checkMessage(uid: String, recUid: String, success: @escaping ([Message]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: MsgAPIs.checkMessage, parameters: ["uid": uid, "recUid": recUid], success: { dict in
+            guard let data = dict["data"] as? [Any] else {
+                return
+            }
+            if data.count > 0 {
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                    let list = try JSONDecoder().decode([Message].self, from: json)
+                    success(list)
+                } catch {
+                    print("error")
+                }
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getMessage(mid: Int, page: Int = 0, success: @escaping ([Message]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: MsgAPIs.getMessage, parameters: ["mid": "\(mid)", "page": "\(page)"], success: { dict in
+            guard let data = dict["data"] as? [Any] else {
+                return
+            }
+            if data.count > 0 {
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                    let list = try JSONDecoder().decode([Message].self, from: json)
+                    success(list)
+                } catch {
+                    print("error")
+                }
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func postMessage(sendUid: String, recUid: String, content: String, time: String = "", success: @escaping (String) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: MsgAPIs.postMessage, parameters: ["sendUid": sendUid, "recUid": recUid, "content": content], success: { dict in
+            guard let msg = dict["msg"] as? String else {
+                return
+            }
+            success(msg)
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getNewReply(mid: Int, sendUid: String, beginTime: String, success: @escaping ([Message]) -> Void) {
+        SolaSessionManager.solaSession(type: .post, url: MsgAPIs.getNewReply, parameters: ["mid": "\(mid)", "sendUid": sendUid, "beginTime": beginTime], success: { dict in
+            guard let data = dict["data"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                let list = try JSONDecoder().decode([Message].self, from: json)
+                success(list)
+            } catch {
+                print("error")
+            }
+        }, failure: { _ in
+            
+        })
     }
 }

@@ -15,7 +15,13 @@ class ScoreView: UIView {
             scoreLabel.text = score
         }
     }
-
+    
+    var flower: Int = 0 {
+        didSet {
+            tipLabel.text = "每天录入不少于三条 奖励1鲜花，每日限一次奖励 \n 现有\(flower)朵鲜花"
+        }
+    }
+    
     private lazy var titileLabel: UILabel = {
         let label = UILabel()
         label.text = "*今日膳食得分*"
@@ -35,9 +41,12 @@ class ScoreView: UIView {
     
     private lazy var tipLabel: UILabel = {
         let label = UILabel()
-        label.text = "每天录入不少于三条 奖励1鲜花，每日限一次奖励"
+        label.text = "每天录入不少于三条 奖励1鲜花，每日限一次奖励 \n 现有\(flower)朵鲜花"
+        label.numberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = mainColor
+        label.textAlignment = .center
         return label
     }()
     
@@ -103,5 +112,5 @@ class ScoreView: UIView {
             make.width.equalTo(60)
         }
     }
-
+    
 }

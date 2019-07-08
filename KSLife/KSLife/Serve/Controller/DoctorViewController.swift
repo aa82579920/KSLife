@@ -37,6 +37,7 @@ class DoctorViewController: UIViewController {
                 getSurveyList(uid: doctor.uid, success: { survey in
                     self.surveyList = survey
                 })
+                
                 self.tableView.reloadData()
             }
         }
@@ -187,9 +188,9 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
                     self.shouldLoadSections.append(n)
                 }
                 tableView.reloadData()
-//                tableView.scrollToRow(at: IndexPath(row: 0, section: indexPath.section), at: .top, animated: true)
+                //                tableView.scrollToRow(at: IndexPath(row: 0, section: indexPath.section), at: .top, animated: true)
             } else {
-
+                
             }
         }
     }
@@ -203,22 +204,38 @@ extension DoctorViewController {
     
     func setUpNav(_ animated: Bool) {
         
-            let image = UIImage(named: "ic_back")
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(close))
- 
-       
-       self.title = "医生详情"
+        let image = UIImage(named: "ic_back")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(close))
+        
+        
+        self.title = "医生详情"
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(color: UIColor.white), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.tintColor = .black
         
-        let rightBtn = NavButton(frame: CGRect(x: 0, y: 5, width: 80, height: 30), backgroundColor: UIColor(hex6: 0xCB4042), titleColor: UIColor.white, title: "预约")
-        rightBtn.backgroundColor = rightBtn.isSelected ? UIColor.yellow : UIColor(hex6: 0xCB4042)
-        rightBtn.setTitle("待签约", for: .selected)
+        var title = "预约"
+        var color = UIColor(hex6: 0xCB4042)
+        switch doctor?.follow {
+        case 0:
+            title = "预约"
+            color = UIColor(hex6: 0xCB4042)
+        case 1:
+            title = "待签约"
+            color = UIColor(hex6: 0xf0ad4e)
+        case 2:
+            title = "已签约"
+            color = mainColor
+        default:
+            break
+        }
+        let rightBtn = NavButton(frame: CGRect(x: 0, y: 5, width: 80, height: 30), backgroundColor: color, titleColor: UIColor.white, title: title)
         rightBtn.addTarget(self, action: #selector(followDoc), for: .touchUpInside)
         rightBtn.cardRadius = 5
-//        rightBtn.addTarget(self, action: #selector(followDoc), for: .touchUpInside)
+        rightBtn.setTitle( "待签约"
+            , for: .selected)
+        rightBtn.backgroundColor = rightBtn.isSelected ? UIColor(hex6: 0xf0ad4e) : color
+        rightBtn.addTarget(self, action: #selector(followDoc), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBtn)
     }
     
@@ -227,7 +244,7 @@ extension DoctorViewController {
     }
     
     @objc func sendFlo() {
-        getRemainFlower(success: { num in
+        DoctorAPIs.getRemainFlower(success: { num in
             if num == 0 {
                 self.tipWithLabel(msg: "余额不足，当前鲜花数为0，请充值后再送花！", frame: CGRect(x: screenW * 0.1, y: screenH * 0.75, width: screenW * 0.8, height: 30))
             } else {
@@ -243,11 +260,14 @@ extension DoctorViewController {
     }
     
     @objc func followDoc(_ sender: UIButton) {
-        let ops = sender.isSelected ? 2 : 1
-        follow(uid: doctor!.uid, ops: ops, success: {
-            sender.isSelected = true
-        })
-        
+        if doctor?.follow == 1 {
+            self.tipWithLabel(msg: "康食：审核中，审核后再操作")
+        } else if (doctor?.follow == 0) {
+            follow(uid: doctor!.uid, ops: 1, success: {
+                self.tipWithLabel(msg: "预约成功")
+                sender.isSelected = true
+            })
+        }
     }
 }
 
@@ -320,36 +340,33 @@ extension DoctorViewController {
         })
     }
     
-    func getRemainFlower(uid: String = UserInfo.shared.user.uid, success: @escaping (Int) -> Void) {
-        SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.getRemainFlower, parameters: ["uid": uid], success: { dict in
-            guard let data = dict["data"] as? [String: Any], let likeNum = data["like_num"] as? Int else {
-                return
-            }
-            success(likeNum)
-        }, failure: { _ in
-            
-        })
-    }
-    
     func sendLike(doctorId: String, likeNum: Int) {
-        SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.getRemainFlower, parameters: ["uid": doctorId, "like_num": "\(likeNum)"], success: { dict in
+        SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.sendLike, parameters: ["uid": doctorId, "like_num": "\(likeNum)"], success: { dict in
             guard let data = dict["data"] as? [String: Any], let likeNum = data["like_num"] as? Int else {
                 return
             }
-            print(data)
+            self.tipWithLabel(msg: "送花成功")
         }, failure: { _ in
             
         })
     }
     
     func follow(uid: String, ops: Int,success: @escaping () -> Void) {
-        SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.getRemainFlower, parameters: ["uid": uid, "ops": "\(ops)"], success: { dict in
-            guard let data = dict["data"] as? [String: Any] else {
+        SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.follow, parameters: ["uid": uid, "ops": "\(ops)"], success: { dict in
+            guard let status = dict["status"] as? Int else {
                 return
             }
-            success()
+            if status == 200 {
+                success()
+            } else {
+                if let msg = dict["msg"] as? String {
+                    self.tipWithLabel(msg: "康食：" + msg)
+                }
+            }
+            
         }, failure: { _ in
             
         })
     }
 }
+

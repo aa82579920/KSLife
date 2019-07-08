@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftDate
+
 class MessageDoctorTableViewCell: UITableViewCell {
     
     let headImageView = UIImageView()
@@ -18,15 +20,16 @@ class MessageDoctorTableViewCell: UITableViewCell {
     var msg: Message? {
         didSet {
             if let msg = msg {
-                if msg.receiver.uid == UserInfo.shared.user.uid {
+                if msg.sender.uid != UserInfo.shared.user.uid {
                     nameLable.text = msg.sender.nickname ?? "康食君"
                     headImageView.sd_setImage(with: URL(string: msg.sender.photo ?? ""), placeholderImage: UIImage(named: "upic"))
                 } else {
-                    nameLable.text = msg.receiver.nickname ?? "康食君"
-                    headImageView.sd_setImage(with: URL(string: msg.receiver.photo ?? ""), placeholderImage: UIImage(named: "upic"))
+                    nameLable.text = msg.receiver!.nickname ?? "康食君"
+                    headImageView.sd_setImage(with: URL(string: msg.receiver!.photo ?? ""), placeholderImage: UIImage(named: "upic"))
                 }
                 contentLable.text = msg.content
-                dayLable.text = msg.time
+                let text = Date.compareCurrntTime(timeStamp: msg.time.toDate()!.date.timeIntervalSince1970)
+                dayLable.text = text
                 countLable.text = "\(msg.number)"
             }
         }
@@ -58,10 +61,11 @@ class MessageDoctorTableViewCell: UITableViewCell {
         contentLable.text = "我是呵呵呵呵"
         contentView.addSubview(contentLable)
         
-        dayLable.frame = CGRect(x: Device.width-70, y: padding, width: 50, height: 25)
+        dayLable.frame = CGRect(x: Device.width-120, y: padding, width: 100, height: 25)
         dayLable.font = UIFont.systemFont(ofSize: 15)
         dayLable.textColor = .gray
         dayLable.text = "67天前"
+        dayLable.textAlignment = .right
         contentView.addSubview(dayLable)
         
         countLable.frame = CGRect(x: Device.width-55, y: dayLable.frame.maxY + 10, width: 20, height: 20)
@@ -78,4 +82,3 @@ class MessageDoctorTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

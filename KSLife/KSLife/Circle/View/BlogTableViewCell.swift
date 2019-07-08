@@ -135,10 +135,10 @@ class BlogTableViewCell: UITableViewCell {
         contentView.addSubview(favBtn)
         remakeConstraints()
         
-//                layoutIfNeeded()
-//        
-//                detailImage.addCorner(roundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight], cornerSize: CGSize(width: avatarImage.frame.height * 0.5, height: avatarImage.frame.height * 0.5))
-//        avatarImage.addCorner(roundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight], cornerSize: CGSize(width: avatarImage.frame.height * 0.5, height: avatarImage.frame.height * 0.5))
+        //                layoutIfNeeded()
+        //
+        //                detailImage.addCorner(roundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight], cornerSize: CGSize(width: avatarImage.frame.height * 0.5, height: avatarImage.frame.height * 0.5))
+        //        avatarImage.addCorner(roundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight], cornerSize: CGSize(width: avatarImage.frame.height * 0.5, height: avatarImage.frame.height * 0.5))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -150,7 +150,7 @@ class BlogTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
-
+    
 }
 
 extension BlogTableViewCell {
@@ -219,5 +219,3 @@ extension BlogTableViewCell {
         
     }
 }
-
-

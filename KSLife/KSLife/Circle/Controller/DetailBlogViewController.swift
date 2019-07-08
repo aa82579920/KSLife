@@ -48,6 +48,11 @@ class DetailBlogViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         tabBarH = (tabBarController?.tabBar.frame.height) ?? 0
+        
+        BlogAPIs.getComments(bid: self.blog!.id, success: { comments in
+            self.comments = comments
+            self.detailTableView.reloadData()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -129,8 +134,8 @@ class DetailBlogViewController: UIViewController {
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.register(CommentTableViewCell.self, forCellReuseIdentifier: detailTableViewCellID)
         return tableView
-    }()
-
+        }()
+    
     
     private lazy var textField: UITextField = {
         let view = UITextField()
@@ -169,10 +174,6 @@ class DetailBlogViewController: UIViewController {
         return view
     }()
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        detailTableView.layoutMargins = UIEdgeInsets.zero
-//    }
 }
 
 extension DetailBlogViewController {
@@ -222,44 +223,28 @@ extension DetailBlogViewController: UITextFieldDelegate, UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         textField.resignFirstResponder()
     }
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         textField.resignFirstResponder()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let text = textField.text
-        postComment(bid: blog!.id, uid: UserInfo.shared.user.uid, comment: text ?? "", success: { msg in
+        BlogAPIs.postComment(bid: blog!.id, uid: UserInfo.shared.user.uid, comment: text ?? "", success: { msg in
             if msg == "OK" {
                 textField.text = ""
                 print(self.comments.count)
                 self.tipWithMessage(msg: "评论成功")
-                self.getComments(bid: self.blog!.id)
+                BlogAPIs.getComments(bid: self.blog!.id, success: { comments in
+                    self.comments = comments
+                    self.detailTableView.reloadData()
+                })
             }
         })
         textField.resignFirstResponder()
         return true
     }
-
-//    @objc func keyboardHeightChange(notifi: Notification) {
-//        let keyBoardRect = (notifi.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-//
-//        let keyBoardH = keyBoardRect.size.height
-//        var offset: CGFloat = 0
-//        if (notifi.name == UIResponder.keyboardWillShowNotification) {
-//            offset = (self.replayView.frame.origin.y - keyBoardH)
-//        } else {
-//        offset = (self.replayView.frame.origin.y + keyBoardH)
-//        }
-//
-//        let duration = notifi.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
-//
-//        if(offset > 0) {
-//            UIView.animate(withDuration: duration,  animations: {
-//                self.replayView.frame = CGRect(x: self.replayView.frame.origin.x, y: offset, width: self.replayView.frame.width, height: self.replayView.frame.height)
-//            }, completion: nil)
-//        }
-//    }
+    
     @objc func keyBoardWillShow(notifi:NSNotification)
     {
         
@@ -384,7 +369,7 @@ extension DetailBlogViewController {
                 make.bottom.equalTo(tableHeaderView).offset(-margin)
             }
             for i in 0 ..< detailImages.count{
-
+                
                 detailImages[i].snp.makeConstraints { (make) -> Void in
                     var scale: CGFloat = 0
                     guard let image = detailImages[i].image else {
@@ -394,19 +379,19 @@ extension DetailBlogViewController {
                         return
                     }
                     scale = image.size.height / image.size.width
-
+                    
                     make.left.equalTo(nameLabel)
                     make.right.equalTo(tableHeaderView).offset(-margin)
                     make.height.equalTo(detailImages[i].snp.width).multipliedBy(scale)
                 }
             }
         }
-
+        
         if detailImages.count > 1 {
             for i in 1 ..< detailImages.count {
                 detailImages[i].snp.makeConstraints { (make) -> Void in
                     make.top.equalTo(detailImages[i - 1].snp.bottom).offset(margin)
-
+                    
                 }
             }
         }
@@ -442,15 +427,15 @@ extension DetailBlogViewController {
         tableHeaderView.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(view)
         }
-
-//        tableFooterView.snp.makeConstraints { (make) -> Void in
-//            make.width.equalTo(detailTableView)
-//        }
+        
+        //        tableFooterView.snp.makeConstraints { (make) -> Void in
+        //            make.width.equalTo(detailTableView)
+        //        }
         
         detailTableView.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(view)
             make.top.equalTo(view)
-//            make.bottom.equalTo(view).offset(-(self.tabBarController?.tabBar.frame.height ?? 0))
+            //            make.bottom.equalTo(view).offset(-(self.tabBarController?.tabBar.frame.height ?? 0))
         }
         
         replayView.snp.makeConstraints { (make) -> Void in
@@ -459,40 +444,5 @@ extension DetailBlogViewController {
             make.width.equalTo(view)
             make.bottom.equalTo(view)
         }
-    }
-}
-
-extension DetailBlogViewController {
-    func postComment(bid: Int, uid: String, comment: String, success: @escaping (String) -> Void) {
-        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.postComment, parameters: ["bid": "\(bid)", "uid": "\(uid)", "comment": comment], success: { dict in
-            guard let msg = dict["msg"] as? String else {
-                return
-            }
-            success(msg)
-        }, failure: { error in
-            print(error)
-        })
-    }
-    
-    func getComments(bid: Int, type: Int = 0, page: Int = 0) {
-        SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getComments, parameters: ["bid": "\(bid)", "type": "\(type)", "page": "\(page)"], success: { dict in
-            guard let data = dict["data"] as? [Any] else {
-                return
-            }
-            var comments = [Comment]()
-            for comment in data {
-                do {
-                    let json = try JSONSerialization.data(withJSONObject: comment, options: [])
-                    let com = try JSONDecoder().decode(Comment.self, from: json)
-                    comments.append(com)
-                } catch {
-                    print("cant show comment")
-                }
-            }
-            self.comments = comments
-            self.detailTableView.reloadData()
-        }, failure: { error in
-            print(error)
-        })
     }
 }

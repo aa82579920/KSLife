@@ -29,23 +29,26 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    private let userField: UITextField = {
+    private lazy var userField: UITextField = { [weak self] in
         let field = UITextField()
         field.borderStyle = .roundedRect
         field.placeholder = "请输入用户名"
         field.clearButtonMode = .always
+        field.delegate = self
+        field.returnKeyType = .next
         return field
-    }()
+        }()
     
-    private let passField: UITextField = {
+    private lazy var passField: UITextField = { [weak self] in
         let field = UITextField()
         field.borderStyle = .roundedRect
         field.placeholder = "请输入密码"
         field.clearButtonMode = .always
         field.autocapitalizationType = .none
         field.isSecureTextEntry = true
+        field.delegate = self
         return field
-    }()
+        }()
     
     private lazy var button: UIButton = {
         let button = UIButton()
@@ -106,7 +109,7 @@ class LoginViewController: UIViewController {
         } else if password.count == 0 {
             tipWithLabel(msg: "密码不能为空")
         } else {
-            UserInfo.shared.setUserInfo(mobile: userId, password: password.MD5, success: {
+            UserInfo.shared.setUserInfo(mobile: userId, password: password, success: {
                 UserInfo.shared.status = true
                 UserDefaults.standard.set(password, forKey: LoginInfo().token)
                 UserDefaults.standard.set(userId,forKey: LoginInfo().userId)
@@ -190,6 +193,10 @@ class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController {
+extension LoginViewController: UITextFieldDelegate {
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

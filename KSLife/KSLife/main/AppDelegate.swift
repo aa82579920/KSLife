@@ -45,7 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = mainVC
             return true
         }
-        
         UserInfo.shared.setUserInfo(mobile: userId, password: pass, success: {
             let mainVC = MainTabBarController()
             self.window?.rootViewController = mainVC

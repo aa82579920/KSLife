@@ -36,14 +36,14 @@ class CommentTableViewCell: UITableViewCell {
             detailLabel.text = details[2]
         }
     }
-
-    var avatarImage: UIImageView = {
+    
+    lazy var avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         return imageView
     }()
     
-    private lazy var nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "王毛线"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
@@ -51,7 +51,7 @@ class CommentTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var timeLabel: UILabel = {
+    lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.text = "2019-05-01"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
@@ -59,8 +59,9 @@ class CommentTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var detailLabel: UILabel = {
+    lazy var detailLabel: UILabel = {
         let label = UILabel()
+        label.lineBreakMode = .byWordWrapping
         label.text = "哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = UIColor.lightGray
@@ -77,11 +78,11 @@ class CommentTableViewCell: UITableViewCell {
         contentView.addSubview(detailLabel)
         remakeConstraints()
         
-        avatarImage.image = UIImage(named: "scenery")
+        avatarImage.image = UIImage(named: "upic")
         
-//        contentView.layoutIfNeeded()
-//        
-//        avatarImage.addCorner(roundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight], cornerSize: CGSize(width: avatarImage.frame.height * 0.5, height: avatarImage.frame.height * 0.5))
+        //        contentView.layoutIfNeeded()
+        //
+        //        avatarImage.addCorner(roundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight], cornerSize: CGSize(width: avatarImage.frame.height * 0.5, height: avatarImage.frame.height * 0.5))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -90,15 +91,11 @@ class CommentTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
-}
-
-extension CommentTableViewCell {
     
-    private func remakeConstraints() {
+    func remakeConstraints() {
         let padding: CGFloat = 15
         let margin: CGFloat = contentView.frame.width * 0.05
         
@@ -108,7 +105,7 @@ extension CommentTableViewCell {
             make.width.equalTo(contentView).multipliedBy(0.1)
             make.height.equalTo(avatarImage.snp.width)
         }
-
+        
         nameLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(avatarImage)
             make.left.equalTo(avatarImage.snp.right).offset(padding)
@@ -126,5 +123,8 @@ extension CommentTableViewCell {
             make.bottom.equalTo(contentView).offset(-margin)
         }
     }
+    
 }
+
+
 

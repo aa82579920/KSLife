@@ -9,7 +9,7 @@
 import UIKit
 
 class CopyRecordViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -92,9 +92,9 @@ extension CopyRecordViewController {
     }
     
     @objc func ensure(){
-//        submitRecords(dishs: self.addDishs) {
-//            PunchViewController.needFresh = true
-//        }
+        //        submitRecords(dishs: self.addDishs) {
+        //            PunchViewController.needFresh = true
+        //        }
         submitRecords(dishs: addDishs)
         PunchViewController.needFresh = true
         self.navigationController?.popViewController(animated: true)
@@ -129,7 +129,11 @@ extension CopyRecordViewController {
     func submitRecords(dishs: [Dish]) {
         for dish in dishs {
             let uid = UserInfo.shared.user.uid, kgId = dish.kgID, amount = dish.amount, unit = dish.unit
-            FoodManager.shared.submitDiet(uid: uid, kgId: kgId, amount: amount, unit: unit)
+            FoodManager.shared.submitDiet(uid: uid, kgId: kgId, amount: amount, unit: unit, success: {
+                self.tipWithLabel(msg: "添加成功")
+            }, failure: { error in
+                self.tipWithLabel(msg: error)
+            })
         }
     }
 }

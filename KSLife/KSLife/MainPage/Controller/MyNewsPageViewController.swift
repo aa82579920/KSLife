@@ -35,7 +35,7 @@ class MyNewsPageViewController: WMPageController {
         titleSizeSelected = 16    // 选中时的标题尺寸
         titleSizeNormal = 15      // 非选中时的标题尺寸
         menuViewStyle = .line    // Menu view 的样式，默认为无下划线
-        titleColorSelected = UIColor.blue    //标题选中时的颜色, 颜色是可动画的.
+        titleColorSelected = mainColor    //标题选中时的颜色, 颜色是可动画的.
         titleColorNormal = UIColor.black    //标题非选择时的颜色, 颜色是可动画的
         menuBGColor = UIColor.white        //导航栏背景色
         
