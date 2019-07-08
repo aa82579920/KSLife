@@ -105,7 +105,7 @@ class CircleTableViewCell: UITableViewCell {
                 labelThree.text = "\(circle.count)朵"
             case CircleType.contract.rawValue:
                 labelOne.text = "签约"
-                labelTwo.text = "\(circle.content!)与\(doctorName)签约成功"
+                labelTwo.text = "\(circle.content ?? "")与\(doctorName)签约成功"
                 labelThree.text = "\(circle.count)位"
             default:
                 break

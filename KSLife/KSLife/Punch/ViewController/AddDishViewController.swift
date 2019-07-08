@@ -25,6 +25,10 @@ class AddDishViewController: UIViewController {
         //        remakeConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        searchField.resignFirstResponder()
+    }
+    
     private var subDishs: [SimpleDish] = []
     private var simpleDishs: [SimpleDish] = [] {
         didSet {
@@ -203,7 +207,7 @@ extension AddDishViewController: UITableViewDataSource, UITableViewDelegate {
             dish = subDishs[indexPath.row]
         }
         vc.dish = dish
-        getDishInfo(kgId: dish!.kgID, success: { str in
+        RecordAPIs.getDishInfo(kgId: dish!.kgID, success: { str in
             vc.element = str
         })
         self.navigationController?.pushViewController(vc, animated: true)
@@ -220,6 +224,13 @@ extension AddDishViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension AddDishViewController: UITextFieldDelegate, PageTitleViewDelegate, PageContentViewDelegate{
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let vc = SearchDishViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+        textField.resignFirstResponder()
+    }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchField.resignFirstResponder()
@@ -360,17 +371,6 @@ extension AddDishViewController {
             } catch {
                 print("sad")
             }
-        }, failure: { _ in
-            
-        })
-    }
-    
-    func getDishInfo(kgId: String, success: @escaping (String) -> Void) {
-        SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getDishInfo, parameters: ["kgId": kgId], success: { dict in
-            guard let data = dict["data"] as? [String: Any], let elements = data["elements"] as? String else {
-                return
-            }
-            success(elements)
         }, failure: { _ in
             
         })

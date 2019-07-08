@@ -16,7 +16,7 @@ class CommentTableViewCell: UITableViewCell {
                 nameLabel.text = comment.name
                 timeLabel.text = comment.time
                 detailLabel.text = comment.content
-                avatarImage.sd_setImage(with: URL(string: comment.photo), placeholderImage: UIImage(named: "scenery"))
+                avatarImage.sd_setImage(with: URL(string: comment.photo), placeholderImage: UIImage(named: "noImg"))
             }
         }
     }

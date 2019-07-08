@@ -19,6 +19,7 @@ class MainPageViewController: UIViewController {
     var msgTimer : Timer?
     var articles = HomeArticles()
     private var recomandDishs: [SimpleDish] = []
+    private var joinTest: Bool = false
     
     fileprivate let modules: [(name: String, img: UIImage?)] = [("能量摄入", UIImage(named: "nengliangsheru")),
                                                                 ("能量燃烧", UIImage(named: "nengliangranshao")),
@@ -113,7 +114,7 @@ class MainPageViewController: UIViewController {
                     let json = JSON(value)
                     
                     
-                    var counts = json["data"].count
+                    let counts = json["data"].count
                     for i in 0..<counts {
                         var newData = HomeArticlesData()
                         newData.id = json["data"][i]["id"].int!
@@ -139,27 +140,39 @@ class MainPageViewController: UIViewController {
 
 extension MainPageViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return joinTest ? 4 : 5
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 2:
-            return 1
-        case 3:
-            return articles.data.count == 0 ? 1 : articles.data.count
-        default:
-            return 0
+        if joinTest {
+            switch section {
+            case 2:
+                return 1
+            case 3:
+                return articles.data.count == 0 ? 1 : articles.data.count
+            default:
+                return 0
+            }
+        } else {
+            switch section {
+            case 2, 3:
+                return 1
+            case 4:
+                return articles.data.count == 0 ? 1 : articles.data.count
+            default:
+                return 0
+            }
         }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //        return (Bundle.main.loadNibNamed("RecommendTableViewCell", owner: self, options: nil)?.first!) as! UITableViewCell.Type
         var cell = UITableViewCell()
         cell.selectionStyle = .none
+        let num1 = joinTest ? 2 : 3
+        let num2 = joinTest ? 3 : 4
         switch indexPath.section {
-        case 2:
-            //            let view = CycleView(frame: .zero)
+        case num1:
             let label = UILabel()
             label.text = "根据您一周的饮食记录，推荐食材及菜肴"
             label.textAlignment = .center
@@ -175,7 +188,7 @@ extension MainPageViewController: UITableViewDataSource {
                 make.width.bottom.equalToSuperview()
                 make.top.equalTo(label.snp.bottom)
             }
-        case 3:
+        case num2:
             if articles.data.count == 0 {
                 cell = FoldTableViewCell(with: .none, name: "暂无安排")
             } else {
@@ -186,26 +199,63 @@ extension MainPageViewController: UITableViewDataSource {
         default:
             break
         }
+        
+        if !joinTest && indexPath.section == 2{
+            let label = UILabel()
+            label.font = .systemFont(ofSize: 13)
+            label.text = "康食君还不够了解你，无法为您推荐，请进行体质检测"
+            label.textColor = .lightGray
+            label.textAlignment = .center
+            cell.contentView.addSubview(label)
+            label.snp.makeConstraints { make in
+                make.top.equalToSuperview()
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview().multipliedBy(0.9)
+            }
+            let button = UIButton()
+            button.setTitle("进行体质检测", for: .normal)
+            button.setTitleColor(mainColor, for: .normal)
+            button.backgroundColor = .white
+            button.layer.cornerRadius = 10
+            button.clipsToBounds = true
+            button.layer.borderColor = mainColor.cgColor
+            button.layer.borderWidth = 1
+            button.addTarget(self, action: #selector(testSurvey), for: .touchUpInside)
+            cell.contentView.addSubview(button)
+            button.snp.makeConstraints { make in
+                make.top.equalTo(label.snp.bottom).offset(10)
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview().multipliedBy(0.5)
+                make.bottom.equalToSuperview().offset(-10)
+            }
+        }
         return cell
     }
 }
 
 extension MainPageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 2 {
+        let num = joinTest ? 2 : 3
+        
+        if indexPath.section == num {
             return 200
+        } else if !joinTest && indexPath.section == 2 {
+            return 80
         } else {
             return 120
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 3 {
+        let num1 = joinTest ? 2 : 3
+        let num2 = joinTest ? 3 : 4
+        
+        if indexPath.section == num2 {
             let vc = ArticleViewController()
             vc.article = articles.data[indexPath.row]
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == num1 {
             self.navigationController?.pushViewController(recomandVC, animated: true)
         }
     }
@@ -221,7 +271,8 @@ extension MainPageViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 3 {
+        let num = joinTest ? 3 : 4
+        if section == num {
             return 80
         } else {
             return 15
@@ -238,6 +289,12 @@ extension MainPageViewController: UITableViewDelegate {
         self.navigationController?.pushViewController(messageVC, animated: true)
     }
     
+    @objc func testSurvey() {
+        let vc = TestSurveyViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section > 1 else {
             if section == 0 {
@@ -245,24 +302,42 @@ extension MainPageViewController: UITableViewDelegate {
             }
             return self.userView
         }
+        
+        let num1 = joinTest ? 2 : 3
+        let num2 = joinTest ? 3 : 4
+        
         let blankView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
-        blankView.backgroundColor = .white
+         blankView.backgroundColor = .white
         
-        let imgView = UIImageView(frame: CGRect(x: self.view.frame.size.width / 2 - 65 / 2, y: 13, width: 65, height: 14))
-        if section == 2 {
-            imgView.image = UIImage(named: "zxsp")
-        } else {
-            imgView.image = UIImage(named: "zbtj")
+        switch section {
+        case num1, num2:
+            let imgView = UIImageView(frame: CGRect(x: self.view.frame.size.width / 2 - 65 / 2, y: 13, width: 65, height: 14))
+            if section == 2 {
+                imgView.image = UIImage(named: "zxsp")
+            } else {
+                imgView.image = UIImage(named: "zbtj")
+            }
+            blankView.addSubview(imgView)
+            
+            let leftLineView = UIView(frame: CGRect(x: imgView.frame.origin.x - 80, y: 18.5, width: 70, height: 3))
+            leftLineView.backgroundColor = .black
+            let rightLineView = UIView(frame: CGRect(x: imgView.frame.origin.x + 65 + 10, y: 18.5, width: 70, height: 3))
+            rightLineView.backgroundColor = .black
+            blankView.addSubview(leftLineView)
+            blankView.addSubview(rightLineView)
+        default:
+            let label = UILabel()
+            label.textColor = .black
+            label.font = .systemFont(ofSize: 14)
+            label.text = "———— VIP专享饮食推荐 ————"
+            label.textAlignment = .center
+            blankView.addSubview(label)
+            label.snp.makeConstraints { make in
+                make.width.top.equalToSuperview()
+                make.height.equalToSuperview().multipliedBy(0.8)
+                make.centerY.equalToSuperview()
+            }
         }
-        blankView.addSubview(imgView)
-        
-        let leftLineView = UIView(frame: CGRect(x: imgView.frame.origin.x - 80, y: 18.5, width: 70, height: 3))
-        leftLineView.backgroundColor = .black
-        let rightLineView = UIView(frame: CGRect(x: imgView.frame.origin.x + 65 + 10, y: 18.5, width: 70, height: 3))
-        rightLineView.backgroundColor = .black
-        blankView.addSubview(leftLineView)
-        blankView.addSubview(rightLineView)
-        
         //        let bottomLineView = UIView(frame: CGRect(x: 0, y: 39.5, width: self.view.frame.width, height: 0.5))
         //        bottomLineView.backgroundColor = .lightGray
         //        blankView.addSubview(bottomLineView)
@@ -411,8 +486,33 @@ extension MainPageViewController {
         userView.msgTag.isHidden = getHomeInfo(uid: UserInfo.shared.user.uid) ? false : true
     }
     
+//    func checkJoinTest() -> Bool{
+//        var test = false
+//        SolaSessionManager.solaSession(type: .post, url: SurveyAPIs.checkJoinTest, success: { dict in
+//            guard let data = dict["data"] as? [String: Any], let join = data["join"] as? Bool else {
+//                return
+//            }
+//            test = join
+//        }, failure: { _ in
+//
+//        })
+//        return test
+//    }
+    
     func getRecomRecipes(uid: String, success: @escaping ([SimpleDish]) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: HomeAPIs.getRecomRecipes, parameters: ["uid": uid], success: { dict in
+            
+            guard let status = dict["status"] as? Int else {
+                return
+            }
+            
+            if status != 200 {
+                if let msg = dict["msg"] as? String {
+                    self.tipWithLabel(msg: "康食：" + msg)
+                }
+                return
+            }
+            
             guard let data = dict["data"] as? [String: Any] else {
                 return
             }
@@ -427,27 +527,44 @@ extension MainPageViewController {
                 }
             }
             success(dishs)
-        }, failure: { _ in
-            
+        }, failure: { error in
+            self.tipWithLabel(msg: error.localizedDescription)
         })
         
         SolaSessionManager.solaSession(type: .post, url: HomeAPIs.getHomeInfo, parameters: ["uid": uid], success: { dict in
-            guard let data = dict["data"] as? [String: Any], let reason = data["recomReason"] as? String else {
+            guard let status = dict["status"] as? Int else {
                 return
             }
+            
+            if status != 200 {
+                if let msg = dict["msg"] as? String {
+                    self.tipWithLabel(msg: "康食：" + msg)
+                }
+                return
+            }
+            
+            guard let data = dict["data"] as? [String: Any], let reason = data["recomReason"] as? String, let time = data["time"] as? Int, let recomRecipe = data["recomRecipe"] as? Bool else {
+                return
+            }
+            self.joinTest = recomRecipe
+            self.userView.timeLabel.text = "您的康食第\(time)天"
             self.recomandVC.recomReason = reason
-        }, failure: { _ in
+            self.tableView.reloadData()
+        }, failure: { error in
+            self.tipWithLabel(msg: error.localizedDescription)
         })
     }
     
     func getHomeInfo(uid: String) -> Bool {
         var flag = false
         SolaSessionManager.solaSession(type: .post, url: HomeAPIs.getHomeInfo, parameters: ["uid": uid], success: { dict in
+            
             guard let data = dict["data"] as? [String: Any], let messageFlag = data["messageFlag"] as? Bool else {
                 return
             }
             flag = messageFlag
         }, failure: { _ in
+            
         })
         return flag
     }

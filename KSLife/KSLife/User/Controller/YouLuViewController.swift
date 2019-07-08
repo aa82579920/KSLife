@@ -16,6 +16,12 @@ struct Device {
 // 友录页面
 class YouLuViewController: UIViewController {
     
+    var addressBook: [[String : [Contact]]]? {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
     //Section标题 及 索引标题
     fileprivate var sectionArray: [String] {
         var sectionArray = [String]()
@@ -38,6 +44,7 @@ class YouLuViewController: UIViewController {
         tableView.dataSource = self
         
         self.view.addSubview(tableView)
+        getContacts()
     }
     // MARK: - 获取联系人姓名首字母(传入汉字字符串, 返回大写拼音首字母)
     func getFirstLetterFromString(aString: String) -> (String) {
@@ -70,21 +77,49 @@ class YouLuViewController: UIViewController {
 }
 extension YouLuViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionCount
+        return addressBook?.count ?? 0
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return addressBook?[section].values.first?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return YouLuTableViewCell(index: indexPath.row)
+        let cell = YouLuTableViewCell(index: indexPath.row)
+        cell.person = addressBook?[indexPath.section].values.first?[indexPath.row]
+        return cell
     }
     // 设置每个Section标题
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionArray[section]
+        return addressBook?[section].keys.first
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
 }
 
+extension YouLuViewController {
+    func getContacts(uid: String = UserInfo.shared.user.uid) {
+        SolaSessionManager.solaSession(type: .post, url: RelationAPIs.getContacts, parameters: ["uid": "\(uid)"], success: { dict in
+            guard let data = dict["data"] as? [[String: [Any]]] else {
+                return
+            }
+            var all: [[String: [Contact]]] = []
+            for item in data {
+                let letter = item.keys.first!
+                let list = item[letter]
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: list, options: [])
+                    let people = try JSONDecoder().decode([Contact].self, from: json)
+                    if people.count > 0 {
+                        all.append([letter: people])
+                    }
+                } catch {
+                    print("sad")
+                }
+            }
+            self.addressBook = all
+        }, failure: { _ in
+            
+        })
+    }
+}

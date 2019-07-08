@@ -19,7 +19,7 @@ class SetNameController: UIViewController {
         self.title = "设置昵称"
         self.view.backgroundColor = UIColor.white
         
-        textField = UITextField(frame: CGRect(x: 20, y: 70, width: Device.width-40, height: 30))
+        textField = UITextField(frame: CGRect(x: 20, y: navigationBarH + statusH + 10, width: Device.width-40, height: 30))
         //设置边框样式为圆角矩形
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.placeholder = "请输入昵称"

@@ -22,7 +22,7 @@ class DetailBlogViewController: UIViewController {
                 for i in 0 ..< blog.images.count {
                     if let image = blog.images[i], image != "" {
                         let imageView = UIImageView()
-                        imageView.sd_setImage(with: URL(string: image), placeholderImage: UIImage(named: "scenery"))
+                        imageView.sd_setImage(with: URL(string: image), placeholderImage: UIImage(named: "noImg"))
                         detailImages.append(imageView)
                     }
                 }
@@ -98,7 +98,7 @@ class DetailBlogViewController: UIViewController {
     private lazy var detailImages: [UIImageView] = {
         let imageViews = [UIImageView]()
         for imageView in imageViews {
-            imageView.image = UIImage(named: "scenery")
+            imageView.image = UIImage(named: "noImg")
         }
         return imageViews
     }()

@@ -28,7 +28,7 @@ class MessageDoctorTableViewCell: UITableViewCell {
                     headImageView.sd_setImage(with: URL(string: msg.receiver!.photo ?? ""), placeholderImage: UIImage(named: "upic"))
                 }
                 contentLable.text = msg.content
-                let text = Date.compareCurrntTime(timeStamp: msg.time.toDate()!.date.timeIntervalSince1970)
+                let text = Date.compareCurrntTime(timeStamp: msg.time.toDate()!.date.timeIntervalSince1970) + "前"
                 dayLable.text = text
                 countLable.text = "\(msg.number)"
             }

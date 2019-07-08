@@ -25,9 +25,9 @@ class DayDishTableViewCell: UITableViewCell {
     private var dish: Dish?
     private var simpleDishs: SimpleDish?
     
-    private lazy var dishImage: UIImageView = {
+    lazy var dishImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "scenery")
+        imageView.image = UIImage(named: "noImg")
         return imageView
     }()
 

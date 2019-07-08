@@ -33,7 +33,7 @@ class SetMealTableViewCell: UITableViewCell {
     
     private lazy var dishImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "scenery")
+        imageView.image = UIImage(named: "noImg")
         return imageView
     }()
     

@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import SwiftDate
 
 class BlogTableViewCell: UITableViewCell {
     
     var blog: Blog? {
         didSet {
             if let blog = blog {
-                avatarImage.sd_setImage(with: URL(string: blog.userInfo.photo), placeholderImage: UIImage(named: "scenery"))
+                avatarImage.sd_setImage(with: URL(string: blog.userInfo.photo), placeholderImage: UIImage(named: "noImg"))
                 nameLabel.text = blog.userInfo.nickname
-                timeLabel.text = blog.time
-                throughLabel.text = "一天"
+                timeLabel.text = blog.time.components(separatedBy: " ")[0]
+                throughLabel.text = Date.compareCurrntTime(timeStamp: blog.time.toDate()!.date.timeIntervalSince1970)
                 addressLabel.text = blog.cityName
                 detailLabel.text = blog.content
                 if blog.userInfo.uid == UserInfo.shared.user.uid {
@@ -32,7 +33,7 @@ class BlogTableViewCell: UITableViewCell {
                         num += 1
                     }
                     if num > 0 {
-                        detailImage.sd_setImage(with: URL(string: blog.images[0]!), placeholderImage: UIImage(named: "scenery"))
+                        detailImage.sd_setImage(with: URL(string: blog.images[0]!), placeholderImage: UIImage(named: "noImg"))
                     } else {
                         detailImage.isHidden = true
                     }
@@ -55,7 +56,7 @@ class BlogTableViewCell: UITableViewCell {
     
     lazy var avatarImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "scenery")
+        imageView.image = UIImage(named: "noImg")
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
@@ -118,7 +119,7 @@ class BlogTableViewCell: UITableViewCell {
     
     private lazy var detailImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "scenery")
+        imageView.image = UIImage(named: "noImg")
         return imageView
     }()
     

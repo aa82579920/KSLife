@@ -19,7 +19,8 @@ class DishDetailViewController: UIViewController {
         actionSheet.showAnimation = ActionSheetShowAnimation()
         actionSheet.dismissAnimation = ActionSheetDismissAnimation()
         actionSheet.block = { weight in
-            FoodManager.shared.submitDiet(uid: UserInfo.shared.user.uid, kgId: self.dish!.kgID, amount: weight, unit: "克", success: {
+            FoodManager.shared.submitDiet(uid: UserInfo.shared.user.uid, kgId: self.dish!.kgID, amount: weight, unit: "克", type: self.dish!.type, success: {
+                
                 self.tipWithLabel(msg: "添加成功")
             }, failure: { error in
                 self.tipWithLabel(msg: error)

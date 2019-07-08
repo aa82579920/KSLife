@@ -22,6 +22,7 @@ struct RecordAPIs {
     static let getRecipeList = "/record/getRecipeList"
     static let searchSetMeals = "/record/searchSetMeals"
     static let submitUserSetMeal = "/record/submitUserSetMeal"
+    static let searchRecipes = "/record/searchRecipes"
     
     static func getDishInfo(kgId: String, success: @escaping (String) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getDishInfo, parameters: ["kgId": kgId], success: { dict in

@@ -276,6 +276,16 @@ extension ArticleViewController: UITextFieldDelegate {
 extension ArticleViewController {
     func favorArticle(id: Int) {
         SolaSessionManager.solaSession(type: .post, url: BlogAPIs.getBlog, parameters: ["id": "\(id)"], success: { dict in
+            guard let status = dict["status"] as? Int else {
+                return
+            }
+            if status != 200 {
+                if let msg = dict["msg"] as? String {
+                    self.tipWithLabel(msg: "康食：" + msg)
+                }
+                return
+            }
+            self.favButton.isSelected = true
         }, failure: { _ in
             
         })

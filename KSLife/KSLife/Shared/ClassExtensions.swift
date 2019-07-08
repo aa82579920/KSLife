@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftDate
 
 extension UIImage {
     
@@ -193,22 +194,25 @@ extension Date{
     }
     
     static func compareCurrntTime(timeStamp: TimeInterval) ->String{
+        let zone = NSTimeZone.local
+        let interval = zone.secondsFromGMT()
         
         let date = Date(timeIntervalSince1970: timeStamp)
-        var timeInterval = date.timeIntervalSinceNow
+        var timeInterval = date.addingTimeInterval(-TimeInterval(interval)).timeIntervalSinceNow
         timeInterval = -timeInterval
         var result: String
-        if timeStamp < 60 {
+
+        if timeInterval < 60 {
             result = "刚刚"
-        } else if  Int(timeInterval/60) < 60 {
-            result = String.init(format:"%@分前",String(Int(timeInterval/60)))
+        } else if Int(timeInterval/60) < 60 {
+            result = String.init(format:"%@分",String(Int(timeInterval/60)))
         } else if Int((timeInterval/60)/60) < 24 {
-            result = String.init(format:"%@时前",String(Int((timeInterval/60)/60)))
+            result = String.init(format:"%@时",String(Int((timeInterval/60)/60)))
         } else if Int((timeInterval/60)/60/24) < 30 {
-            result = String.init(format:"%@天前",String(Int((timeInterval/60)/60/24)))
+            result = String.init(format:"%@天",String(Int((timeInterval/60)/60/24)))
         } else {
             let dateformatter = DateFormatter()
-            dateformatter.dateFormat="一个月前"
+            dateformatter.dateFormat="一个月"
             result = dateformatter.string(from: date as Date)
         }
         return result

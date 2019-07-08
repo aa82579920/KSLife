@@ -12,4 +12,5 @@ struct RelationAPIs {
     static let beFriend = "/relation/beFriend"
     static let getFriends = "/relation/getFriends"
     static let getDoctors = "/relation/getDoctors"
+    static let getContacts = "/relation/getContacts"
 }

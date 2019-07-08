@@ -105,6 +105,7 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
                     make.left.equalTo(cell.contentView).offset(5)
                     make.right.top.bottom.equalTo(cell.contentView)
                 }
+                field.clearButtonMode = .always
                 field.delegate = self
                 fields.append(field)
                 if indexPath.row == 2 {
@@ -160,6 +161,11 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     @objc func getCode() {
+        
+        for field in fields {
+            field.resignFirstResponder()
+        }
+        
         guard let mobile = fields[0].text else {
             return
         }
@@ -170,6 +176,18 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
             msg = "手机号输入错误"
         } else {
             SolaSessionManager.solaSession(type: .post, url: UserAPIs.checkDuplicate, parameters: ["mobile": mobile], success: { dict in
+                
+                guard let status = dict["status"] as? Int else {
+                    return
+                }
+                
+                if status != 200 {
+                    if let msg = dict["msg"] as? String {
+                        self.tipWithLabel(msg: "康食：" + msg)
+                    }
+                    return
+                }
+                
                 guard let data = dict["data"] as? [String: Any], let duplicate = data["duplicate"] as? Int else {
                     return
                 }
@@ -177,17 +195,28 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
                     self.remainingSeconds = 59
                     self.isCounting = !self.isCounting
                     SolaSessionManager.solaSession(type: .post, url: UserAPIs.getMobileVerifyCode, parameters: ["mobile": mobile], success: { _ in
+                        
+                        guard let status = dict["status"] as? Int else {
+                            return
+                        }
+                        
+                        if status != 200 {
+                            if let msg = dict["msg"] as? String {
+                                self.tipWithLabel(msg: "康食：" + msg)
+                            }
+                            return
+                        }
                         msg = "已发送"
                         self.tipWithLabel(msg: "已发送")
-                    }, failure: { _ in
-                        
+                    }, failure: { error in
+                        self.tipWithLabel(msg: error.localizedDescription)
                     })
                 } else {
                     msg = "手机号已注册"
                     self.tipWithLabel(msg: "手机号已注册")
                 }
             }, failure: { error in
-                print(error)
+                self.tipWithLabel(msg: error.localizedDescription)
             })
         }
         tipWithLabel(msg: msg ?? "")
@@ -199,7 +228,24 @@ class SignInViewController: UIViewController, UITableViewDataSource, UITableView
         }
         
         SolaSessionManager.solaSession(type: .post, url: UserAPIs.register, parameters: ["mobile": mobile, "code": code, "password": pass.MD5, "role": "1"], success: { dict in
+            guard let status = dict["status"] as? Int else {
+                return
+            }
+            
+            if status != 200 {
+                if let msg = dict["msg"] as? String {
+                    self.tipWithLabel(msg: "康食：" + msg)
+                }
+                return
+            }
+            
             self.tipWithLabel(msg: "注册成功")
+            UserInfo.shared.setUserInfo(mobile: mobile, password: pass, success: {
+                let mainVC = MainTabBarController()
+                UIApplication.shared.keyWindow!.rootViewController = mainVC
+            }, failure: {
+                
+            })
         }, failure: { _ in
             
         })

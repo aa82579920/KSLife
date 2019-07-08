@@ -116,13 +116,14 @@
                 <outlet property="locationImgBtn" destination="Yb1-6i-y2G" id="Hx6-cu-gAU"/>
                 <outlet property="messageBtn" destination="51p-Uh-7NN" id="37l-Ms-TVu"/>
                 <outlet property="msgTag" destination="zyR-pa-xA1" id="ES0-Fx-AG4"/>
+                <outlet property="timeLabel" destination="Ufo-mb-bZr" id="ZsL-D2-SHp"/>
             </connections>
             <point key="canvasLocation" x="-735.50724637681162" y="-518.97321428571422"/>
         </view>
     </objects>
     <resources>
-        <image name="dituIc" width="12" height="12"/>
+        <image name="dituIc" width="24" height="24"/>
         <image name="upic" width="46" height="46"/>
-        <image name="xiaoxi" width="45" height="45"/>
+        <image name="xiaoxi" width="60" height="60"/>
     </resources>
 </document>

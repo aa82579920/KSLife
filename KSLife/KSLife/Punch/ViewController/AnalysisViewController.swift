@@ -149,6 +149,17 @@ extension AnalysisViewController {
 extension AnalysisViewController {
     func analyseDiet(uid: String, day: String, success: @escaping () -> Void) {
         SolaSessionManager.solaSession(type: .post, url: RecordAPIs.analyseDiet, parameters: ["uid": uid, "day": day], success: { dict in
+            guard let status = dict["status"] as? Int else {
+                return
+            }
+            
+            if status != 200 {
+                if let msg = dict["msg"] as? String {
+                    self.tipWithLabel(msg: "康食：" + msg)
+                }
+                return
+            }
+            
             guard let data = dict["data"] as? [String: Any], let dietItems = data["dietItems"] as? [[String: Any]] else {
                 return
             }

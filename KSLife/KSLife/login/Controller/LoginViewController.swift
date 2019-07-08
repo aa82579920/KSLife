@@ -6,6 +6,7 @@
 //  Copyright © 2019 王春杉. All rights reserved.
 //
 
+
 import UIKit
 import Alamofire
 import SwiftyJSON
@@ -99,6 +100,10 @@ class LoginViewController: UIViewController {
     
     
     @objc func clickLogin() {
+
+        passField.resignFirstResponder()
+        userField.resignFirstResponder()
+        
         guard let userId = userField.text, let password = passField.text else {
             tipWithLabel(msg: "请输入用户名密码")
             return
@@ -194,6 +199,12 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: UITextFieldDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        passField.resignFirstResponder()
+        userField.resignFirstResponder()
+        
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

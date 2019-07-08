@@ -74,7 +74,7 @@ class FriendViewController: ViewController,  UITableViewDataSource, UITableViewD
         switch indexPath.section {
         case 0:
             let image = UIImageView()
-            image.sd_setImage(with: URL(string: user?.photo ?? ""), placeholderImage: UIImage(named: "scenery"))
+            image.sd_setImage(with: URL(string: user?.photo ?? ""), placeholderImage: UIImage(named: "noImg"))
             cell.contentView.addSubview(image)
             image.snp.makeConstraints { make in
                 make.left.top.equalTo(cell.contentView).offset(10)

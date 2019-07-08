@@ -28,7 +28,7 @@ class MessageDoctorViewController: UIViewController {
         })
         
         let header = MJRefreshNormalHeader()
-        header.setRefreshingTarget(self, refreshingAction: Selector(("refresh")))
+        header.setRefreshingTarget(self, refreshingAction: #selector(refresh))
         tableView.mj_header = header
     }
     
@@ -49,6 +49,18 @@ class MessageDoctorViewController: UIViewController {
     
     func getMessages(uid: String, type: Int, page: Int = 0, success: @escaping ([Message]) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: MsgAPIs.getMessages, parameters: ["uid": uid, "type": "\(type)", "page": "\(page)"], success: { dict in
+            
+            guard let status = dict["status"] as? Int else {
+                return
+            }
+            
+            if status != 200 {
+                if let msg = dict["msg"] as? String {
+                    self.tipWithLabel(msg: "康食：" + msg)
+                }
+                return
+            }
+            
             guard let data = dict["data"] as? [Any] else {
                 return
             }
@@ -57,10 +69,10 @@ class MessageDoctorViewController: UIViewController {
                 let list = try JSONDecoder().decode([Message].self, from: json)
                 success(list)
             } catch {
-                print("error")
+                self.tipWithLabel(msg: "数据解析失败")
             }
-        }, failure: { _ in
-            
+        }, failure: { error in
+            self.tipWithLabel(msg: error.localizedDescription)
         })
     }
 }

@@ -21,6 +21,7 @@ struct DoctorAPIs {
     
     static func getRemainFlower(uid: String = UserInfo.shared.user.uid, success: @escaping (Int) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.getRemainFlower, parameters: ["uid": uid], success: { dict in
+            
             guard let data = dict["data"] as? [String: Any], let likeNum = data["like_num"] as? Int else {
                 return
             }

@@ -157,6 +157,11 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc func getCode() {
+        
+        for textField in fields {
+            textField.resignFirstResponder()
+        }
+        
         guard let mobile = fields[0].text else {
             tipWithLabel(msg: "手机号不能为空")
             return
@@ -169,15 +174,29 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
         } else {
             remainingSeconds = 59
             isCounting = !isCounting
-            SolaSessionManager.solaSession(type: .post, url: UserAPIs.getMobileVerifyCode, parameters: ["mobile": mobile], success: { _ in
-                self.tipWithLabel(msg: "已发送")
-            }, failure: { _ in
-                
+            SolaSessionManager.solaSession(type: .post, url: UserAPIs.getMobileVerifyCode, parameters: ["mobile": mobile], success: { dict in
+                guard let status = dict["status"] as? Int else {
+                    return
+                }
+                if status == 200 {
+                    self.tipWithLabel(msg: "已发送")
+                } else {
+                    if let msg = dict["msg"] as? String {
+                        self.tipWithLabel(msg: "康食：" + msg)
+                    }
+                }
+            }, failure: { error in
+                self.tipWithLabel(msg: "康食：" + error.localizedDescription)
             })
         }
     }
     
     @objc func ensure() {
+        
+        for textField in fields {
+            textField.resignFirstResponder()
+        }
+        
         guard let mobile = fields[0].text, let code = fields[1].text, let newpass = fields[2].text, let repeatpass = fields[3].text else {
             return
         }
@@ -194,17 +213,31 @@ class ResetPassViewController: UIViewController, UITableViewDataSource, UITableV
             msg = "很抱歉，密码只能是6-20位的数字字母，或数字和字母的组合"
         } else {
             SolaSessionManager.solaSession(type: .post, url: UserAPIs.resetPassword, parameters: ["mobile": mobile, "code": code, "newpass": newpass.MD5], success: { dict in
-                msg = "修改成功"
-            }, failure: { _ in
-                msg = "验证码输入错误"
+                guard let status = dict["status"] as? Int else {
+                    return
+                }
+                if status == 200 {
+                     msg = "修改成功"
+                } else {
+                    if let msg = dict["msg"] as? String {
+                        self.tipWithLabel(msg: "康食：" + msg)
+                    }
+                }
+            }, failure: { error in
+                msg = error.localizedDescription
             })
         }
-        
         tipWithLabel(msg: msg!)
     }
 }
 
 extension ResetPassViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for textField in fields {
+            textField.resignFirstResponder()
+        }
+    }
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         for textField in fields {
             textField.resignFirstResponder()

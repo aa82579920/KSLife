@@ -47,28 +47,33 @@
 		74FBF4AE22CB3C9500E8B022 /* CourseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBF4AD22CB3C9500E8B022 /* CourseData.swift */; };
 		74FBF4B022CB47A000E8B022 /* CoursePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBF4AF22CB47A000E8B022 /* CoursePlayerViewController.swift */; };
 		B71259684D475A4CB24E6E03 /* Pods_KSLifeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36AEA81B96721ADB27EEFF60 /* Pods_KSLifeTests.framework */; };
-		C41A50CF22D305C50056DB21 /* NavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50C122D305C50056DB21 /* NavButton.swift */; };
-		C41A50D022D305C50056DB21 /* PopTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50C222D305C50056DB21 /* PopTextView.swift */; };
-		C41A50D122D305C50056DB21 /* PopBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50C322D305C50056DB21 /* PopBaseView.swift */; };
-		C41A50D222D305C50056DB21 /* PopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50C422D305C50056DB21 /* PopView.swift */; };
-		C41A50D422D305C50056DB21 /* SwiftPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50C622D305C50056DB21 /* SwiftPopup.swift */; };
-		C41A50D522D305C50056DB21 /* PageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50C722D305C50056DB21 /* PageContentView.swift */; };
-		C41A50D622D305C50056DB21 /* SwiftPopupPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50C822D305C50056DB21 /* SwiftPopupPresentationController.swift */; };
-		C41A50D722D305C50056DB21 /* SwiftPopupAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50C922D305C50056DB21 /* SwiftPopupAnimation.swift */; };
-		C41A50D822D305C50056DB21 /* PageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50CA22D305C50056DB21 /* PageTitleView.swift */; };
-		C41A50D922D305C50056DB21 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50CB22D305C50056DB21 /* PhotoViewController.swift */; };
-		C41A50DA22D305C50056DB21 /* InsertLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50CC22D305C50056DB21 /* InsertLabel.swift */; };
-		C41A50DB22D305C50056DB21 /* CycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50CD22D305C50056DB21 /* CycleView.swift */; };
-		C41A50DC22D305C50056DB21 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50CE22D305C50056DB21 /* DropDownMenu.swift */; };
 		C41A50DD22D306B80056DB21 /* DoctorAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4A522A0DB2300F9AB7D /* DoctorAPIs.swift */; };
 		C41A50DE22D306B80056DB21 /* FormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4B322A1D89D00F9AB7D /* FormTableViewCell.swift */; };
-		C41A50E022D306E40056DB21 /* TestSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50DF22D306E40056DB21 /* TestSurveyViewController.swift */; };
 		C41A50EC22D30CC00056DB21 /* SetMealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50EB22D30CC00056DB21 /* SetMealTableViewCell.swift */; };
 		C41A50EE22D30D2F0056DB21 /* DetailMealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50ED22D30D2F0056DB21 /* DetailMealViewController.swift */; };
 		C41A50F022D30E820056DB21 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50EF22D30E820056DB21 /* ViewController.swift */; };
 		C41A50F322D30FAB0056DB21 /* UserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C41A50F122D30FAA0056DB21 /* UserView.xib */; };
 		C41A50F422D30FAB0056DB21 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50F222D30FAA0056DB21 /* UserView.swift */; };
 		C41A50F822D310450056DB21 /* RecommandCycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50F722D310450056DB21 /* RecommandCycleView.swift */; };
+		C41A50FA22D315F40056DB21 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50F922D315F40056DB21 /* Contact.swift */; };
+		C41A50FC22D325C90056DB21 /* TitleCellectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50FB22D325C90056DB21 /* TitleCellectionViewCell.swift */; };
+		C41A50FE22D328FB0056DB21 /* SearchDishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50FD22D328FB0056DB21 /* SearchDishViewController.swift */; };
+		C41A510E22D36C1B0056DB21 /* KSLife-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4BD22A501DA00F9AB7D /* KSLife-Bridging-Header.h */; };
+		C41A512A22D36CF70056DB21 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511D22D36CF70056DB21 /* DropDownMenu.swift */; };
+		C41A512B22D36D690056DB21 /* NavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511122D36CF70056DB21 /* NavButton.swift */; };
+		C41A512C22D36D690056DB21 /* PopBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511222D36CF70056DB21 /* PopBaseView.swift */; };
+		C41A512D22D36D690056DB21 /* PopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511322D36CF70056DB21 /* PopView.swift */; };
+		C41A512E22D36D690056DB21 /* SwiftPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511422D36CF70056DB21 /* SwiftPopup.swift */; };
+		C41A512F22D36D690056DB21 /* PageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511522D36CF70056DB21 /* PageContentView.swift */; };
+		C41A513022D36D690056DB21 /* SwiftPopupPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511622D36CF70056DB21 /* SwiftPopupPresentationController.swift */; };
+		C41A513122D36D690056DB21 /* SwiftPopupAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511722D36CF70056DB21 /* SwiftPopupAnimation.swift */; };
+		C41A513222D36D690056DB21 /* PageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511822D36CF70056DB21 /* PageTitleView.swift */; };
+		C41A513322D36D690056DB21 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511922D36CF70056DB21 /* PhotoViewController.swift */; };
+		C41A513422D36D690056DB21 /* PageTitleScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511A22D36CF70056DB21 /* PageTitleScrollView.swift */; };
+		C41A513522D36D690056DB21 /* InsertLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511B22D36CF70056DB21 /* InsertLabel.swift */; };
+		C41A513622D36D690056DB21 /* CycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A511C22D36CF70056DB21 /* CycleView.swift */; };
+		C41A513722D36D8C0056DB21 /* TestSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A50DF22D306E40056DB21 /* TestSurveyViewController.swift */; };
+		C41A513922D36E1B0056DB21 /* SendFlowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41A513822D36E1B0056DB21 /* SendFlowerView.swift */; };
 		C41CF49F22A0D1F000F9AB7D /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF49E22A0D1F000F9AB7D /* NetworkTools.swift */; };
 		C41CF4A222A0D7EA00F9AB7D /* DeviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4A122A0D7EA00F9AB7D /* DeviceStatus.swift */; };
 		C41CF4A422A0D84D00F9AB7D /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4A322A0D84D00F9AB7D /* CustomError.swift */; };
@@ -195,19 +200,6 @@
 		74FBF4AF22CB47A000E8B022 /* CoursePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursePlayerViewController.swift; sourceTree = "<group>"; };
 		9A6DCBDB48F937C60CA4BBE4 /* Pods_KSLifeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KSLifeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6A9D6DF693054324302DC29 /* Pods-KSLifeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeTests/Pods-KSLifeTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C41A50C122D305C50056DB21 /* NavButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
-		C41A50C222D305C50056DB21 /* PopTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopTextView.swift; sourceTree = "<group>"; };
-		C41A50C322D305C50056DB21 /* PopBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopBaseView.swift; sourceTree = "<group>"; };
-		C41A50C422D305C50056DB21 /* PopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopView.swift; sourceTree = "<group>"; };
-		C41A50C622D305C50056DB21 /* SwiftPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopup.swift; sourceTree = "<group>"; };
-		C41A50C722D305C50056DB21 /* PageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentView.swift; sourceTree = "<group>"; };
-		C41A50C822D305C50056DB21 /* SwiftPopupPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopupPresentationController.swift; sourceTree = "<group>"; };
-		C41A50C922D305C50056DB21 /* SwiftPopupAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopupAnimation.swift; sourceTree = "<group>"; };
-		C41A50CA22D305C50056DB21 /* PageTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTitleView.swift; sourceTree = "<group>"; };
-		C41A50CB22D305C50056DB21 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
-		C41A50CC22D305C50056DB21 /* InsertLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertLabel.swift; sourceTree = "<group>"; };
-		C41A50CD22D305C50056DB21 /* CycleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CycleView.swift; sourceTree = "<group>"; };
-		C41A50CE22D305C50056DB21 /* DropDownMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
 		C41A50DF22D306E40056DB21 /* TestSurveyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestSurveyViewController.swift; path = "../../../../../../../../../../KSLife 2/KSLife/KSLife/User/Controller/TestSurveyViewController.swift"; sourceTree = "<group>"; };
 		C41A50EB22D30CC00056DB21 /* SetMealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetMealTableViewCell.swift; sourceTree = "<group>"; };
 		C41A50ED22D30D2F0056DB21 /* DetailMealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailMealViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +207,23 @@
 		C41A50F122D30FAA0056DB21 /* UserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserView.xib; sourceTree = "<group>"; };
 		C41A50F222D30FAA0056DB21 /* UserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		C41A50F722D310450056DB21 /* RecommandCycleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandCycleView.swift; sourceTree = "<group>"; };
+		C41A50F922D315F40056DB21 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		C41A50FB22D325C90056DB21 /* TitleCellectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCellectionViewCell.swift; sourceTree = "<group>"; };
+		C41A50FD22D328FB0056DB21 /* SearchDishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDishViewController.swift; sourceTree = "<group>"; };
+		C41A511122D36CF70056DB21 /* NavButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
+		C41A511222D36CF70056DB21 /* PopBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopBaseView.swift; sourceTree = "<group>"; };
+		C41A511322D36CF70056DB21 /* PopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopView.swift; sourceTree = "<group>"; };
+		C41A511422D36CF70056DB21 /* SwiftPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopup.swift; sourceTree = "<group>"; };
+		C41A511522D36CF70056DB21 /* PageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentView.swift; sourceTree = "<group>"; };
+		C41A511622D36CF70056DB21 /* SwiftPopupPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopupPresentationController.swift; sourceTree = "<group>"; };
+		C41A511722D36CF70056DB21 /* SwiftPopupAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPopupAnimation.swift; sourceTree = "<group>"; };
+		C41A511822D36CF70056DB21 /* PageTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTitleView.swift; sourceTree = "<group>"; };
+		C41A511922D36CF70056DB21 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		C41A511A22D36CF70056DB21 /* PageTitleScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTitleScrollView.swift; sourceTree = "<group>"; };
+		C41A511B22D36CF70056DB21 /* InsertLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertLabel.swift; sourceTree = "<group>"; };
+		C41A511C22D36CF70056DB21 /* CycleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CycleView.swift; sourceTree = "<group>"; };
+		C41A511D22D36CF70056DB21 /* DropDownMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
+		C41A513822D36E1B0056DB21 /* SendFlowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFlowerView.swift; sourceTree = "<group>"; };
 		C41CF49E22A0D1F000F9AB7D /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
 		C41CF4A122A0D7EA00F9AB7D /* DeviceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStatus.swift; sourceTree = "<group>"; };
 		C41CF4A322A0D84D00F9AB7D /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
@@ -480,6 +489,7 @@
 				748C77762299037A00E1E97D /* MessageDoctorTableViewCell.swift */,
 				74FBF4A422CA346900E8B022 /* MessageFriendTableViewCell.swift */,
 				C41A50F722D310450056DB21 /* RecommandCycleView.swift */,
+				C41A50FB22D325C90056DB21 /* TitleCellectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -487,7 +497,7 @@
 		74B09EBD228D80960065D3AB /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				C41A50C022D305C50056DB21 /* View */,
+				C41A511022D36CF70056DB21 /* View */,
 				74B09EBE228D80960065D3AB /* ClassExtensions.swift */,
 				C453AF3E229F7CF900369F10 /* common.swift */,
 				C41CF49E22A0D1F000F9AB7D /* NetworkTools.swift */,
@@ -563,6 +573,7 @@
 			children = (
 				74FBF4A722CA3B5400E8B022 /* DangAnProfile.swift */,
 				74FBF4AD22CB3C9500E8B022 /* CourseData.swift */,
+				C41A50F922D315F40056DB21 /* Contact.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -588,25 +599,25 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		C41A50C022D305C50056DB21 /* View */ = {
+		C41A511022D36CF70056DB21 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C41A50C122D305C50056DB21 /* NavButton.swift */,
-				C41A50C222D305C50056DB21 /* PopTextView.swift */,
-				C41A50C322D305C50056DB21 /* PopBaseView.swift */,
-				C41A50C422D305C50056DB21 /* PopView.swift */,
-				C41A50C622D305C50056DB21 /* SwiftPopup.swift */,
-				C41A50C722D305C50056DB21 /* PageContentView.swift */,
-				C41A50C822D305C50056DB21 /* SwiftPopupPresentationController.swift */,
-				C41A50C922D305C50056DB21 /* SwiftPopupAnimation.swift */,
-				C41A50CA22D305C50056DB21 /* PageTitleView.swift */,
-				C41A50CB22D305C50056DB21 /* PhotoViewController.swift */,
-				C41A50CC22D305C50056DB21 /* InsertLabel.swift */,
-				C41A50CD22D305C50056DB21 /* CycleView.swift */,
-				C41A50CE22D305C50056DB21 /* DropDownMenu.swift */,
+				C41A511122D36CF70056DB21 /* NavButton.swift */,
+				C41A511222D36CF70056DB21 /* PopBaseView.swift */,
+				C41A511322D36CF70056DB21 /* PopView.swift */,
+				C41A511422D36CF70056DB21 /* SwiftPopup.swift */,
+				C41A511522D36CF70056DB21 /* PageContentView.swift */,
+				C41A511622D36CF70056DB21 /* SwiftPopupPresentationController.swift */,
+				C41A511722D36CF70056DB21 /* SwiftPopupAnimation.swift */,
+				C41A511822D36CF70056DB21 /* PageTitleView.swift */,
+				C41A511922D36CF70056DB21 /* PhotoViewController.swift */,
+				C41A511A22D36CF70056DB21 /* PageTitleScrollView.swift */,
+				C41A511B22D36CF70056DB21 /* InsertLabel.swift */,
+				C41A511C22D36CF70056DB21 /* CycleView.swift */,
+				C41A511D22D36CF70056DB21 /* DropDownMenu.swift */,
 			);
 			name = View;
-			path = "../../../../../../../../../KSLife 2/KSLife/KSLife/Shared/View";
+			path = ../../../../../../../../../KSLife/KSLife/KSLife/Shared/View;
 			sourceTree = "<group>";
 		};
 		C453AF56229F7D2700369F10 /* Punch */ = {
@@ -651,6 +662,7 @@
 				C453AF64229F7D2700369F10 /* AnalysisViewController.swift */,
 				C45FAAAB22A05D4A0040FA3C /* FoodRecordViewController.swift */,
 				C453AF5F229F7D2700369F10 /* AddDishViewController.swift */,
+				C41A50FD22D328FB0056DB21 /* SearchDishViewController.swift */,
 				C453AF5E229F7D2700369F10 /* CopyRecordViewController.swift */,
 				C48CBC4522C8B8CD00370115 /* SetMealsViewController.swift */,
 				C41A50ED22D30D2F0056DB21 /* DetailMealViewController.swift */,
@@ -748,6 +760,7 @@
 				C41CF4B322A1D89D00F9AB7D /* FormTableViewCell.swift */,
 				C41CF4AD22A1AAB900F9AB7D /* CircleTableViewCell.swift */,
 				C41CF4B122A1CA2700F9AB7D /* ActivityTableViewCell.swift */,
+				C41A513822D36E1B0056DB21 /* SendFlowerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -981,17 +994,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41A513722D36D8C0056DB21 /* TestSurveyViewController.swift in Sources */,
+				C41A512B22D36D690056DB21 /* NavButton.swift in Sources */,
+				C41A512C22D36D690056DB21 /* PopBaseView.swift in Sources */,
+				C41A512D22D36D690056DB21 /* PopView.swift in Sources */,
+				C41A512E22D36D690056DB21 /* SwiftPopup.swift in Sources */,
+				C41A512F22D36D690056DB21 /* PageContentView.swift in Sources */,
+				C41A513022D36D690056DB21 /* SwiftPopupPresentationController.swift in Sources */,
+				C41A513122D36D690056DB21 /* SwiftPopupAnimation.swift in Sources */,
+				C41A513222D36D690056DB21 /* PageTitleView.swift in Sources */,
+				C41A513322D36D690056DB21 /* PhotoViewController.swift in Sources */,
+				C41A513422D36D690056DB21 /* PageTitleScrollView.swift in Sources */,
+				C41A513522D36D690056DB21 /* InsertLabel.swift in Sources */,
+				C41A513622D36D690056DB21 /* CycleView.swift in Sources */,
+				C41A510E22D36C1B0056DB21 /* KSLife-Bridging-Header.h in Sources */,
 				C41A50DD22D306B80056DB21 /* DoctorAPIs.swift in Sources */,
 				C41A50DE22D306B80056DB21 /* FormTableViewCell.swift in Sources */,
-				C41A50E022D306E40056DB21 /* TestSurveyViewController.swift in Sources */,
+				C41A512A22D36CF70056DB21 /* DropDownMenu.swift in Sources */,
 				C453AF4A229F7CFA00369F10 /* common.swift in Sources */,
 				C45FAAAE22A06C150040FA3C /* WeeklySelectDateView.swift in Sources */,
 				C41CF4A822A0DD5E00F9AB7D /* Doctor.swift in Sources */,
 				C48CBC5222C9F86C00370115 /* Message.swift in Sources */,
 				74B09ECC228D80960065D3AB /* RecommendTableViewCell.swift in Sources */,
-				C41A50D922D305C50056DB21 /* PhotoViewController.swift in Sources */,
 				742104DE228F06F200A23C83 /* YouLuViewController.swift in Sources */,
-				C41A50D522D305C50056DB21 /* PageContentView.swift in Sources */,
 				C453AF70229F7D2700369F10 /* DiyDishViewController.swift in Sources */,
 				748C77772299037A00E1E97D /* MessageDoctorTableViewCell.swift in Sources */,
 				74FBF4A522CA346900E8B022 /* MessageFriendTableViewCell.swift in Sources */,
@@ -1004,11 +1029,13 @@
 				C453AF93229F7D4E00369F10 /* FormViewController.swift in Sources */,
 				C41CF4C722A650A100F9AB7D /* FoodManager.swift in Sources */,
 				C41CF4AA22A198FD00F9AB7D /* SurveyAPIs.swift in Sources */,
+				C41A50FC22D325C90056DB21 /* TitleCellectionViewCell.swift in Sources */,
 				74B09ED3228D80960065D3AB /* DottedLineView.swift in Sources */,
 				C453AF74229F7D2700369F10 /* PunchMainViewController.swift in Sources */,
 				C453AF6E229F7D2700369F10 /* PunchViewController.swift in Sources */,
 				C48CBC4622C8B8CE00370115 /* SetMealsViewController.swift in Sources */,
 				743212C6229514EC0076CCF3 /* AboutViewController.swift in Sources */,
+				C41A513922D36E1B0056DB21 /* SendFlowerView.swift in Sources */,
 				C453AF6C229F7D2700369F10 /* CopyRecordViewController.swift in Sources */,
 				C453AF72229F7D2700369F10 /* AnalysisViewController.swift in Sources */,
 				748C777F2299330100E1E97D /* CourseStudyViewController.swift in Sources */,
@@ -1022,12 +1049,10 @@
 				C48CBC5022C9F5D500370115 /* MsgAPIs.swift in Sources */,
 				748C77812299352600E1E97D /* CourseTableViewCell.swift in Sources */,
 				C48CBC4E22C9F42E00370115 /* MessageViewController.swift in Sources */,
-				C41A50DA22D305C50056DB21 /* InsertLabel.swift in Sources */,
 				74B09ECF228D80960065D3AB /* ClassExtensions.swift in Sources */,
-				C41A50D822D305C50056DB21 /* PageTitleView.swift in Sources */,
 				C41CF4BA22A2217F00F9AB7D /* RecordAPIs.swift in Sources */,
 				C453AF97229F7D4E00369F10 /* DoctorTableViewCell.swift in Sources */,
-				C41A50D122D305C50056DB21 /* PopBaseView.swift in Sources */,
+				C41A50FA22D315F40056DB21 /* Contact.swift in Sources */,
 				C48CBC4822C8D3AA00370115 /* RelationAPIs.swift in Sources */,
 				C453AF96229F7D4E00369F10 /* FormView.swift in Sources */,
 				C453AF99229F7D4E00369F10 /* FoldTableViewCell.swift in Sources */,
@@ -1046,10 +1071,9 @@
 				C41CF4A422A0D84D00F9AB7D /* CustomError.swift in Sources */,
 				748C77792299320600E1E97D /* CourseViewController.swift in Sources */,
 				C41CF4AC22A19A6600F9AB7D /* Survey.swift in Sources */,
-				C41A50CF22D305C50056DB21 /* NavButton.swift in Sources */,
 				C41CF49F22A0D1F000F9AB7D /* NetworkTools.swift in Sources */,
-				C41A50D622D305C50056DB21 /* SwiftPopupPresentationController.swift in Sources */,
 				C453AF92229F7D4E00369F10 /* MedicalServeViewController.swift in Sources */,
+				C41A50FE22D328FB0056DB21 /* SearchDishViewController.swift in Sources */,
 				C41CF4C922A6A3D900F9AB7D /* ResetPassViewController.swift in Sources */,
 				C453AF82229F7D3C00369F10 /* BlogViewController.swift in Sources */,
 				C453AF69229F7D2700369F10 /* ActionSheetShowAnimation.swift in Sources */,
@@ -1066,15 +1090,11 @@
 				C41CF4B822A2107F00F9AB7D /* BlogAPIs.swift in Sources */,
 				C442987322CB3F1400764610 /* MessageTableViewCell.swift in Sources */,
 				C453AF6D229F7D2700369F10 /* AddDishViewController.swift in Sources */,
-				C41A50DB22D305C50056DB21 /* CycleView.swift in Sources */,
 				C453AF95229F7D4E00369F10 /* CheckBoxView.swift in Sources */,
 				C41CF4B222A1CA2700F9AB7D /* ActivityTableViewCell.swift in Sources */,
 				74B09ED2228D80960065D3AB /* PersonalRecordViewController.swift in Sources */,
-				C41A50D722D305C50056DB21 /* SwiftPopupAnimation.swift in Sources */,
-				C41A50D022D305C50056DB21 /* PopTextView.swift in Sources */,
 				C48CBC4C22C9290200370115 /* RemarkViewController.swift in Sources */,
 				74B09ED1228D80960065D3AB /* PersonalInfoViewController.swift in Sources */,
-				C41A50D222D305C50056DB21 /* PopView.swift in Sources */,
 				C453AF6B229F7D2700369F10 /* ScoreView.swift in Sources */,
 				748C777B2299329600E1E97D /* CourseBuyViewController.swift in Sources */,
 				748C77752298FEBE00E1E97D /* MessageFriendsViewConttroller.swift in Sources */,
@@ -1082,7 +1102,6 @@
 				748C777D229932C500E1E97D /* CourseShouCangViewController.swift in Sources */,
 				C453AF85229F7D3C00369F10 /* BlogTableViewCell.swift in Sources */,
 				C41A50F022D30E820056DB21 /* ViewController.swift in Sources */,
-				C41A50DC22D305C50056DB21 /* DropDownMenu.swift in Sources */,
 				74FBF4A822CA3B5400E8B022 /* DangAnProfile.swift in Sources */,
 				74E1A60A229188F500B38CC2 /* YouLuTableViewCell.swift in Sources */,
 				C45FAAAC22A05D4A0040FA3C /* FoodRecordViewController.swift in Sources */,
@@ -1090,7 +1109,6 @@
 				C48CBC4A22C8D7E200370115 /* FriendViewController.swift in Sources */,
 				C453AF81229F7D3C00369F10 /* FoodPreserveViewController.swift in Sources */,
 				74FBF4AC22CB2D1100E8B022 /* SetIntroController.swift in Sources */,
-				C41A50D422D305C50056DB21 /* SwiftPopup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1275,7 +1293,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shan.KSLife;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eshine.kslife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "KSLife/Shared/KSLife-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1298,7 +1316,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shan.KSLife;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eshine.kslife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "KSLife/Shared/KSLife-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;

@@ -22,7 +22,7 @@ class BlogViewController: UIViewController {
     private var page: Int = 0
     
     lazy var msgTableView: UITableView = {[unowned self] in
-        let tableView = UITableView(frame: self.view.bounds, style: .grouped)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.rowHeight = itemH
         tableView.sectionFooterHeight = 10
         tableView.sectionHeaderHeight = 0
@@ -40,6 +40,9 @@ class BlogViewController: UIViewController {
         getBlogs(uid: UserInfo.shared.user.uid, type: type!, page: 0, success: { list in
             self.blogs = list
         })
+        msgTableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         let header = MJRefreshNormalHeader()
         header.setRefreshingTarget(self, refreshingAction: Selector(("refresh")))
         msgTableView.mj_header = header

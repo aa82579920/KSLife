@@ -15,6 +15,17 @@ class YouLuTableViewCell: UITableViewCell {
     let numLable = UILabel()
     let jianTouImageView = UIImageView()
     
+    var person: Contact? {
+        didSet {
+            if let person = person {
+                headImageView.sd_setImage(with: URL(string: person.photo ?? ""), placeholderImage: UIImage(named: "upic"))
+                nameLable.text = person.remark
+                discribLable.text = person.nickname
+                numLable.text = "康食号：" + person.uid
+            }
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }

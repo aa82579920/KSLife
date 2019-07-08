@@ -23,7 +23,7 @@ class RecommandCycleView: CycleView {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cycleCellID, for: indexPath)
         let imageView = UIImageView()
-        imageView.sd_setImage(with: URL(string: imgUrls![indexPath.row % imgUrls!.count]), placeholderImage: UIImage(named: "scenery"))
+        imageView.sd_setImage(with: URL(string: imgUrls![indexPath.row % imgUrls!.count]), placeholderImage: UIImage(named: "noImg"))
         cell.contentView.addSubview(imageView)
         imageView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(cell.contentView)

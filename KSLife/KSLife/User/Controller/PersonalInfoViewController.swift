@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 class PersonalInfoViewController: UIViewController {
     var tableView: UITableView!
-
+    
     fileprivate let nameLabel: UILabel = {
         let label = UILabel()
         label.text = UserInfo.shared.user.nickname
@@ -21,7 +21,7 @@ class PersonalInfoViewController: UIViewController {
         label.textColor = .black
         return label
     }()
-
+    
     fileprivate let digitLabel: UILabel = {
         let label = UILabel()
         label.text = "康食号：" + UserInfo.shared.user.uid
@@ -30,25 +30,24 @@ class PersonalInfoViewController: UIViewController {
         label.textColor = .black
         return label
     }()
-
+    
     fileprivate var imgView: UIImageView = {
         let imgView = UIImageView()
-//        imgView.layer.masksToBounds = true
-//        imgView.layer.cornerRadius = 120/2
+        imgView.backgroundColor = .white
+        //        imgView.layer.masksToBounds = true
+        //        imgView.layer.cornerRadius = 120/2
         //imgView.image = UIImage.resizedImage(image: UIImage(named: "upic")!, scaledToWidth: 30.0)
         imgView.sd_setImage(with: URL(string: UserInfo.shared.user.photo), placeholderImage: UIImage(named: "upic"))
-        imgView.layer.masksToBounds = true
-        imgView.layer.cornerRadius = imgView.frame.width/2
         return imgView
     }()
-
+    
     fileprivate var moreImgView: UIImageView = {
         let imgView = UIImageView()
         imgView.backgroundColor = .white
         imgView.image = UIImage(named: "more_arrow")
         return imgView
     }()
-
+    
     fileprivate var outBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("退出登录", for: .normal)
@@ -57,33 +56,34 @@ class PersonalInfoViewController: UIViewController {
         btn.backgroundColor = .red
         return btn
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.tableView = UITableView(frame: self.view.bounds, style: .grouped)
-
+        
         tableView.delegate = self
         tableView.dataSource = self
-
+        
         self.view.addSubview(tableView)
-
-
+        
+        
         self.outBtn.addTarget(self, action: #selector(logout), for: .touchUpInside)
-
+        
     }
-
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
-//
-//    }
+    
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(animated)
+    //
+    //        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    //
+    //    }
 }
 
 extension PersonalInfoViewController {
     @objc func logout() {
-
+        let mainVC = LoginViewController()
+        UIApplication.shared.keyWindow!.rootViewController = mainVC
     }
 }
 
@@ -91,7 +91,7 @@ extension PersonalInfoViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 1) {
             return 6
@@ -99,7 +99,7 @@ extension PersonalInfoViewController: UITableViewDataSource {
             return 1
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 2 {
             let cell = UITableViewCell()
@@ -201,7 +201,7 @@ extension PersonalInfoViewController: UITableViewDelegate {
             return 44
         }
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         if indexPath.section == 0 {
@@ -232,21 +232,20 @@ extension PersonalInfoViewController: UITableViewDelegate {
             }
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ? 0 : 25
     }
-
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 0
-//    }
-
+    
+    //    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    //        return 0
+    //    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView()
     }
-
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return UIView()
-//    }
+    
+    //    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    //        return UIView()
+    //    }
 }
-

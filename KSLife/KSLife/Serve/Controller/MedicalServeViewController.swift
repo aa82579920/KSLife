@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MJRefresh
 
 class MedicalServeViewController: UIViewController {
 
@@ -24,6 +25,10 @@ class MedicalServeViewController: UIViewController {
         getBanner(uid: UserInfo.shared.user.uid, success: { list in
             self.cycleView.imgUrls = list
         })
+        
+        let header = MJRefreshNormalHeader()
+        header.setRefreshingTarget(self, refreshingAction: Selector(("refresh")))
+        tableView.mj_header = header
     }
     
     private var doctors: [Doctor] = []
@@ -103,6 +108,15 @@ extension MedicalServeViewController {
                 self.tableView.reloadData()
             })
         }
+    }
+    
+    @objc func refresh() {
+        getDoctorList(page: 0, success: { list in
+            self.doctors = list
+            self.allDoctors = list
+            self.tableView.reloadData()
+        })
+        self.tableView.mj_header.endRefreshing()
     }
 }
 
@@ -197,6 +211,7 @@ extension MedicalServeViewController {
 extension MedicalServeViewController {
     func getDoctorList(page: Int, success: @escaping ([Doctor]) -> Void) {
         SolaSessionManager.solaSession(url: DoctorAPIs.getDoctorList, parameters: ["page": "0"], success: { dict in
+            
             if let data = dict["data"] as? [String: Any], let items = data["items"]  as? [Any]{
                 do {
                     let json = try JSONSerialization.data(withJSONObject: items, options: [])

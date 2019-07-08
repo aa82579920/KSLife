@@ -13,18 +13,22 @@ class FoodManager {
     
     func submitDiet(uid: String, kgId: String, amount: String, unit: String, date: String = Date().toISO([.withFullDate]), type: Int = 1, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: RecordAPIs.submitDiet, parameters: ["uid": uid, "kgId": kgId, "amount": amount, "unit": unit, "type": "\(type)"], success: { dict in
+        
             guard let status = dict["status"] as? Int else {
                 return
             }
-            if status == 200 {
-                guard let data = dict["data"] as? [String: Any], let score = data["score"] as? String, let dietId = data["dietId"] as? String else {
-                    return
+            
+            if status != 200 {
+                if let msg = dict["msg"] as? String {
+                    failure("康食：" + msg)
                 }
-                PunchViewController.dietIds.append(dietId)
-                success()
-            } else {
-                failure(dict["msg"] as! String)
+                return
             }
+            guard let data = dict["data"] as? [String: Any], let score = data["score"] as? String, let dietId = data["dietId"] as? String else {
+                return
+            }
+            PunchViewController.dietIds.append(dietId)
+            success()
         }, failure: { error in
             failure(error.localizedDescription)
         })

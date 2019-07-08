@@ -13,6 +13,8 @@ class UserView: UIView {
 
     @IBOutlet weak var helloLabel: UILabel!
     
+    @IBOutlet weak var timeLabel: UILabel!
+    
     @IBOutlet weak var locationImgBtn: UIButton!
     
     @IBOutlet weak var locationBtn: UIButton!

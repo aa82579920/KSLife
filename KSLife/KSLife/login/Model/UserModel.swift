@@ -59,6 +59,7 @@ class UserInfo {
         Alamofire.request(loginUrl, method: .post, parameters: ["mobile": mobile, "password": password.MD5]).responseJSON { response in
             switch response.result.isSuccess {
             case true:
+                print(password.MD5)
                 //把得到的JSON数据转为数组
                 if let value = response.result.value {
                     let json = JSON(value)
@@ -68,17 +69,17 @@ class UserInfo {
                     } else {
                         print("--------------\(json["data"]["uid"].string!)")
                         UserInfo.shared.user.uid = json["data"]["uid"].string!
-                        UserInfo.shared.user.nickname = json["data"]["nickname"].string!
-                        UserInfo.shared.user.photo = json["data"]["photo"].string!
-                        UserInfo.shared.user.sex = json["data"]["sex"].int!
-                        UserInfo.shared.user.age = json["data"]["age"].int!
-                        UserInfo.shared.user.height = json["data"]["height"].int!
-                        UserInfo.shared.user.weight = json["data"]["weight"].int!
+                        UserInfo.shared.user.nickname = json["data"]["nickname"].string ?? "昵称"
+                        UserInfo.shared.user.photo = json["data"]["photo"].string ?? ""
+                        UserInfo.shared.user.sex = json["data"]["sex"].int ?? 2
+                        UserInfo.shared.user.age = json["data"]["age"].int ?? 23
+                        UserInfo.shared.user.height = json["data"]["height"].int ?? 165
+                        UserInfo.shared.user.weight = json["data"]["weight"].int ?? 60
                         UserInfo.shared.user.role = json["data"]["role"].int!
                         UserInfo.shared.user.status = json["data"]["status"].int!
-                        UserInfo.shared.user.demand = json["data"]["demand"].string!
-                        UserInfo.shared.user.physicalStatus = json["data"]["physicalStatus"].string!
-                        UserInfo.shared.user.province_name = json["data"]["province_name"].string!
+                        UserInfo.shared.user.demand = json["data"]["demand"].string ?? "减肥"
+                        UserInfo.shared.user.physicalStatus = json["data"]["physicalStatus"].string ?? "您的体型正常,处于减肥期间"
+                        UserInfo.shared.user.province_name = json["data"]["province_name"].string ?? "天津"
                         UserInfo.shared.user.like_num = json["data"]["like_num"].int!
                         success()
                     }
