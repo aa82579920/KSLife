@@ -140,7 +140,13 @@ class LoginViewController: UIViewController {
     }
     
     @objc func wechat() {
+        // 没安装客户端不跳转
+        let req = SendAuthReq()
+        req.scope = "snsapi_userinfo"
+        req.state = "default_state"
         
+        WXApi.send(req)
+        print("click wechat_login")
     }
     
     func setUpUI() {
