@@ -179,6 +179,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         let url = URL(string: urlStr)
         
         do {
+            //                    let responseStr = try String.init(contentsOf: url!, encoding: String.Encoding.utf8)
             
             let responseData = try Data.init(contentsOf: url!, options: Data.ReadingOptions.alwaysMapped)
             
@@ -203,7 +204,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
                     "nickname": dic["nickname"]!,
                     "sex": dic["sex"]!
                 ]
-                
+                let url = "http://kangshilife.com/EGuider/user/register/wx"
+                Alamofire.request(url, method: .post, parameters: data).responseJSON { response in
+                    switch response.result.isSuccess {
+                    case true:
+                        //把得到的JSON数据转为数组
+                        if let value = response.result.value {
+                            let json = JSON(value)
+                            if json["status"] == 200  {
+                                if json["data"]["mobile"] == JSON.null {
+//                                    let vc = UINavigationController(rootViewController: SignInViewController())
+//                                    vc.hidesBottomBarWhenPushed = true
+//                                    self.present(vc, animated: true, completion: nil)
+                                    
+                                    print("未绑定手机号")
+                                } else {
+                                    print("已绑定手机号")
+                                }
+                            }
+                        }
+                    case false:
+                        print(response.result.error)
+                    }
+                    
+                }
             }
         } catch {
             DispatchQueue.main.async {
