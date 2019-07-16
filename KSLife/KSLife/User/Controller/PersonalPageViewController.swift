@@ -16,6 +16,8 @@ class PersonalPageViewController: UIViewController {
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60 ))
         imgView.backgroundColor = .white
         imgView.sd_setImage(with: URL(string: UserInfo.shared.user.photo), placeholderImage: UIImage(named: "upic"))
+        imgView.layer.cornerRadius = imgView.frame.width/2
+        imgView.clipsToBounds = true
         return imgView
     }()
 

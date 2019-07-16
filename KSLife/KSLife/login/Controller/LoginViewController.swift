@@ -37,6 +37,7 @@ class LoginViewController: UIViewController {
         field.clearButtonMode = .always
         field.delegate = self
         field.returnKeyType = .next
+        field.keyboardType = UIKeyboardType.numberPad
         return field
         }()
     
@@ -85,6 +86,7 @@ class LoginViewController: UIViewController {
         button.setTitleColor(mainColor, for: .normal)
         button.backgroundColor = .white
         button.addTarget(self, action: #selector(signIn), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15/375 * Device.width)
         return button
     }()
     

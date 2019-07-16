@@ -17,8 +17,9 @@ class PersonalRecordViewController: PhotoViewController {
     var dangAnProfile = DangAnProfile()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "档案"
-
+        self.title = "康食档案"
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.tintColor = .black
         setProfile()
 
     }
