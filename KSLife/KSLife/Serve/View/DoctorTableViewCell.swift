@@ -13,7 +13,7 @@ class DoctorTableViewCell: CommentTableViewCell {
     var doctor: Doctor? {
         didSet {
             if let doctor = doctor {
-                details = [doctor.name, "收到鲜花数\(doctor.likeNum)", doctor.hospital + "  " + doctor.level + "\n" + doctor.introduction]
+                details = [doctor.name, "收到鲜花数：\(doctor.likeNum)", doctor.hospital + "  " + doctor.level + "\n" + doctor.introduction]
                 avatarImage.sd_setImage(with: URL(string: doctor.photo), placeholderImage: UIImage(named: "noImg"))
                 switch doctor.follow {
                 case 0:

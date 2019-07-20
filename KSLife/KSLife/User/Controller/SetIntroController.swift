@@ -11,7 +11,11 @@ import  Alamofire
 import SwiftyJSON
 class SetIntroController: UIViewController {
     var textField: UITextField!
-    var button: UIButton!
+    private lazy var button: UIButton = {
+        let btn = NavButton(frame: CGRect(x: Device.width/2-30, y: textField.frame.maxY+5, width: 60, height: 30), title: "确认")
+        btn.addTarget(self, action: #selector(queding), for: .touchUpInside)
+        return btn
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +33,7 @@ class SetIntroController: UIViewController {
         textField.delegate = self
         self.view.addSubview(textField)
         
-        button = UIButton(frame: CGRect(x: Device.width/2-20, y: textField.frame.maxY+5, width: 40, height: 30))
-        //设置圆角
-        button.layer.masksToBounds = true
-        button.layer.cornerRadius = 5.0
-        button.backgroundColor = UIColor.blue
-        button.tintColor = .white
-        button.setTitle("确定", for: .normal)
-        button.addTarget(self, action: #selector(queding), for: .touchUpInside)
+        
         self.view.addSubview(button)
     }
     @objc func queding() {

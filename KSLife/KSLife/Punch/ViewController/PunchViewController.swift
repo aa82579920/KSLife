@@ -282,7 +282,7 @@ extension PunchViewController {
         
         for i in 0..<3 {
             btns[i].snp.makeConstraints { (make) -> Void in
-                make.top.equalTo(scoreView.snp.bottom).offset(padding)
+                make.top.equalTo(scoreView.snp.bottom).offset(padding*3)
                 make.width.equalTo(view).multipliedBy(0.3)
             }
         }

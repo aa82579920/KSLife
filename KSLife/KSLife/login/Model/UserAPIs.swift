@@ -15,4 +15,5 @@ struct UserAPIs {
     static let checkDuplicate = "/user/checkDuplicate"
     static let setFriendRemark = "/user/setFriendRemark"
     static let getFriendRemark = "/user/getFriendRemark"
+    static let registerwx = "/user/register/wx"      // 微信验证后的康食注册
 }

@@ -34,5 +34,8 @@ class MainTabBarController: UITabBarController {
         five.tabBarItem.image = UIImage(named: "my")
         
         self.setViewControllers([UINavigationController(rootViewController: one), UINavigationController(rootViewController: two), UINavigationController(rootViewController: three), UINavigationController(rootViewController: four), UINavigationController(rootViewController: five)], animated: true)
+        
+        
     }
+    
 }

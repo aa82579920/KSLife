@@ -118,6 +118,8 @@ extension PersonalInfoViewController: UITableViewDataSource {
                 make.left.equalToSuperview().inset(30)
                 make.width.equalTo(70)
             }
+            imgView.layer.cornerRadius = 70/2
+            imgView.clipsToBounds = true
             nameLabel.snp.makeConstraints { make in
                 make.left.equalTo(imgView.snp.right).offset(15)
                 make.right.equalToSuperview().inset(10)
