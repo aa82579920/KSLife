@@ -11,6 +11,7 @@ import MJRefresh
 import Alamofire
 import SwiftyJSON
 import SDWebImage
+import SCLAlertView
 // 康食主页
 class MainPageViewController: UIViewController {
     
@@ -65,6 +66,7 @@ class MainPageViewController: UIViewController {
             self.recomandVC.dishs = list
         })
         addMsgTimer()
+        setAlert()
     }
     // 初始化信息
     func setController() {
@@ -103,6 +105,27 @@ class MainPageViewController: UIViewController {
         userView.locationBtn.addTarget(self, action: #selector(presentPickerView(_:)), for: .touchUpInside)
         userView.locationImgBtn.addTarget(self, action: #selector(presentPickerView(_:)), for: .touchUpInside)
     }
+    // 弹窗
+    func setAlert() {
+        if UserInfo.shared.user.isQuestionnaire == false {
+            //自定义提示框样式
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false, //不显示关闭按钮
+                showCircularIcon: false, //隐藏头部图标
+                buttonCornerRadius : 5  //按钮圆角
+                
+            )
+            //使用自定义样式的提示框
+            let alert = SCLAlertView(appearance: appearance)
+            //alert.addButton("进行体质监测", target: self, selector: #selector(alertClick))
+            let btn = alert.addButton("进行体质监测", backgroundColor: UIColor.white, textColor: mainColor, showTimeout: nil, target: self, selector: #selector(alertClick))
+            btn.layer.borderWidth = 1.0
+            btn.layer.borderColor = mainColor.cgColor
+            //显示提示框
+            alert.showInfo("", subTitle: "康食君还不了解您，无法为您推荐，请进行体质监测")
+        }
+    }
+    
     // 主编推荐请求
     func setArticles() {
         let loginUrl = "http://kangshilife.com/EGuider/home/getArticles?uid=\(UserInfo.shared.user.uid)"
@@ -135,6 +158,12 @@ class MainPageViewController: UIViewController {
                 print(response.result.error)
             }
         }
+    }
+    
+    @objc func alertClick() {
+        let vc = TestSurveyViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

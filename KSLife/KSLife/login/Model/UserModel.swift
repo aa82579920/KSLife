@@ -24,7 +24,7 @@ struct User {
     var physicalStatus: String
     var province_name: String
     var like_num: Int
-    
+    var isQuestionnaire: Bool
     init() {
         self.nickname = ""
         self.uid = ""
@@ -39,6 +39,7 @@ struct User {
         self.physicalStatus = ""
         self.province_name = ""
         self.like_num = -1
+        self.isQuestionnaire = true
     }
 }
 
@@ -63,11 +64,15 @@ class UserInfo {
                 //把得到的JSON数据转为数组
                 if let value = response.result.value {
                     let json = JSON(value)
+                    print(json)
                     let status = json["status"].int!
                     if status != 200 {
                         failure()
                     } else {
                         print("--------------\(json["data"]["uid"].string!)")
+                        if json["data"]["height"].int == nil {
+                            UserInfo.shared.user.isQuestionnaire = false
+                        }
                         UserInfo.shared.user.uid = json["data"]["uid"].string!
                         UserInfo.shared.user.nickname = json["data"]["nickname"].string ?? "昵称"
                         UserInfo.shared.user.photo = json["data"]["photo"].string ?? ""
