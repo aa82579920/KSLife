@@ -36,6 +36,7 @@ class DoctorTableViewCell: CommentTableViewCell {
     private lazy var statusLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = .systemFont(ofSize: 14)
         label.textAlignment = .center
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
@@ -58,7 +59,7 @@ class DoctorTableViewCell: CommentTableViewCell {
         avatarImage.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(contentView).offset(margin)
             make.left.equalTo(contentView).offset(margin)
-            make.width.equalTo(contentView).multipliedBy(0.2)
+            make.width.equalTo(contentView).multipliedBy(0.15)
             make.height.equalTo(avatarImage.snp.width)
         }
         

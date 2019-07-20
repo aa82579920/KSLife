@@ -183,7 +183,7 @@ class LoginViewController: UIViewController {
         signInBtn.snp.makeConstraints {make in
             make.centerY.equalTo(resetPass)
             make.right.equalTo(view).offset(-margin)
-            make.width.equalTo(view).multipliedBy(0.2)
+            make.width.lessThanOrEqualTo(view).multipliedBy(0.3)
         }
         noAccount.snp.makeConstraints {make in
             make.right.equalTo(signInBtn.snp.left).offset(-10)

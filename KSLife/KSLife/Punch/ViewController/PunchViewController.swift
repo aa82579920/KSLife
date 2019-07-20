@@ -277,7 +277,7 @@ extension PunchViewController {
         scoreView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(view)
             make.width.equalTo(view.bounds.width)
-            make.height.equalTo(view.bounds.height * 0.25)
+            make.height.lessThanOrEqualTo(view.bounds.height * 0.3)
         }
         
         for i in 0..<3 {

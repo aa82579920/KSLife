@@ -50,9 +50,11 @@ class RecomandDishViewController: UIViewController {
             }
         }
         for item in allChildVCs {
-            RecordAPIs.getDishInfo(kgId: item.dish!.kgID, success: { str in
-                item.element = str
-            })
+            if let dish = item.dish {
+                RecordAPIs.getDishInfo(kgId: dish.kgID, success: { str in
+                    item.element = str
+                })
+            }
         }
     }
     

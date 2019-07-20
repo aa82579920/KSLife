@@ -61,6 +61,7 @@ class ScoreView: UIView {
     var addDishBtn: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "adding"), for: .normal)
+        button.contentMode = .scaleAspectFit
         return button
     }()
     
@@ -108,8 +109,8 @@ class ScoreView: UIView {
         addDishBtn.snp.makeConstraints { (make) -> Void in
             make.centerX.equalTo(self)
             make.top.equalTo(scoreLabel.snp.bottom).offset(padding)
-            make.height.equalTo(50)
-            make.width.equalTo(60)
+            make.width.equalToSuperview().multipliedBy(0.2)
+            make.bottom.equalToSuperview().offset(-10)
         }
     }
     

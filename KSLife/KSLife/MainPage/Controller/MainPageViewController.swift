@@ -52,6 +52,7 @@ class MainPageViewController: UIViewController {
         self.setController()
         self.setArticles()
         getRecomRecipes(uid: UserInfo.shared.user.uid, success: { list in
+            
             self.recomandDishs = list
             var urls = [String]()
             var names = [String]()
@@ -63,6 +64,7 @@ class MainPageViewController: UIViewController {
             self.cycleView.names = names
             self.tableView.reloadData()
             self.recomandVC.dishs = list
+            
         })
         addMsgTimer()
     }
