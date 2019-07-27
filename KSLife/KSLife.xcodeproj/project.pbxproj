@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1514CB5FCEB463F8082FAB2C /* Pods_KSLifeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6DCBDB48F937C60CA4BBE4 /* Pods_KSLifeUITests.framework */; };
 		4972AAB311FB586C52577F24 /* Pods_KSLife.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A039A5CB1A5D80B3F9D241 /* Pods_KSLife.framework */; };
+		7413D9C122EC22B800A4B5F9 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413D9C022EC22B700A4B5F9 /* CalendarCell.swift */; };
+		7413D9C322EC230500A4B5F9 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413D9C222EC230500A4B5F9 /* CalendarView.swift */; };
 		74155AA022D75B8000908E5A /* TestSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74155A9F22D75B8000908E5A /* TestSurveyViewController.swift */; };
 		74155AB022D75C4000908E5A /* NavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74155AA222D75BF000908E5A /* NavButton.swift */; };
 		74155AB122D75C4000908E5A /* PopTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74155AA322D75BF000908E5A /* PopTextView.swift */; };
@@ -126,9 +128,7 @@
 		C45FAAAC22A05D4A0040FA3C /* FoodRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45FAAAB22A05D4A0040FA3C /* FoodRecordViewController.swift */; };
 		C45FAAAE22A06C150040FA3C /* WeeklySelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45FAAAD22A06C150040FA3C /* WeeklySelectDateView.swift */; };
 		C45FAAB022A071FC0040FA3C /* DateSelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45FAAAF22A071FC0040FA3C /* DateSelectCollectionViewCell.swift */; };
-		C477552F22E4B025006C951B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C477552C22E4B024006C951B /* CalendarView.swift */; };
 		C477553022E4B025006C951B /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C477552D22E4B024006C951B /* WeekView.swift */; };
-		C477553122E4B025006C951B /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C477552E22E4B025006C951B /* CalendarCell.swift */; };
 		C477553322E4B0E9006C951B /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C477553222E4B0E9006C951B /* CalendarViewController.swift */; };
 		C477553522E67FCE006C951B /* LectureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C477553422E67FCE006C951B /* LectureTableViewCell.swift */; };
 		C477553722E8E2A1006C951B /* LectureDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C477553622E8E2A1006C951B /* LectureDetailViewController.swift */; };
@@ -163,6 +163,8 @@
 		36AEA81B96721ADB27EEFF60 /* Pods_KSLifeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KSLifeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A039A5CB1A5D80B3F9D241 /* Pods_KSLife.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KSLife.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		605C45607BE7BFDEDDDC1674 /* Pods-KSLifeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KSLifeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KSLifeUITests/Pods-KSLifeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7413D9C022EC22B700A4B5F9 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		7413D9C222EC230500A4B5F9 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		74155A9F22D75B8000908E5A /* TestSurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSurveyViewController.swift; sourceTree = "<group>"; };
 		74155AA222D75BF000908E5A /* NavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
 		74155AA322D75BF000908E5A /* PopTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopTextView.swift; sourceTree = "<group>"; };
@@ -302,9 +304,7 @@
 		C45FAAAB22A05D4A0040FA3C /* FoodRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRecordViewController.swift; sourceTree = "<group>"; };
 		C45FAAAD22A06C150040FA3C /* WeeklySelectDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySelectDateView.swift; sourceTree = "<group>"; };
 		C45FAAAF22A071FC0040FA3C /* DateSelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectCollectionViewCell.swift; sourceTree = "<group>"; };
-		C477552C22E4B024006C951B /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = "../../../../../../../../../../CalendarDemo-master/CalendarDemo/Calendar/CalendarView.swift"; sourceTree = "<group>"; };
 		C477552D22E4B024006C951B /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
-		C477552E22E4B025006C951B /* CalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCell.swift; path = "../../../../../../../../../../CalendarDemo-master/CalendarDemo/Calendar/CalendarCell.swift"; sourceTree = "<group>"; };
 		C477553222E4B0E9006C951B /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		C477553422E67FCE006C951B /* LectureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTableViewCell.swift; sourceTree = "<group>"; };
 		C477553622E8E2A1006C951B /* LectureDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailViewController.swift; sourceTree = "<group>"; };
@@ -669,6 +669,7 @@
 		C453AF58229F7D2700369F10 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7413D9C222EC230500A4B5F9 /* CalendarView.swift */,
 				C453AF59229F7D2700369F10 /* DayDishTableViewCell.swift */,
 				C41A50EB22D30CC00056DB21 /* SetMealTableViewCell.swift */,
 				C453AF5A229F7D2700369F10 /* ActionSheetShowAnimation.swift */,
@@ -676,8 +677,7 @@
 				C453AF5C229F7D2700369F10 /* ScoreView.swift */,
 				C45FAAAD22A06C150040FA3C /* WeeklySelectDateView.swift */,
 				C45FAAAF22A071FC0040FA3C /* DateSelectCollectionViewCell.swift */,
-				C477552E22E4B025006C951B /* CalendarCell.swift */,
-				C477552C22E4B024006C951B /* CalendarView.swift */,
+				7413D9C022EC22B700A4B5F9 /* CalendarCell.swift */,
 				C477552D22E4B024006C951B /* WeekView.swift */,
 			);
 			path = View;
@@ -1027,9 +1027,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7413D9C322EC230500A4B5F9 /* CalendarView.swift in Sources */,
+				7413D9C122EC22B800A4B5F9 /* CalendarCell.swift in Sources */,
 				C477553322E4B0E9006C951B /* CalendarViewController.swift in Sources */,
 				74155AB022D75C4000908E5A /* NavButton.swift in Sources */,
-				C477553122E4B025006C951B /* CalendarCell.swift in Sources */,
 				74155AB122D75C4000908E5A /* PopTextView.swift in Sources */,
 				74155AB222D75C4000908E5A /* PopBaseView.swift in Sources */,
 				C477553522E67FCE006C951B /* LectureTableViewCell.swift in Sources */,
@@ -1063,7 +1064,6 @@
 				C453AF68229F7D2700369F10 /* DayDishTableViewCell.swift in Sources */,
 				74FBF4AA22CB247E00E8B022 /* SetNameController.swift in Sources */,
 				C453AF83229F7D3C00369F10 /* DetailBlogViewController.swift in Sources */,
-				C477552F22E4B025006C951B /* CalendarView.swift in Sources */,
 				748C77732298FE9400E1E97D /* MessageDoctorViewController.swift in Sources */,
 				C453AF93229F7D4E00369F10 /* FormViewController.swift in Sources */,
 				C41CF4C722A650A100F9AB7D /* FoodManager.swift in Sources */,

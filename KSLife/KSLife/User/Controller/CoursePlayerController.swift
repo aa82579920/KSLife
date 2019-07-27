@@ -38,7 +38,12 @@ class CoursePlayerController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.dataSource = CourseInfo.courseInfo.enroll[CourseInfo.index].newContent
+        if CourseInfo.index == -1 {  // 从医生页面进入课程
+            self.dataSource = CourseInfo.newContent
+        }else { // 从课程列表页面进入
+            self.dataSource = CourseInfo.courseInfo.enroll[CourseInfo.index].newContent
+        }
+        
         self.title = "课程详情"
         self.view.backgroundColor = UIColor.white
         
@@ -135,7 +140,15 @@ class CoursePlayerController: UIViewController, UIScrollViewDelegate {
         self.view.addSubview(yuYinBtn)
         
         mainLable = UILabel(frame: CGRect(x: yuYinBtn.frame.maxX + 20, y: (scrollerView?.frame.maxY)!+5, width: scrollerViewWidth!*3/4, height: 30))
-        mainLable.text = CourseInfo.courseInfo.enroll[CourseInfo.index].title
+        let musicUrl: URL?
+        if CourseInfo.index == -1 {  // 从医生页面进入课程
+            mainLable.text = CourseInfo.title
+            musicUrl = URL(string: CourseInfo.url)
+        }else { // 从课程列表页面进入
+            mainLable.text = CourseInfo.courseInfo.enroll[CourseInfo.index].title
+            // 初始化播放器
+            musicUrl = URL(string: CourseInfo.courseInfo.enroll[CourseInfo.index].url)
+        }
         mainLable.textColor = .gray
         mainLable.font = UIFont.systemFont(ofSize: 20)
         self.view.addSubview(mainLable)
@@ -145,9 +158,7 @@ class CoursePlayerController: UIViewController, UIScrollViewDelegate {
         secondLable.font = UIFont.systemFont(ofSize: 15)
         secondLable.text = "介绍估算自己每餐吃的食物的重量的简单方法，方便用户记录自己的饮食数据。"
         self.view.addSubview(secondLable)
-        
-        // 初始化播放器
-        let musicUrl = URL(string: CourseInfo.courseInfo.enroll[CourseInfo.index].url)
+        print("ppppp\(musicUrl!)")
         playerItem = AVPlayerItem(url: musicUrl!)
         player = AVPlayer(playerItem: playerItem)
         
@@ -165,9 +176,15 @@ class CoursePlayerController: UIViewController, UIScrollViewDelegate {
         
         totalTime = UILabel(frame: CGRect(x: playSlider.frame.maxX-30, y: playSlider.frame.maxY+2, width: 50, height: 15))
         totalTime.font = UIFont.systemFont(ofSize: 15)
-        totalTime.text = self.getTime(currentTime: CourseInfo.courseInfo.enroll[CourseInfo.index].duration)
+        if CourseInfo.index == -1 {  // 从医生页面进入课程
+            totalTime.text = self.getTime(currentTime:
+                CourseInfo.duration)
+        }else { // 从课程列表页面进入
+            totalTime.text = self.getTime(currentTime:
+                CourseInfo.courseInfo.enroll[CourseInfo.index].duration)
+        }
         self.view.addSubview(totalTime)
-        
+        print("asdasd\(musicUrl!)")
         playSlider.minimumValue = 0
         playSlider.maximumValue = Float(second)
         playSlider.isContinuous = false
@@ -253,8 +270,10 @@ class CoursePlayerController: UIViewController, UIScrollViewDelegate {
         //根据rate属性判断当天是否在播放
         if player?.rate == 0 {
             player!.play()
+            print("播放")
         } else {
             player!.pause()
+            print("暂停")
         }
     }
     //拖动进度条改变值时触发

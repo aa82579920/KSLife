@@ -92,8 +92,8 @@ class CalendarViewController: SwiftPopup {
         calendarView = CalendarView(frame: calendarViewFrame, collectionViewLayout: layout)
         contentView.addSubview(calendarView ?? UICollectionView())
         calendarView?.getDatesBlock = { period in
-            self.firstLabel.text = period.0
-            self.secondLabel.text = period.1
+//            self.firstLabel.text = period.0
+//            self.secondLabel.text = period.1
         }
         self.calendarView?.date = yearOMonth
         

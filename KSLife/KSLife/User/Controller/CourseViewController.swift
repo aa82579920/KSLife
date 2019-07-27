@@ -13,6 +13,11 @@ import SwiftyJSON
 struct CourseInfo {
     static var courseInfo: CourseData = CourseData()
     static var index: Int = -1
+    // 从课程页面进入的课程所需数据
+    static var newContent : [String] = []  // ppt
+    static var url: String = ""   // mp3
+    static var title: String = ""
+    static var duration: Int = 0
 }
 class CourseViewController: WMPageController {
     override func viewDidLoad() {

@@ -14,6 +14,11 @@ class LectureDetailViewController: UIViewController {
         didSet {
             contents = ["\(lecture?.price ?? 0)鲜花", lecture?.title ?? "", lecture?.label ?? ""]
             rightBtn.isSelected = lecture?.status == 2 ? true : false
+            print(lecture?.url)
+            CourseInfo.newContent = self.stringFix(oldString: lecture?.contentImage ?? "")
+            CourseInfo.title = lecture?.title ?? ""
+            CourseInfo.url = lecture?.url ?? ""
+            CourseInfo.duration = lecture?.duration ?? 0
             tablewView.reloadData()
         }
     }
@@ -51,12 +56,47 @@ class LectureDetailViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(tablewView)
         button.addTarget(self, action: #selector(startToLearn), for: .touchUpInside)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setUpNav(animated)
     }
-
+    
+    // MARK: - 处理Url字符串
+    func stringFix(oldString: String) -> [String] {
+        let substringArray: [Substring] = oldString.split(separator: ",")
+        let stringArrray: [String] = substringArray.compactMap{"\($0)"}
+        var newStringArray: [String] = []
+        if stringArrray.count == 1 {
+            let startIndex = stringArrray[0].index(stringArrray[0].startIndex, offsetBy: 2)
+            let endIndex = stringArrray[0].index(stringArrray[0].endIndex, offsetBy: -2)
+            let newString = String(stringArrray[0][startIndex..<endIndex])
+            newStringArray.append(newString)
+            return newStringArray
+        }
+        var i = 0
+        for item in stringArrray {
+            if i == 0 {
+                let startIndex = item.index(item.startIndex, offsetBy: 2)
+                let endIndex = item.index(item.endIndex, offsetBy: -1)
+                let newString = String(item[startIndex..<endIndex])
+                newStringArray.append(newString)
+            }else if i == stringArrray.count-1 {
+                let startIndex = item.index(item.startIndex, offsetBy: 1)
+                let endIndex = item.index(item.endIndex, offsetBy: 0)
+                let newString = String(item[startIndex..<endIndex])
+                newStringArray.append(newString)
+            } else {
+                let startIndex = item.index(item.startIndex, offsetBy: 1)
+                let endIndex = item.index(item.endIndex, offsetBy: -1)
+                let newString = String(item[startIndex..<endIndex])
+                newStringArray.append(newString)
+            }
+            i += 1
+        }
+        return newStringArray
+    }
 }
 
 extension LectureDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -117,10 +157,11 @@ extension LectureDetailViewController {
     }
     
     @objc func startToLearn() {
-        CourseInfo.index = 0
+        CourseInfo.index = -1
         let playVC = CoursePlayerController()
         playVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(playVC, animated: true)
+        
     }
     
 }
