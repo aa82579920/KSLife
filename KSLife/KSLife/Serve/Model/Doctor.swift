@@ -69,6 +69,7 @@ enum CircleType: String {
     case contract = "contract"
     case article = "article"
     case survey = "survey"
+    case course = "course"
 }
 
 struct Circle: Codable {
@@ -76,4 +77,44 @@ struct Circle: Codable {
     let type: String
     let content: String?
     let single: Int?
+}
+
+struct Lecture: Codable {
+    let lid: Int
+    let title: String
+    let url: String
+    let price: Int
+    let cover: String
+    let viewnum, date, recommend, duration: Int
+    let played: Int
+    let doctor: String
+    let soldnum, collectednum: Int
+    let contentFile: String
+    let contentImage: String
+    
+    enum CodingKeys: String, CodingKey {
+        case lid, title, url, price, cover, viewnum, date, recommend, duration, played, doctor, soldnum, collectednum
+        case contentFile = "content_file"
+        case contentImage = "content_image"
+    }
+}
+
+struct LectureDetail: Codable {
+    let lid: Int
+    let title, brief: String
+    let url: String
+    let price: Int
+    let cover: String
+    let label: String
+    let viewnum, date, follow, enroll: Int
+    let recommend, duration, played: Int
+    let status, soldnum, collectednum: Int
+    let contentFile: String
+    let contentImage: String
+    
+    enum CodingKeys: String, CodingKey {
+        case lid, title, brief, url, price, cover, label, viewnum, date, follow, enroll, recommend, duration, played, status, soldnum, collectednum
+        case contentFile = "content_file"
+        case contentImage = "content_image"
+    }
 }

@@ -12,6 +12,7 @@ struct SurveyAPIs {
     static let getSurveyList = "/survey/getSurveyList"
     static let getQuestion = "/survey/getQuestion"
     static let getTestSurvey = "/survey/getTestSurvey"
+    static let postAnswer = "/survey/postAnswer"
 //    static let searchDoctor = "/doctor/searchDoctor"
 //    static let getRemainFlower = "/doctor/getRemainLike"
 //    static let getDoctorActivity = "/doctor/getDoctorActivity"

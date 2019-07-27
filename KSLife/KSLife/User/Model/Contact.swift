@@ -16,9 +16,11 @@ struct Contact: Codable {
     let selfIntro: String?
     let role: Int
     let remark: String
+    let province: String?
+    let status: Int?
     
     enum CodingKeys: String, CodingKey {
-        case uid, name, nickname, photo, role,  remark
+        case uid, name, nickname, photo, role,  remark, province, status
         case selfIntro = "self_intro"
     }
 }

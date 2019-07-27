@@ -38,6 +38,10 @@ class DoctorViewController: UIViewController {
                     self.surveyList = survey
                 })
                 
+                getLectureList(uid: doctor.uid) { courses in
+                    self.lectureList = courses
+                }
+                
                 self.tableView.reloadData()
             }
         }
@@ -47,6 +51,7 @@ class DoctorViewController: UIViewController {
     private var activitys: [Activity] = []
     private var surveyList: [Survey] = []
     private var circleList: [Circle] = []
+    private var lectureList: [Lecture] = []
     
     private var shouldLoadSections: [Int] = []
     
@@ -93,6 +98,8 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
                     return circleList.count == 0 ? 2 : circleList.count + 1
                 case 5:
                     return surveyList.count == 0 ? 2 : surveyList.count + 1
+                case 6:
+                    return lectureList.count == 0 ? 2 : lectureList.count + 1
                 default:
                     return 2
                 }
@@ -151,7 +158,7 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
                     case 5:
                         cell = (surveyList.count == 0) ? FoldTableViewCell(with: .none, name: "暂无问卷") : FormTableViewCell(name: surveyList[indexPath.row - 1].title)
                     case 6:
-                        cell = FoldTableViewCell(with: .none, name: "亲，没找到相关数据")
+                        cell = (lectureList.count == 0) ? FoldTableViewCell(with: .none, name: "亲，没找到相关数据") : LectureTableViewCell(lecture: lectureList[indexPath.row - 1])
                     default:
                         break
                     }
@@ -174,9 +181,27 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
+        if (indexPath.section == 6 && indexPath.row != 0) {
+            let vc = LectureDetailViewController()
+            getLectureDetail(lid: lectureList[indexPath.row - 1].lid, success: { lecture in
+                vc.lecture = lecture
+            })
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
         switch indexPath.section {
-        case 0, 1, 3:
+        case 0, 1:
             tableView.deselectRow(at: indexPath, animated: true)
+        case 3:
+            if doctorMsg?.follow == 2 {
+                let vc = MessageViewController()
+                vc.hidesBottomBarWhenPushed = true
+                vc.recUid = doctor?.uid
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                self.tipWithLabel(msg: "请预约医生并等待审核通过")
+            }
         default:
             let n = indexPath.section - 2
             if indexPath.row == 0 {
@@ -340,6 +365,40 @@ extension DoctorViewController {
         })
     }
     
+    func getLectureList(uid: String, page: Int = 0, success: @escaping ([Lecture]) -> Void) {
+        SolaSessionManager.solaSession(url: DoctorAPIs.getLectureList, parameters: ["uid": uid, "page": "\(page)"], success: { dict in
+            guard let data = dict["data"] as? [String: Any], let item = data["items"] as? [Any] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: item, options: [])
+                let courses = try JSONDecoder().decode([Lecture].self, from: json)
+                success(courses)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
+    func getLectureDetail(lid: Int, success: @escaping (LectureDetail) -> Void) {
+        SolaSessionManager.solaSession(url: DoctorAPIs.getLectureDetail, parameters: ["lid": "\(lid)"], success: { dict in
+            guard let data = dict["data"] as? Any else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: data, options: [])
+                let courses = try JSONDecoder().decode(LectureDetail.self, from: json)
+                success(courses)
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
+    
     func sendLike(doctorId: String, likeNum: Int) {
         SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.sendLike, parameters: ["uid": doctorId, "like_num": "\(likeNum)"], success: { dict in
             guard let data = dict["data"] as? [String: Any], let likeNum = data["like_num"] as? Int else {
@@ -369,4 +428,5 @@ extension DoctorViewController {
         })
     }
 }
+
 

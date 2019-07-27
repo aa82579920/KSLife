@@ -109,7 +109,7 @@ extension UIViewController {
         let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
         alert.view.backgroundColor = .lightGray
         self.present(alert, animated: true, completion: nil)
-        self.perform(#selector(dismiss), with: alert, afterDelay: 3.0)
+        self.perform(#selector(dismiss), with: alert, afterDelay: 2.0)
     }
     
     func tipWithLabel(msg: String, frame: CGRect = CGRect(x: screenW * 0.25, y: 500, width: screenW * 0.5, height: 30)) {
@@ -123,6 +123,8 @@ extension UIViewController {
         tiplabel.textAlignment = .center
         tiplabel.textColor = .white
         view.addSubview(tiplabel)
+        tiplabel.layer.zPosition = .greatestFiniteMagnitude
+        
         tiplabel.snp.makeConstraints { make in
             make.width.lessThanOrEqualTo(view).multipliedBy(0.9)
             make.centerX.equalToSuperview()

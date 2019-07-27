@@ -40,14 +40,14 @@ class SendFlowerView: PopBaseView {
     
     func addWhiteVieSubView1(){
         titleLabel = UILabel(frame: CGRect.init(x: 0, y: 0, width: WhiteView.frame.width, height: titleHeight))
-        titleLabel.text = "选择送花\(restNum)朵"
+        titleLabel.text = "选择送花\(restNum / 2)朵"
         titleLabel.textAlignment = .center
         titleLabel.font = .systemFont(ofSize: 15, weight: .bold)
         titleLabel.textColor = .black
         WhiteView.addSubview(titleLabel)
         
         textField = UITextField(frame: CGRect.init(x: 20, y: titleHeight, width: WhiteView.frame.width - 40, height: WhiteView.frame.height * 0.3))
-        textField.text = "\(restNum)"
+        textField.text = "\(restNum / 2)"
         textField.placeholder = textStr
         textField.layer.masksToBounds = true
         textField.layer.borderColor = UIColor.lightGray.cgColor

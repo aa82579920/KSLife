@@ -59,6 +59,7 @@ class FormView: UIView {
             button.setImage(normalImage, for: .normal)
             button.setImage(selectImage, for: .selected)
             button.addTarget(self, action: #selector(choose), for: .touchUpInside)
+            button.tag = i
             btns.append(button)
             addSubview(button)
             
@@ -120,6 +121,7 @@ extension FormView {
         sender.isSelected = true
         lastBtn.isSelected = false
         lastBtn = sender
+        selectIndexs = []
         selectIndexs.append(tag)
     }
 }

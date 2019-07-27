@@ -29,6 +29,7 @@ class MessageDoctorViewController: UIViewController {
         
         let header = MJRefreshNormalHeader()
         header.setRefreshingTarget(self, refreshingAction: #selector(refresh))
+        header.lastUpdatedTimeLabel.isHidden = true
         tableView.mj_header = header
     }
     

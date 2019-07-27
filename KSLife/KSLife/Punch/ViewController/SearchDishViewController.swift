@@ -21,8 +21,9 @@ class SearchDishViewController: UIViewController {
         searchRecipes(success: { list in
             self.dishs = list
         })
-        let footer = MJRefreshFooter()
+        let footer = MJRefreshAutoNormalFooter()
         footer.setRefreshingTarget(self, refreshingAction: Selector(("getMore")))
+        footer.setTitle("没有更多数据了", for: .noMoreData)
         tableView.mj_footer = footer
     }
     
@@ -147,11 +148,12 @@ extension SearchDishViewController {
 extension SearchDishViewController {
     
     @objc func getMore() {
-        print("ha")
         page += 1
         let text = searchField.text ?? ""
-        searchRecipes(keyword: text, page: 0, success: { list in
-            if list.count > 0 {
+        searchRecipes(keyword: text, page: page, success: { list in
+            if list.count <= 0 {
+                self.tableView.mj_footer.endRefreshingWithNoMoreData()
+            }else{
                 self.dishs += list
             }
         })

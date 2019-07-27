@@ -39,6 +39,7 @@ class MessageViewController: ViewController {
         addTimer()
         let header = MJRefreshNormalHeader()
         header.setRefreshingTarget(self, refreshingAction: Selector(("getHistoryMsg")))
+        header.lastUpdatedTimeLabel.isHidden = true
         tableView.mj_header = header
     }
     
@@ -96,9 +97,10 @@ class MessageViewController: ViewController {
     }()
     
     private lazy var sendButton: UIButton = {
-        let btn = UIButton()
+        let btn = NavButton(frame: .zero, title: "发送")
         btn.backgroundColor = mainColor
-        btn.setTitle("发送", for: .normal)
+        btn.shadowBlur = 0
+        btn.shadowOpacity = 0
         btn.setTitleColor(.white, for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         btn.addTarget(self, action: #selector(send), for: .touchUpInside)

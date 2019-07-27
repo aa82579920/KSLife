@@ -64,7 +64,7 @@ class AddDishViewController: UIViewController {
         }()
     
     private lazy var pageTitleView: PageTitleView = {[weak self] in
-        let titles = ["最爱","菜肴","自定套餐","自定菜肴","自定食品"]
+        let titles = ["最爱","菜肴","食材", "自定套餐","自定菜肴","自定食品"]
         let view = PageTitleView(frame: CGRect(x: 0, y: statusH + navigationBarH + searchViewH, width: screenW, height: titleViewH), titles: titles, with: .flexibleType)
         view.delegate = self
         return view
@@ -73,7 +73,7 @@ class AddDishViewController: UIViewController {
     private lazy var pageContentView: PageContentView = { [weak self] in
         let contentH = screenH - statusH - navigationBarH - titleViewH - searchViewH
         let contentFrame = CGRect(x: 0, y: statusH + navigationBarH + titleViewH + searchViewH, width: screenW, height: contentH)
-        let views = [subViewOne,subViewTwo,subViewThree,subViewFour,subViewFive]
+        let views = [subViewOne,subViewTwo,subViewTwo,subViewThree,subViewFour,subViewFive]
         let view = PageContentView(frame: contentFrame, views: views)
         view.delegate = self
         return view

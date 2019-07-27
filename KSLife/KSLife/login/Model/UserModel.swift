@@ -64,7 +64,6 @@ class UserInfo {
                 //把得到的JSON数据转为数组
                 if let value = response.result.value {
                     let json = JSON(value)
-                    print(json)
                     let status = json["status"].int!
                     if status != 200 {
                         failure()

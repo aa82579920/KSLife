@@ -12,6 +12,7 @@ class SetMealTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         contentView.addSubview(dishImage)
         contentView.addSubview(nameLabel)
         contentView.addSubview(button)

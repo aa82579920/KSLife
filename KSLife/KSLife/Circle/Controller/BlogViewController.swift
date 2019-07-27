@@ -45,10 +45,11 @@ class BlogViewController: UIViewController {
         }
         let header = MJRefreshNormalHeader()
         header.setRefreshingTarget(self, refreshingAction: Selector(("refresh")))
+        header.lastUpdatedTimeLabel.isHidden = true
         msgTableView.mj_header = header
-        
-        let footer = MJRefreshFooter()
+        let footer = MJRefreshAutoNormalFooter()
         footer.setRefreshingTarget(self, refreshingAction: Selector(("getMore")))
+        footer.setTitle("没有更多数据了", for: .noMoreData)
         msgTableView.mj_footer = footer
     }
     
@@ -110,7 +111,9 @@ extension BlogViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func getMore() {
         page += 1
         getBlogs(uid: UserInfo.shared.user.uid, type: type!, page: page, success: { list in
-            if list.count >= 0 {
+            if list.count <= 0 {
+                self.msgTableView.mj_footer.endRefreshingWithNoMoreData()
+            }else{
                 self.blogs += list
             }
         })

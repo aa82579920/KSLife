@@ -42,7 +42,6 @@ struct SolaSessionManager {
                     switch response.result {
                     case .success:
                         if let data = response.result.value {
-                            print(data)
                             if let dict = convertToDictionary(text: data) {
                                 success?(dict)
                                 return

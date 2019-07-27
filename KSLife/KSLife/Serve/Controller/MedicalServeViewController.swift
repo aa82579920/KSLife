@@ -28,9 +28,15 @@ class MedicalServeViewController: UIViewController {
         
         let header = MJRefreshNormalHeader()
         header.setRefreshingTarget(self, refreshingAction: Selector(("refresh")))
+        header.lastUpdatedTimeLabel.isHidden = true
         tableView.mj_header = header
+        let footer = MJRefreshAutoNormalFooter()
+        footer.setRefreshingTarget(self, refreshingAction: Selector(("getMore")))
+        footer.setTitle("没有更多数据了", for: .noMoreData)
+        tableView.mj_footer = footer
     }
     
+    private var page: Int = 0
     private var doctors: [Doctor] = []
     private var allDoctors: [Doctor] = []
     
@@ -117,6 +123,22 @@ extension MedicalServeViewController {
             self.tableView.reloadData()
         })
         self.tableView.mj_header.endRefreshing()
+    }
+    
+    @objc func getMore() {
+        page += 1
+        getDoctorList(page: page, success: { list in
+            if list.count <= 0 {
+                self.tableView.mj_footer.endRefreshingWithNoMoreData()
+            }else{
+                for data in list {
+                    self.doctors.append(data)
+                }
+                self.tableView.reloadData()
+
+            }
+        })
+        self.tableView.mj_footer.endRefreshing()
     }
 }
 
@@ -210,7 +232,7 @@ extension MedicalServeViewController {
 
 extension MedicalServeViewController {
     func getDoctorList(page: Int, success: @escaping ([Doctor]) -> Void) {
-        SolaSessionManager.solaSession(url: DoctorAPIs.getDoctorList, parameters: ["page": "0"], success: { dict in
+        SolaSessionManager.solaSession(url: DoctorAPIs.getDoctorList, parameters: ["page": "\(page)"], success: { dict in
             
             if let data = dict["data"] as? [String: Any], let items = data["items"]  as? [Any]{
                 do {

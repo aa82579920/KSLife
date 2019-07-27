@@ -34,6 +34,7 @@ class CircleTableViewCell: UITableViewCell {
         label.layer.masksToBounds = true
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 0
+        label.textAlignment = .center
         label.sizeToFit()
         return label
     }()
@@ -107,6 +108,10 @@ class CircleTableViewCell: UITableViewCell {
                 labelOne.text = "签约"
                 labelTwo.text = "\(circle.content ?? "")与\(doctorName)签约成功"
                 labelThree.text = "\(circle.count)位"
+            case CircleType.course.rawValue:
+                labelOne.text = "课程"
+                labelTwo.text = "\(doctorName)已经发布了新的课程\(circle.content ?? "")快去试一下吧"
+                labelThree.text = "\(circle.count)篇"
             default:
                 break
             }

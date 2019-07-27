@@ -20,6 +20,7 @@ class FormViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(tablewView)
         tablewView.addSubview(button)
+        button.addTarget(self, action: #selector(post), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +85,12 @@ extension FormViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension FormViewController {
+    @objc func post(sender: UIButton) {
+        
+    }
+}
+
+extension FormViewController {
     func setUpNav(_ animated: Bool){
         self.title = "调查问卷"
         
@@ -101,3 +108,5 @@ extension FormViewController {
         self.navigationController?.popViewController(animated: true)
     }
 }
+
+

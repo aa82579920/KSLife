@@ -32,3 +32,10 @@ struct SimpleQuestion: Codable {
     let question: String
     let type: Int
 }
+
+struct SurveyAnswer: Codable {
+    let qid: String
+    let options: Int?
+    let type: Int
+    let answer: String?
+}

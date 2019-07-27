@@ -8,6 +8,8 @@
 
 import UIKit
 import SwiftDate
+import Alamofire
+import WebKit
 
 class FoodRecordViewController: UIViewController {
     
@@ -19,12 +21,23 @@ class FoodRecordViewController: UIViewController {
         getDietRecord(uid: UserInfo.shared.user.uid, success: { dishs in
             self.dishs = dishs
         })
-        
+        calendarVc.showAnimation = ActionSheetShowAnimation()
+        calendarVc.dismissAnimation = ActionSheetDismissAnimation()
         dateSelectView.block = { date in
             let dayStr = date.toISO([.withFullDate])
             self.dateLabel.text = dayStr
             self.getDietRecord(uid: UserInfo.shared.user.uid, day: dayStr, success: { dishs in
                 self.dishs = dishs
+            })
+        }
+        calendarVc.block = { period in
+            let starDate = period.0
+            let endDate = period.1
+            self.applyReport(uid: UserInfo.shared.user.uid, begin: starDate, end: endDate, success: { path in
+                print(path)
+                if let path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: path) {
+                    UIApplication.shared.open(url)
+                }
             })
         }
     }
@@ -71,11 +84,17 @@ class FoodRecordViewController: UIViewController {
         label.font = .systemFont(ofSize: 15)
         return label
     }()
+    
+     let calendarVc = CalendarViewController()
 }
 
 extension FoodRecordViewController {
     @objc func close() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func showCalendar(sender: UIButton) {
+        calendarVc.show()
     }
     
     @objc func getReport(sender: UIButton) {
@@ -87,8 +106,20 @@ extension FoodRecordViewController {
         } else {
             print("还没写呢")
         }
-        applyReport(uid: UserInfo.shared.user.uid, begin: begin, end: end, success: { url in
-            print(url)
+        applyReport(uid: UserInfo.shared.user.uid, begin: begin, end: end, success: { path in
+            print(path)
+            if let path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: path) {
+                UIApplication.shared.open(url)
+            }
+//            let url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+//            let webView = WKWebView(frame: self.view.bounds)
+//            webView.backgroundColor = .white
+//            self.view.addSubview(webView)
+//            let data = try! Data(contentsOf: url)
+//            webView.loadFileURL(URL(fileURLWithPath: path), allowingReadAccessTo: URL(fileURLWithPath: path))
+//            let urlStr = URL.init(fileURLWithPath:path)
+//            let data = try! Data(contentsOf: urlStr)
+//            webView.load(data, mimeType: "application/pdf", characterEncodingName: "utf-8", baseURL: NSURL() as URL)
         })
     }
 }
@@ -141,7 +172,11 @@ extension FoodRecordViewController: UITableViewDataSource, UITableViewDelegate {
             btn.titleLabel?.font = .systemFont(ofSize: 18)
             btn.backgroundColor = mainColor
             btn.tag = indexPath.section
-            btn.addTarget(self, action: #selector(getReport), for: .touchUpInside)
+            if indexPath.section == 1 {
+                btn.addTarget(self, action: #selector(getReport), for: .touchUpInside)
+            } else {
+                btn.addTarget(self, action: #selector(showCalendar), for: .touchUpInside)
+            }
             btn.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -287,12 +322,57 @@ extension FoodRecordViewController {
     
     func applyReport(uid: String, begin: String, end: String, type: String = "pdf", success: @escaping (String) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: CheckinAPIs.applyReport, parameters: ["uid": uid, "begin": begin, "end": end, "type": type], success: { dict in
+            guard let status = dict["status"] as? Int else {
+                return
+            }
+            if status != 200 {
+                if let msg = dict["msg"] as? String {
+                    self.tipWithLabel(msg: "康食：" + msg)
+                }
+                return
+            }
             guard let data = dict["data"] as? String else {
+                self.tipWithLabel(msg: "康食：empty string")
                 return
             }
             success(data)
-        }, failure: { _ in
+//            print(data)
+//            var z = URL(string:data)
+//            let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+//                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//                let fileURL = documentsURL.appendingPathComponent("kangshi/\(data)")
+//                z = fileURL
+//                //两个参数表示如果有同名文件则会覆盖，如果路径中文件夹不存在则会自动创建
+//                return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+//            }
+//
+//
+//
+//            //开始下载
+//            Alamofire.download(data.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!, to: destination)
+//                .responseData { response in
+//                    DispatchQueue.main.async {
+//
+//                        if let path = response.destinationURL?.path{
+//                            success(path)
+//                        }
+//                    }
+//            }
+            //            let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+            //                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            //                let fileName = data.components(separatedBy: "/").last ?? ""
+            //                let fileURL = documentsURL.appendingPathComponent("kangshi/" + fileName)
+            //                return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+            //            }
+            //            Alamofire.download(data.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!, to: destination)
+            //                .response { response in
+            //                    if let path = response.destinationURL?.path {
+            //                        success(path)
+            //                    }
+            //            }
             
+        }, failure: { _ in
+            self.tipWithLabel(msg: "康食：网络错误，请稍后再试")
         })
     }
 }

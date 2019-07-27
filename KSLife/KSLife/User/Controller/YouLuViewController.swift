@@ -85,6 +85,7 @@ extension YouLuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = YouLuTableViewCell(index: indexPath.row)
+        cell.selectionStyle = .none
         cell.person = addressBook?[indexPath.section].values.first?[indexPath.row]
         return cell
     }
@@ -94,6 +95,15 @@ extension YouLuViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = FriendViewController()
+        if let person = addressBook?[indexPath.section].values.first?[indexPath.row] {
+            vc.user = BlogUserInfo(uid: person.uid, nickname: person.nickname ?? "", photo: person.photo ?? "", province: person.province ?? "", selfIntro: person.selfIntro, role: person.role, status: person.status ?? 2)
+        }
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

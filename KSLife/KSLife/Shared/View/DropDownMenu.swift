@@ -65,7 +65,7 @@ class DropDownMenu: UIView {
         menuTableView.separatorStyle = .singleLine
         menuTableView.separatorColor = UIColor(hex6: 0xdbdbdb)
         menuTableView.separatorInset = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
-        menuTableView.backgroundColor = UIColor(hex6: 0xdbdbdb)
+        menuTableView.backgroundColor = .white
         menuTableView.showsVerticalScrollIndicator = false
         menuTableView.register(UITableViewCell.self, forCellReuseIdentifier: tableViewCellID)
         
@@ -89,7 +89,7 @@ extension DropDownMenu: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.textAlignment = .center
         cell.textLabel?.text = titleList[indexPath.row]
         cell.textLabel?.textColor = .black
-        cell.backgroundColor = UIColor(hex6: 0xdbdbdb)
+        cell.backgroundColor = .white
         return cell
     }
     

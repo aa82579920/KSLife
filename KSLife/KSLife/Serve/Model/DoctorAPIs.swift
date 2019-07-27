@@ -18,6 +18,9 @@ struct DoctorAPIs {
     static let getCircle = "/doctor/getCircle"
     static let sendLike = "/doctor/sendLike"
     static let follow = "/doctor/follow"
+    static let getLectureList = "/doctor/getLectureList"
+    static let collectLecture = "/doctor/collectLecture"
+    static let getLectureDetail = "/doctor/getLectureDetail"
     
     static func getRemainFlower(uid: String = UserInfo.shared.user.uid, success: @escaping (Int) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: DoctorAPIs.getRemainFlower, parameters: ["uid": uid], success: { dict in
