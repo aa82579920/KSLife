@@ -22,7 +22,7 @@ class PageTitleView: UIView {
     private let selectedColor: (CGFloat, CGFloat, CGFloat) = (0, 155, 255)
     private let scrollLineH: CGFloat = 2
     
-     private var titleType: PageTitleType = .flexibleType
+    private var titleType: PageTitleType = .flexibleType
     private var fontSize: CGFloat = 16
     
     private var titles: [String]

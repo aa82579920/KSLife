@@ -79,7 +79,7 @@ class DayDishTableViewCell: UITableViewCell {
         contentView.addSubview(nameLabel)
         remakeSimpleConstraints()
         
-        dishImage.sd_setImage(with: URL(string: dish.icon), placeholderImage: UIImage(named: "noImg"))
+        dishImage.sd_setImage(with: URL(string: dish.icon ?? ""), placeholderImage: UIImage(named: "noImg"))
         nameLabel.text = dish.name
     }
     

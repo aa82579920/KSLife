@@ -92,8 +92,17 @@ class CalendarViewController: SwiftPopup {
         calendarView = CalendarView(frame: calendarViewFrame, collectionViewLayout: layout)
         contentView.addSubview(calendarView ?? UICollectionView())
         calendarView?.getDatesBlock = { period in
-//            self.firstLabel.text = period.0
-//            self.secondLabel.text = period.1
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            if period.0 != 0 {
+                self.firstLabel.text = formatter.string(from: Date(timeIntervalSince1970: TimeInterval(period.0)))
+            }
+            if period.1 != 0 {
+                self.secondLabel.text = formatter.string(from: Date(timeIntervalSince1970: TimeInterval(period.1)))
+            } else {
+                self.secondLabel.text = ""
+            }
         }
         self.calendarView?.date = yearOMonth
         
@@ -152,9 +161,9 @@ class CalendarViewController: SwiftPopup {
     
     //点击确定
     @objc func selectPeriod() {
-        if firstLabel.text != "" && secondLabel.text != ""{
+        if let text1 = firstLabel.text, let text2 = secondLabel.text {
             if let block = block {
-                block((firstLabel.text!, secondLabel.text!))
+                block((text1, text2))
                 dismiss()
                 return
             }

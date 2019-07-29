@@ -10,6 +10,12 @@ import UIKit
 
 class TitleCellectionViewCell: UICollectionViewCell {
     
+    var font: CGFloat = 16{
+        didSet {
+            label.font = UIFont.systemFont(ofSize: font)
+        }
+    }
+    
     lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -28,7 +34,7 @@ class TitleCellectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            label.textColor = oldValue ? mainColor : .lightGray
+            label.textColor = isSelected ? mainColor : .lightGray
         }
     }
     

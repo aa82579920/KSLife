@@ -176,6 +176,7 @@ extension DoctorViewController: UITableViewDataSource, UITableViewDelegate {
             let vc = FormViewController()
             getQuestions(sid: "\(surveyList[indexPath.row - 1].sid)", success: { qs in
                 vc.questions = qs
+                vc.sid = self.surveyList[indexPath.row - 1].sid
             })
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)

@@ -121,7 +121,7 @@ extension SearchDishViewController: UITableViewDataSource, UITableViewDelegate, 
         vc.hidesBottomBarWhenPushed = true
         vc.dish = dishs[indexPath.row]
         if dishs[indexPath.row].type == 0 {
-             vc.element = dishs[indexPath.row].name
+             vc.element = dishs[indexPath.row].name ?? ""
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }

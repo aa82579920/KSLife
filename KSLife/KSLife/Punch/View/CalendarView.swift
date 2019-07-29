@@ -7,6 +7,7 @@
 //
 
 import UIKit
+typealias DatesBlock = ((Int, Int))->(Void)
 
 class CalendarView: UICollectionView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -19,15 +20,13 @@ class CalendarView: UICollectionView,UICollectionViewDelegate,UICollectionViewDa
         self.showsVerticalScrollIndicator = false
         self.isScrollEnabled = false
     }
-    var getDatesBlock: ((UILabel)->())?
+    var getDatesBlock: DatesBlock?
     
     var date: Date = Date() {
         didSet {
             //获取日期所在月份的所有日期
             self.weekday = getFirstDayInDateMonth(date) - 1
-            print("date所在月份第一天是星期\(self.weekday)")
             self.days = calculateDaysInDateMonth(date)
-            print("date所在月份有\(self.days)天")
         }
     }
     /// 指定日期所在月份的第一天是星期几
@@ -39,6 +38,9 @@ class CalendarView: UICollectionView,UICollectionViewDelegate,UICollectionViewDa
             self.reloadData()
         }
     }
+    
+    var startDate: Int? = 0
+    var endDate: Int? = 0
     /// 用于在对应月份中的
     var tempDay: Int = 1
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -49,15 +51,31 @@ class CalendarView: UICollectionView,UICollectionViewDelegate,UICollectionViewDa
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CalendarCell
+         let selectDate = Date.init(year: date.year, month: date.month, day: tempDay, hour: 0, minute: 0)
+        let time = Int(selectDate.timeIntervalSince1970)
+        
+        cell.dateLabel.textColor = UIColor.black
+        cell.dateLabel.backgroundColor = UIColor.white
+        
+        if time == startDate || time == endDate {
+            cell.isSelected = true
+            cell.dateLabel.textColor = .white
+            cell.dateLabel.backgroundColor = mainColor
+        } else if time > startDate! && time < endDate! {
+            cell.isSelected = true
+            cell.dateLabel.textColor = .black
+            cell.dateLabel.backgroundColor = UIColor(r: 0, g: 155, b: 255, a: 0.5)
+        }
+        
         if indexPath.row >= self.weekday && indexPath.row < self.weekday + self.days  {
             cell.dateLabel.text = "\(tempDay)"
             tempDay += 1
         }else {
             cell.dateLabel.text = ""
+            cell.dateLabel.textColor = UIColor.black
+            cell.dateLabel.backgroundColor = UIColor.white
         }
         //点击collectionview中的几个cell后点击“上个月”或者“下个月”按钮获取新的月份信息时，如不加下面的两行会点击的背景出现胡乱排序的问题，还在找原因
-        cell.dateLabel.textColor = UIColor.black
-        cell.dateLabel.backgroundColor = UIColor.white
         return cell
     }
     required init?(coder aDecoder: NSCoder) {
@@ -66,9 +84,32 @@ class CalendarView: UICollectionView,UICollectionViewDelegate,UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! CalendarCell
         let dayLabel = cell.dateLabel
+        guard let text = dayLabel.text, let day = Int(text) else {
+            return
+        }
+        let selectDate = Date.init(year: date.year, month: date.month, day: day, hour: 0, minute: 0)
+        let time = Int(selectDate.timeIntervalSince1970)
+        if startDate == 0 {
+            startDate = time
+        }else if startDate! > 0 && endDate! < 0 {
+            startDate = time
+            endDate = 0
+        }else if startDate! > 0 && endDate! > 0 {
+            startDate = time
+            endDate = 0
+        }else{
+            if startDate! < time {
+                endDate = time
+            }else{
+                startDate = time
+            }
+            
+        }
 //        dayLabel.textColor = UIColor.white
 //        dayLabel.backgroundColor = UIColor(red: 115/255, green: 201/255, blue: 188/255, alpha: 1)
-        self.getDatesBlock?(dayLabel)
+        self.getDatesBlock?((startDate!, endDate!))
+        tempDay = 1
+        collectionView.reloadData()
     }
    
     /// 获取指定月份的天数

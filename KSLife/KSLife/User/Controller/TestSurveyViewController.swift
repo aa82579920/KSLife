@@ -11,13 +11,19 @@ import UIKit
 class TestSurveyViewController: FormViewController {
     
     var simpleQ: [SimpleQuestion] = []
-    private var sid: Int?
     private var fields: [UITextField] = []
-    private var formViews: [FormView] = []
+    private var formViews: [FormView?] = []
+    private var fieldTexts = [String]()
+    private var needStr = ""
+    private var options = [[Int]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         getTestSurvey(success: {
+            self.fields = Array(repeating: UITextField(), count: 4)
+            self.fieldTexts = Array(repeating: "", count: 4)
+            self.formViews = Array(repeating: nil, count: self.questions.count)
+            self.options = Array(repeating: [], count: self.questions.count)
             self.tablewView.reloadData()
         })
     }
@@ -27,8 +33,6 @@ class TestSurveyViewController: FormViewController {
     }
     
     override func post(sender: UIButton) {
-        print(simpleQ.count)
-        print(fields.count)
         var answers = [SurveyAnswer]()
         for i in 0..<fields.count {
             let ques = simpleQ[i]
@@ -41,7 +45,7 @@ class TestSurveyViewController: FormViewController {
         for i in 0..<questions.count {
             let ques = questions[i]
             let form = formViews[i]
-            for ops in form.selectIndexs {
+            for ops in form!.selectIndexs {
                 let answer = SurveyAnswer(qid: "\(ques.qid)", options: ops, type: ques.type, answer: nil)
                 answers.append(answer)
             }
@@ -55,7 +59,9 @@ class TestSurveyViewController: FormViewController {
             let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
             let okAction = UIAlertAction(title: "确定", style: .default, handler: {
                 action in
-                print("点击了确定")
+                let encoder = JSONEncoder()
+                let data = try! encoder.encode(answers)
+                SurveyAPIs.postAnswer(sid: self.sid ?? 1, answer: String(data: data, encoding: .utf8)!)
             })
             alert.addAction(cancelAction)
             alert.addAction(okAction)
@@ -89,6 +95,7 @@ class TestSurveyViewController: FormViewController {
 extension TestSurveyViewController: DropDownMenuDelegate{
     func setDropDownDelegate(str: String?) {
         dropBtn.setTitle(str, for: .normal)
+        needStr = str ?? ""
     }
     
     @objc func dropDown(sender: UIButton) {
@@ -138,6 +145,7 @@ extension TestSurveyViewController {
                 label.font = UIFont.systemFont(ofSize: 13)
                 label.textColor = UIColor.gray
             let field = UITextField()
+            field.text = fieldTexts[indexPath.row]
             field.backgroundColor = .white
             field.borderStyle = .roundedRect
             cell.contentView.addSubview(label)
@@ -152,7 +160,7 @@ extension TestSurveyViewController {
                 make.centerX.equalTo(cell.contentView)
                 make.bottom.equalTo(cell.contentView).offset(-margin)
             }
-            fields.append(field)
+            fields[indexPath.row] = field
         } else if indexPath.row == simpleQ.count - 1 {
             let question = simpleQ[indexPath.row]
             let label = UILabel()
@@ -166,6 +174,7 @@ extension TestSurveyViewController {
                 make.top.equalTo(cell.contentView).offset(margin)
                 make.left.equalTo(cell.contentView).offset(margin)
             }
+            dropBtn.setTitle(needStr, for: .normal)
             dropBtn.snp.makeConstraints { make in
                 make.top.equalTo(label.snp.bottom).offset(margin)
                 make.width.equalTo(cell.contentView).multipliedBy(0.9)
@@ -182,12 +191,25 @@ extension TestSurveyViewController {
             formView!.snp.makeConstraints { (make) -> Void in
                 make.edges.equalTo(cell.contentView)
             }
-            formViews.append(formView!)
+            formView?.selectIndexs = options[indexPath.row - simpleQ.count]
+            formViews[indexPath.row - simpleQ.count] = formView
         }
         
         
         cell.selectionStyle = .none
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let n = indexPath.row
+        if n < simpleQ.count - 1 {
+            guard let text = fields[n].text else {
+                return
+            }
+            fieldTexts[n] = text
+        } else if n > simpleQ.count - 1{
+            options[n - simpleQ.count] = formViews[n - simpleQ.count]!.selectIndexs
+        }
     }
 }
 
@@ -197,7 +219,7 @@ extension TestSurveyViewController {
             guard let data = dict["data"] as? [String: Any], let items = data["question"]  as? [[String: Any]], let sid = data["sid"] as? Int else {
                 return
             }
-            self.sid = sid
+            self.sid = sid ?? 1
             for item in items {
                 guard let type = item["type"] as? Int else {
                     return
@@ -218,15 +240,6 @@ extension TestSurveyViewController {
                 }
             }
            success()
-        }, failure: { _ in
-            
-        })
-    }
-    
-    func postAnswer(sid: Int, answer: String) {
-        print(answer)
-        SolaSessionManager.solaSession(type: .post, url: SurveyAPIs.postAnswer, parameters: ["sid": "\(sid)", "answer": answer], success: { dict in
-            print(dict)
         }, failure: { _ in
             
         })

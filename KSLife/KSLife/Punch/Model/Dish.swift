@@ -27,15 +27,16 @@ struct Dish: Codable {
 }
 
 struct SimpleDish: Codable {
-    let kgID, name: String
-    let icon: String
-    let groupName: String?
+    let groupId: String?
+    let kgID, name: String?
+    let icon: String?
+    let groupName: String? 
     let type: Int
     //    let type: Int
     
     enum CodingKeys: String, CodingKey {
         case kgID = "kgId"
-        case name, icon, groupName, type
+        case name, icon, groupName, type, groupId
     }
 }
 

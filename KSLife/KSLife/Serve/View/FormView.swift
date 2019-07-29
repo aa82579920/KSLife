@@ -10,7 +10,13 @@ import UIKit
 
 class FormView: UIView {
     
-    var selectIndexs:[Int] = []
+    var selectIndexs:[Int] = [] {
+        didSet {
+            for btn in btns {
+                btn.isSelected = selectIndexs.contains(btn.tag)
+            }
+        }
+    }
     var questionStr: String = ""
     var optionList: [String] = []
     

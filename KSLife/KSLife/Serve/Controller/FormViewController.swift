@@ -12,9 +12,16 @@ class FormViewController: UIViewController {
     
     var questions: [Question] = [] {
         didSet {
+            self.formViews = Array(repeating: nil, count: questions.count)
+            self.options = Array(repeating: [], count: questions.count)
             tablewView.reloadData()
         }
     }
+    
+    var sid: Int?
+    
+    private var formViews: [FormView?] = []
+    private var options = [[Int]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,14 +86,34 @@ extension FormViewController: UITableViewDelegate, UITableViewDataSource {
         formView!.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(cell.contentView)
         }
+        formViews[indexPath.row] = formView
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        options[indexPath.row] = formViews[indexPath.row]!.selectIndexs
     }
 }
 
 extension FormViewController {
     @objc func post(sender: UIButton) {
-        
+        var answers = [SurveyAnswer]()
+        for i in 0..<questions.count {
+            let ques = questions[i]
+            let form = formViews[i]
+            for ops in form!.selectIndexs {
+                let answer = SurveyAnswer(qid: "\(ques.qid)", options: ops, type: ques.type, answer: nil)
+                answers.append(answer)
+            }
+        }
+        if answers.count == questions.count{
+            let encoder = JSONEncoder()
+            let data = try! encoder.encode(answers)
+            SurveyAPIs.postAnswer(sid: sid!, answer: String(data: data, encoding: .utf8)!)
+        } else {
+            self.tipWithLabel(msg: "请答完所有问题后提交")
+        }
     }
 }
 

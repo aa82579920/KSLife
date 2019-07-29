@@ -10,58 +10,6 @@ import UIKit
 
 class RecomandDishViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.addSubview(label)
-        view.addSubview(titleCollectionView)
-        view.addSubview(pageContentView)
-        view.backgroundColor = .white
-        
-        for dish in dishs {
-            switch dish.groupName {
-            case "蛋白质食材":
-                allChildVCs[0].dish = dish
-                allChildVCs[0].element = dish.name
-            case "蛋白菜肴":
-                allChildVCs[1].dish = dish
-            case "纤维食材":
-                allChildVCs[2].dish = dish
-                allChildVCs[2].element = dish.name
-            case "纤维菜肴":
-                allChildVCs[3].dish = dish
-            case "维生素食材":
-                allChildVCs[4].dish = dish
-                allChildVCs[4].element = dish.name
-            case "维生素菜肴":
-                allChildVCs[5].dish = dish
-            case "脂肪食材":
-                allChildVCs[6].dish = dish
-                allChildVCs[6].element = dish.name
-            case "脂肪菜肴":
-                allChildVCs[7].dish = dish
-            case "碳水食材":
-                allChildVCs[8].dish = dish
-                allChildVCs[8].element = dish.name
-            case "碳水菜肴":
-                allChildVCs[9].dish = dish
-            default:
-                break
-            }
-        }
-        for item in allChildVCs {
-            if let dish = item.dish {
-                RecordAPIs.getDishInfo(kgId: dish.kgID, success: { str in
-                    item.element = str
-                })
-            }
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        setUpNav(animated)
-    }
-    
     var dishs: [SimpleDish] = []
     
     var recomReason: String = "" {
@@ -138,6 +86,59 @@ class RecomandDishViewController: UIViewController {
         contentView.backgroundColor = .white
         return contentView
         }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addSubview(label)
+        view.addSubview(titleCollectionView)
+        view.addSubview(pageContentView)
+        view.backgroundColor = .white
+        titleCollectionView.selectItem(at: IndexPath(item: selectedIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+        
+        for dish in dishs {
+            switch dish.groupName {
+            case "蛋白质食材":
+                allChildVCs[0].dish = dish
+                allChildVCs[0].element = dish.name ?? ""
+            case "蛋白菜肴":
+                allChildVCs[1].dish = dish
+            case "纤维食材":
+                allChildVCs[2].dish = dish
+                allChildVCs[2].element = dish.name ?? ""
+            case "纤维菜肴":
+                allChildVCs[3].dish = dish
+            case "维生素食材":
+                allChildVCs[4].dish = dish
+                allChildVCs[4].element = dish.name ?? ""
+            case "维生素菜肴":
+                allChildVCs[5].dish = dish
+            case "脂肪食材":
+                allChildVCs[6].dish = dish
+                allChildVCs[6].element = dish.name ?? ""
+            case "脂肪菜肴":
+                allChildVCs[7].dish = dish
+            case "碳水食材":
+                allChildVCs[8].dish = dish
+                allChildVCs[8].element = dish.name ?? ""
+            case "碳水菜肴":
+                allChildVCs[9].dish = dish
+            default:
+                break
+            }
+        }
+        for item in allChildVCs {
+            if let dish = item.dish {
+                RecordAPIs.getDishInfo(kgId: dish.kgID ?? "", success: { str in
+                    item.element = str
+                })
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setUpNav(animated)
+    }
 }
 
 extension RecomandDishViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -148,7 +149,6 @@ extension RecomandDishViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TitleCellID", for: indexPath) as! TitleCellectionViewCell
         cell.label.text = titles[indexPath.item]
-        cell.isSelected = selectedIndex == indexPath.item ? true : false
         return cell
     }
     

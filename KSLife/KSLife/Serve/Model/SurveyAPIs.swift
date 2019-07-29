@@ -16,4 +16,12 @@ struct SurveyAPIs {
 //    static let searchDoctor = "/doctor/searchDoctor"
 //    static let getRemainFlower = "/doctor/getRemainLike"
 //    static let getDoctorActivity = "/doctor/getDoctorActivity"
+    static func postAnswer(sid: Int, answer: String) {
+        print(answer)
+        SolaSessionManager.solaSession(type: .post, url: SurveyAPIs.postAnswer, parameters: ["sid": "\(sid)", "answer": answer], success: { dict in
+            print(dict)
+        }, failure: { _ in
+            
+        })
+    }
 }

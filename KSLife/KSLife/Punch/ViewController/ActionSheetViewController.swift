@@ -182,7 +182,7 @@ extension ActionSheetViewController: UITableViewDelegate, UITableViewDataSource,
         case 0:
             let label = UILabel()
             cell.contentView.addSubview(label)
-            label.text = "常用计量估计"
+            label.text = "常用计量估计\n米饭：大碗-250克，中碗-150克，小碗-100克，餐盒-250克，大盘-300克，小盘-200克\n饮品：玻璃杯-300ml\n汤汁：汤匙-45克，小勺-10克"
             label.textColor = mainColor
             label.numberOfLines = 0
             label.font = UIFont.systemFont(ofSize: 13)

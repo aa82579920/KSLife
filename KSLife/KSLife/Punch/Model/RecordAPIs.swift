@@ -34,6 +34,30 @@ struct RecordAPIs {
             
         })
     }
+    
+    static func getRecipeList(uid: String = UserInfo.shared.user.uid, page: Int = 0, type: Int, cateId: String? = nil, success: @escaping ([[SimpleDish]]) -> Void) {
+        var parameters = ["uid": uid, "page": "\(page)", "type": "\(type)"]
+        if let id = cateId {
+            parameters["cateId"] = id
+        }
+        
+        SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getRecipeList, parameters: parameters, success: { dict in
+            guard let data = dict["data"] as? [String: Any], let recipeList = data["recipeList"] as? [Any], let groups = data["groups"] else {
+                return
+            }
+            do {
+                let json = try JSONSerialization.data(withJSONObject: recipeList, options: [])
+                let list = try JSONDecoder().decode([SimpleDish].self, from: json)
+                let jsonSec = try JSONSerialization.data(withJSONObject: groups, options: [])
+                let groups = try JSONDecoder().decode([SimpleDish].self, from: jsonSec)
+                success([groups, list])
+            } catch {
+                print("sad")
+            }
+        }, failure: { _ in
+            
+        })
+    }
 }
 
 struct CheckinAPIs {

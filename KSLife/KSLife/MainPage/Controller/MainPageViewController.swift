@@ -58,8 +58,8 @@ class MainPageViewController: UIViewController {
             var urls = [String]()
             var names = [String]()
             for dish in list {
-                urls.append(dish.icon)
-                names.append(dish.name)
+                urls.append(dish.icon ?? "")
+                names.append(dish.name ?? "")
             }
             self.cycleView.imgUrls = urls
             self.cycleView.names = names

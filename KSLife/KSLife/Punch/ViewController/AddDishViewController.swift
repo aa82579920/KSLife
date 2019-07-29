@@ -13,23 +13,30 @@ class AddDishViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setUpUI()
+        contentH = screenH - statusH - navigationBarH - titleViewH - searchViewH
+        contentFrame = CGRect(x: 0, y: statusH + navigationBarH + titleViewH + searchViewH, width: screenW, height: contentH)
+
+        view.addSubview(searchField)
+        view.addSubview(pageTitleView)
         setUpNav()
-        geHistory(uid: UserInfo.shared.user.uid, page: 0, success: { list in
+        
+        getRecipeNames(success: {
+            self.subViewTwo = DishListView(frame: self.contentFrame, groups: self.dishGroups, fontSize: 14, type: 1)
+            self.subViewThree = DishListView(frame: self.contentFrame, groups: self.materialGroups, fontSize: 14, type: 0)
+            self.setUpUI()
+        })
+        
+        getHistory(uid: UserInfo.shared.user.uid, page: 0, success: { list in
             self.simpleDishs = list
         })
-        getRecipeList(success: { list in
-            self.subDishs = list
-            self.subTableViews[0].reloadData()
-        })
-        //        remakeConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         searchField.resignFirstResponder()
     }
     
-    private var subDishs: [SimpleDish] = []
+    private var dishGroups: [SimpleDish] = []
+    private var materialGroups: [SimpleDish] = []
     private var simpleDishs: [SimpleDish] = [] {
         didSet {
             subViewOne.reloadData()
@@ -38,6 +45,8 @@ class AddDishViewController: UIViewController {
     
     private let titleViewH: CGFloat = screenH * 0.06
     private let searchViewH: CGFloat = 40
+    private var contentH: CGFloat = 0
+    private var contentFrame: CGRect = .zero
     
     private lazy var searchField: UITextField = {[weak self] in
         let field = UITextField(frame: CGRect(x: 15, y: statusH + navigationBarH, width: screenW - 30, height: searchViewH))
@@ -63,50 +72,21 @@ class AddDishViewController: UIViewController {
         return field
         }()
     
-    private lazy var pageTitleView: PageTitleView = {[weak self] in
+    private lazy var pageTitleView: TitleCollectionView = {
+        [weak self] in
         let titles = ["最爱","菜肴","食材", "自定套餐","自定菜肴","自定食品"]
-        let view = PageTitleView(frame: CGRect(x: 0, y: statusH + navigationBarH + searchViewH, width: screenW, height: titleViewH), titles: titles, with: .flexibleType)
+        let view = TitleCollectionView(frame: CGRect(x: 0, y: statusH + navigationBarH + searchViewH, width: screenW, height: titleViewH), titles: titles)
         view.delegate = self
         return view
-        }()
+    }()
     
-    private lazy var pageContentView: PageContentView = { [weak self] in
-        let contentH = screenH - statusH - navigationBarH - titleViewH - searchViewH
-        let contentFrame = CGRect(x: 0, y: statusH + navigationBarH + titleViewH + searchViewH, width: screenW, height: contentH)
-        let views = [subViewOne,subViewTwo,subViewTwo,subViewThree,subViewFour,subViewFive]
-        let view = PageContentView(frame: contentFrame, views: views)
-        view.delegate = self
-        return view
-        }()
-    
-    private lazy var subTableViews: [UITableView] = []
-    
-    private lazy var pageTitleViewSec: PageTitleView = {[weak self] in
-        let titles = ["家常菜","川菜","湘菜","湘菜","粤菜","江浙沪菜","家常菜"]
-        let view = PageTitleView(frame: CGRect(x: 0, y: 0, width: screenW, height: titleViewH), titles: titles, with: .flexibleType, fontSize: 14)
-        view.delegate = self
-        return view
-        }()
-    
-    private lazy var pageContentViewSec: PageContentView = { [weak self] in
-        let contentH = screenH - statusH - navigationBarH - 2 * titleViewH - searchViewH
-        let contentFrame = CGRect(x: 0, y: titleViewH, width: screenW, height: contentH)
-        for i in 0..<7 {
-            let tableView = UITableView(frame: .zero, style: .grouped)
-            tableView.rowHeight = 70
-            tableView.delegate = self
-            tableView.dataSource = self
-            tableView.sectionHeaderHeight = 0
-            tableView.separatorStyle = .singleLine
-            tableView.showsVerticalScrollIndicator = false
-            tableView.register(DayDishTableViewCell.self, forCellReuseIdentifier: faviDishCellID)
-            subTableViews.append(tableView)
-        }
-        let views = subTableViews
-        let view = PageContentView(frame: contentFrame, views: views)
-        view.delegate = self
-        return view
-        }()
+    private var pageContentView: PageContentView?
+//        = { [weak self] in
+//        let views = [subViewOne,subViewTwo,subViewThree,subViewFour,subViewFive,subViewSix]
+//        let view = PageContentView(frame: contentFrame, views: views)
+//        view.delegate = self
+//        return view
+//        }()
     
     private let faviDishCellID = "faviDishCellID"
     private lazy var subViewOne: UITableView = {[unowned self] in
@@ -121,19 +101,21 @@ class AddDishViewController: UIViewController {
         return tableView
         }()
     
-    private lazy var subViewTwo: UIView = {[unowned self] in
-        let view = UIView()
-        view.backgroundColor = .white
-        view.addSubview(pageTitleViewSec)
-        view.addSubview(pageContentViewSec)
-        return view
-        }()
+    private var subViewTwo: DishListView?
+    //        = {[unowned self] in
+    //        let view = DishListView(frame: contentFrame, groups: [], fontSize: 14)
+    //        view.backgroundColor = .white
+    //        return view
+    //        }()
+    //    private var subViewTwo: DishListView!
     
-    private lazy var subViewThree: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
+    private var subViewThree: DishListView?
+    //        = {[unowned self] in
+    //        let view = DishListView(frame: contentFrame, groups: [], fontSize: 14)
+    //        view.backgroundColor = .white
+    //        return view
+    //        }()
+    //     private var subViewThree: DishListView!
     
     private lazy var subViewFour: UIView = {
         let view = UIView()
@@ -142,6 +124,12 @@ class AddDishViewController: UIViewController {
     }()
     
     private lazy var subViewFive: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private lazy var subViewSix: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
@@ -171,22 +159,12 @@ class AddDishViewController: UIViewController {
 
 extension AddDishViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch tableView {
-        case subViewOne:
-            return simpleDishs.count == 0 ? 1 : simpleDishs.count
-        default:
-            return subDishs.count == 0 ? 1 : subDishs.count
-        }
+        return simpleDishs.count == 0 ? 1 : simpleDishs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-        switch tableView {
-        case subViewOne:
-            cell = simpleDishs.count == 0 ? FoldTableViewCell(with: .none, name: "暂无数据") : DayDishTableViewCell(dish: simpleDishs[indexPath.row])
-        default:
-            cell = subDishs.count == 0 ? FoldTableViewCell(with: .none, name: "暂无数据") : DayDishTableViewCell(dish: subDishs[indexPath.row])
-        }
+        cell = simpleDishs.count == 0 ? FoldTableViewCell(with: .none, name: "暂无数据") : DayDishTableViewCell(dish: simpleDishs[indexPath.row])
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         return cell
@@ -200,30 +178,22 @@ extension AddDishViewController: UITableViewDataSource, UITableViewDelegate {
         let vc = DishDetailViewController()
         vc.hidesBottomBarWhenPushed = true
         var dish: SimpleDish?
-        switch tableView {
-        case subViewOne:
-            dish = simpleDishs[indexPath.row]
-        default:
-            dish = subDishs[indexPath.row]
-        }
+        
+        dish = simpleDishs[indexPath.row]
+        
         vc.dish = dish
-        RecordAPIs.getDishInfo(kgId: dish!.kgID, success: { str in
+        RecordAPIs.getDishInfo(kgId: dish!.kgID ?? "", success: { str in
             vc.element = str
         })
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch tableView {
-        case subViewOne:
-            return simpleDishs.count == 0 ? 160 : 70
-        default:
-            return 70
-        }
+        return simpleDishs.count == 0 ? 160 : 70
     }
 }
 
-extension AddDishViewController: UITextFieldDelegate, PageTitleViewDelegate, PageContentViewDelegate{
+extension AddDishViewController: UITextFieldDelegate, PageTitleViewDelegate, PageContentViewDelegate, TitleCollectionViewDelegate{
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let vc = SearchDishViewController()
@@ -247,28 +217,15 @@ extension AddDishViewController: UITextFieldDelegate, PageTitleViewDelegate, Pag
     }
     
     func pageContentView(contentView: PageContentView, progress: CGFloat, sourceIndex: Int, targetIndex: Int) {
-        if contentView == pageContentView {
-            pageTitleView.setTitleWithProgress(progress: progress, sourceIndex: sourceIndex, targetIndex: targetIndex)
-        } else {
-            pageTitleViewSec.setTitleWithProgress(progress: progress, sourceIndex: sourceIndex, targetIndex: targetIndex)
-            getRecipeList(page:targetIndex, success: { list in
-                self.subDishs = list
-                self.subTableViews[targetIndex].reloadData()
-            })
-        }
+        pageTitleView.setTitleWithProgress(progress: progress, sourceIndex: sourceIndex, targetIndex: targetIndex)
     }
     
     func pageTitleView(titleView: PageTitleView, selectedIndex index: Int) {
-        if titleView == pageTitleView {
-            pageContentView.setCurrentIndex(currentIndex: index)
-        } else {
-            pageContentViewSec.setCurrentIndex(currentIndex: index)
-            getRecipeList(page:index, success: { list in
-                self.subDishs = list
-                self.subTableViews[index].reloadData()
-            })
-        }
-        
+        pageContentView?.setCurrentIndex(currentIndex: index)
+    }
+    
+    func titleCollectionView(titleView: TitleCollectionView, selectedIndex index: Int) {
+        pageContentView?.setCurrentIndex(currentIndex: index)
     }
 }
 
@@ -304,10 +261,10 @@ extension AddDishViewController {
 
 extension AddDishViewController {
     func setUpUI() {
-        view.addSubview(searchField)
-        view.addSubview(pageTitleView)
-        view.addSubview(pageContentView)
-        let subViews = [subViewThree, subViewFour, subViewFive]
+        pageContentView = PageContentView(frame: contentFrame, views: [subViewOne, subViewTwo!, subViewThree!, subViewFour, subViewFive, subViewSix])
+        pageContentView?.delegate = self
+        view.addSubview(pageContentView!)
+        let subViews = [subViewFour, subViewFive, subViewSix]
         let btns = [addBtn, addBtnTwo, addBtnThree]
         for i in 0..<3 {
             subViews[i].addSubview(btns[i])
@@ -319,31 +276,6 @@ extension AddDishViewController {
             }
         }
     }
-    
-    //    func remakeConstraints() {
-    //        let padding: CGFloat = 15
-    //        let margin: CGFloat = 20
-    //
-    //        searchField.snp.makeConstraints { (make) -> Void in
-    //            make.top.equalTo(view).offset(padding)
-    //            make.left.equalTo(view).offset(padding)
-    //            make.right.equalTo(view).offset(-padding)
-    //        }
-    //
-    //        pageTitleView.snp.makeConstraints { (make) -> Void in
-    //            make.top.equalTo(searchField.snp.bottom).offset(margin)
-    //            make.left.equalTo(view)
-    //            make.right.equalTo(view)
-    //            make.height.equalTo(titleViewH)
-    //        }
-    //
-    //        pageContentView.snp.makeConstraints { (make) -> Void in
-    //            make.top.equalTo(pageTitleView.snp.bottom)
-    //            make.left.equalTo(view)
-    //            make.right.equalTo(view)
-    //            make.bottom.equalTo(view)
-    //        }
-    //    }
     
     func setUpNav() {
         let image = UIImage(named: "ic_back")
@@ -359,7 +291,7 @@ extension AddDishViewController {
 }
 
 extension AddDishViewController {
-    func geHistory(uid: String, page: Int = 0, success: @escaping ([SimpleDish]) -> Void) {
+    func getHistory(uid: String, page: Int = 0, success: @escaping ([SimpleDish]) -> Void) {
         SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getUserHistoryRecords, parameters: ["uid": uid, "page": "\(0)"], success: { dict in
             guard let data = dict["data"] as? [String: Any], let recipeList = data["recipeList"] as? [Any] else {
                 return
@@ -386,21 +318,21 @@ extension AddDishViewController {
         })
     }
     
-    func getRecipeList(page: Int = 0, type: Int = 1, success: @escaping ([SimpleDish]) -> Void) {
-        SolaSessionManager.solaSession(type: .post, url: RecordAPIs.getRecipeList, parameters: ["page": "\(page)", "type": "\(type)"], success: { dict in
-            guard let data = dict["data"] as? [String: Any], let recipeList = data["recipeList"] as? [Any] else {
-                return
-            }
-            do {
-                let json = try JSONSerialization.data(withJSONObject: recipeList, options: [])
-                let list = try JSONDecoder().decode([SimpleDish].self, from: json)
-                success(list)
-            } catch {
-                print("sad")
-            }
-        }, failure: { _ in
-            
-        })
+    func getRecipeNames(success: @escaping () -> Void) {
+        let group = DispatchGroup()
+        group.enter()
+        RecordAPIs.getRecipeList(uid: UserInfo.shared.user.uid, type: 0, cateId: nil) { list in
+            self.materialGroups = list[0]
+            group.leave()
+        }
+        group.enter()
+        RecordAPIs.getRecipeList(uid: UserInfo.shared.user.uid, type: 1, cateId: nil) { list in
+            self.dishGroups = list[0]
+            group.leave()
+        }
+        group.notify(queue: DispatchQueue.main) {
+            success()
+        }
     }
 }
 

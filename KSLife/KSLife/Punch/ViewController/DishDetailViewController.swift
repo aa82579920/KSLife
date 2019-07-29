@@ -19,7 +19,7 @@ class DishDetailViewController: UIViewController {
         actionSheet.showAnimation = ActionSheetShowAnimation()
         actionSheet.dismissAnimation = ActionSheetDismissAnimation()
         actionSheet.block = { weight in
-            FoodManager.shared.submitDiet(uid: UserInfo.shared.user.uid, kgId: self.dish!.kgID, amount: weight, unit: "克", type: self.dish!.type, success: {
+            FoodManager.shared.submitDiet(uid: UserInfo.shared.user.uid, kgId: self.dish!.kgID ?? "", amount: weight, unit: "克", type: self.dish!.type, success: {
                 
                 self.tipWithLabel(msg: "添加成功")
             }, failure: { error in
@@ -35,8 +35,8 @@ class DishDetailViewController: UIViewController {
         didSet {
             if let dish = dish {
                 self.title = dish.name
-                imageView.sd_setImage(with: URL(string: dish.icon), placeholderImage: UIImage(named: "noImg"))
-                getRecipeInfo(kgId: dish.kgID, type: dish.type, success: {
+                imageView.sd_setImage(with: URL(string: dish.icon ?? ""), placeholderImage: UIImage(named: "noImg"))
+                getRecipeInfo(kgId: dish.kgID ?? "", type: dish.type, success: {
                     self.tableView.reloadData()
                 })
             }

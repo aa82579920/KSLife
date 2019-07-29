@@ -96,6 +96,8 @@
 		C41CF4CB22A6B00200F9AB7D /* UserAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4CA22A6B00200F9AB7D /* UserAPIs.swift */; };
 		C41CF4CD22A6B2CE00F9AB7D /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4CC22A6B2CE00F9AB7D /* SignInViewController.swift */; };
 		C41CF4D122A7E6BC00F9AB7D /* RecomandDishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CF4D022A7E6BC00F9AB7D /* RecomandDishViewController.swift */; };
+		C42D290122ECDF3500663B27 /* TitleCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D290022ECDF3500663B27 /* TitleCollectionView.swift */; };
+		C42D290322ECEFAC00663B27 /* DishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D290222ECEFAC00663B27 /* DishListView.swift */; };
 		C442987322CB3F1400764610 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C442987222CB3F1400764610 /* MessageTableViewCell.swift */; };
 		C453AF4A229F7CFA00369F10 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF3E229F7CF900369F10 /* common.swift */; };
 		C453AF68229F7D2700369F10 /* DayDishTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AF59229F7D2700369F10 /* DayDishTableViewCell.swift */; };
@@ -261,6 +263,8 @@
 		C41CF4CC22A6B2CE00F9AB7D /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		C41CF4D022A7E6BC00F9AB7D /* RecomandDishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomandDishViewController.swift; sourceTree = "<group>"; };
 		C41CF4D222A91F8B00F9AB7D /* PopBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopBaseView.swift; sourceTree = "<group>"; };
+		C42D290022ECDF3500663B27 /* TitleCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionView.swift; sourceTree = "<group>"; };
+		C42D290222ECEFAC00663B27 /* DishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishListView.swift; sourceTree = "<group>"; };
 		C442987222CB3F1400764610 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		C453AF3E229F7CF900369F10 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
 		C453AF3F229F7CF900369F10 /* NavButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
@@ -387,6 +391,7 @@
 				74155AA922D75BF000908E5A /* SwiftPopupPresentationController.swift */,
 				74155AAA22D75BF000908E5A /* SwiftPopupAnimation.swift */,
 				74155AAB22D75BF000908E5A /* PageTitleView.swift */,
+				C42D290022ECDF3500663B27 /* TitleCollectionView.swift */,
 				74155AAC22D75BF000908E5A /* PhotoViewController.swift */,
 				74155AAD22D75BF000908E5A /* InsertLabel.swift */,
 				74155AAE22D75BF000908E5A /* CycleView.swift */,
@@ -679,6 +684,7 @@
 				C45FAAAF22A071FC0040FA3C /* DateSelectCollectionViewCell.swift */,
 				7413D9C022EC22B700A4B5F9 /* CalendarCell.swift */,
 				C477552D22E4B024006C951B /* WeekView.swift */,
+				C42D290222ECEFAC00663B27 /* DishListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1060,6 +1066,7 @@
 				748C77772299037A00E1E97D /* MessageDoctorTableViewCell.swift in Sources */,
 				74FBF4A522CA346900E8B022 /* MessageFriendTableViewCell.swift in Sources */,
 				C41CF4BC22A2408D00F9AB7D /* Dish.swift in Sources */,
+				C42D290122ECDF3500663B27 /* TitleCollectionView.swift in Sources */,
 				C41A50EC22D30CC00056DB21 /* SetMealTableViewCell.swift in Sources */,
 				C453AF68229F7D2700369F10 /* DayDishTableViewCell.swift in Sources */,
 				74FBF4AA22CB247E00E8B022 /* SetNameController.swift in Sources */,
@@ -1069,6 +1076,7 @@
 				C41CF4C722A650A100F9AB7D /* FoodManager.swift in Sources */,
 				C41CF4AA22A198FD00F9AB7D /* SurveyAPIs.swift in Sources */,
 				C41A50FC22D325C90056DB21 /* TitleCellectionViewCell.swift in Sources */,
+				C42D290322ECEFAC00663B27 /* DishListView.swift in Sources */,
 				74B09ED3228D80960065D3AB /* DottedLineView.swift in Sources */,
 				C453AF74229F7D2700369F10 /* PunchMainViewController.swift in Sources */,
 				C453AF6E229F7D2700369F10 /* PunchViewController.swift in Sources */,
